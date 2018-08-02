@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "994896141013",
+    "firebase_url": "https://wethepnu-ec1b1.firebaseio.com",
+    "project_id": "wethepnu-ec1b1",
+    "storage_bucket": "wethepnu-ec1b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994896141013:android:6fe450e20634f18d",
+        "android_client_info": {
+          "package_name": "com.example.wjdck.hakerton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994896141013-8sf8mqoq8njevqihqvm278gcepdps37g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wjdck.hakerton",
+            "certificate_hash": "6f475da53d048386a515fd5df99bbc57c17fae7f"
+          }
+        },
+        {
+          "client_id": "994896141013-f265e6kp2d1gf1k4ip044l1esbjp7gug.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAp7k1K6tF1NQfd30KUhm9jJL5jYt62H58"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994896141013-f265e6kp2d1gf1k4ip044l1esbjp7gug.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
