@@ -7,4 +7,5 @@
     <string name="title_activity_discuss">discuss</string>
     <string name="title_activity_discuss_detail">discussDetailActivity</string>
     <string name="title_activity_add_agenda">addAgendaActivity</string>
+    <string name="title_activity_splash">splashActivity</string>
 </resources>
