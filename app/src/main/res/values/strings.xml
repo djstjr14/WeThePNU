@@ -1,4 +1,10 @@
 <resources>
     <string name="hello_world">WETHEPNU</string>
     <string name="app_name">WETHEPNU</string>
+    <string name="title_activity_detail_acivity">detailAcivity</string>
+    <string name="title_activity_login">loginActivity</string>
+    <string name="title_activity_report">reportActivity</string>
+    <string name="title_activity_discuss">discuss</string>
+    <string name="title_activity_discuss_detail">discussDetailActivity</string>
+    <string name="title_activity_add_agenda">addAgendaActivity</string>
 </resources>
