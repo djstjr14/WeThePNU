@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category">
+        <item >정치개혁</item>
+        <item >외교</item>
+        <item >일자리</item>
+        <item >미래</item>
+    </string-array>
+</resources>
