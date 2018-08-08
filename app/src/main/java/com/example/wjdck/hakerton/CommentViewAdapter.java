@@ -34,18 +34,18 @@ public class CommentViewAdapter extends BaseAdapter{
         // "listview_item" Layout을 inflate하여 convertView 참조 획득
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item, parent,false);
+            convertView = inflater.inflate(R.layout.comment_item, parent,false);
         }
 
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.agenda_title);
-        TextView recommendTextView = (TextView) convertView.findViewById(R.id.agenda_num);
-        TextView dateTextView = (TextView) convertView.findViewById(R.id.agenda_date);
+        TextView useridTextView = (TextView) convertView.findViewById(R.id.comment_userid);
+        TextView bodyTextView = (TextView) convertView.findViewById(R.id.comment_body);
+        TextView datetimeTextView = (TextView) convertView.findViewById(R.id.comment_datetime);
 
         ListViewItem listViewItem = listviewItemList.get(position);
 
-        titleTextView.setText(listViewItem.getTitle());
-        recommendTextView.setText(listViewItem.getRecommend());
-        dateTextView.setText(listViewItem.getDate());
+        useridTextView.setText(listViewItem.getTitle());
+        bodyTextView.setText(listViewItem.getRecommend());
+        datetimeTextView.setText(listViewItem.getDate());
 
 
         return convertView;
@@ -57,14 +57,14 @@ public class CommentViewAdapter extends BaseAdapter{
     @Override
     public Object getItem(int position){ return listviewItemList.get(position);}
 
-    public void addItem(String title, String recommend, String date){
+    public void addItem(String userid, String body, String datetime){
 
 
         ListViewItem item = new ListViewItem();
 
-        item.setTitle(title);
-        item.setRecommend(recommend);
-        item.setDate(date);
+        item.setTitle(userid);
+        item.setRecommend(body);
+        item.setDate(datetime);
 
         listviewItemList.add(item);
     }
