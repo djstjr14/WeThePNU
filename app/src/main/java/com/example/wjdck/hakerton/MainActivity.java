@@ -1,24 +1,24 @@
 package com.example.wjdck.hakerton;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    boolean flag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /* 리스트 나열 */
         ListView listview = (ListView) findViewById(R.id.agenda_listview);
-
         ListViewAdapter adapter;
 
         adapter = new ListViewAdapter();
@@ -42,8 +42,22 @@ public class MainActivity extends AppCompatActivity {
 
                 ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
 
+                Intent intent = new Intent(MainActivity.this, detailAcivity.class);
+                startActivity(intent);
+
 
             }
         });
+
     }
+    public void Field_Click(View view){
+
+        LinearLayout field = (LinearLayout) findViewById(R.id.field_layout);
+
+        if(flag) field.setVisibility(View.VISIBLE);
+        else field.setVisibility(View.INVISIBLE);
+        flag = !flag;
+
+    }
+
 }
