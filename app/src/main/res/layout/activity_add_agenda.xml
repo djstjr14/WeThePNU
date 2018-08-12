@@ -45,6 +45,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/title_edit"
                 android:textSize="@dimen/fab_margin"
                 android:hint="제목"/>
         </LinearLayout>
@@ -70,6 +71,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/agenda_edit"
                 android:background="@drawable/border"
                 android:gravity="start|top"/>
         </LinearLayout>
@@ -91,15 +93,15 @@
                 android:background="@color/colorPrimary"/>
 
             <Button
-                android:layout_weight="1"
+                android:id="@+id/regist_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/regist_btn"
-                android:textSize="25dp"
-                android:text="등록"
                 android:layout_marginLeft="5dp"
+                android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"/>
+                android:text="등록"
+                android:textColor="@android:color/white"
+                android:textSize="25dp" />
 
         </LinearLayout>
 

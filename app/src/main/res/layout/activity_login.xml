@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:color="#FFFFFFFF"
+    android:background="@android:color/white"
+    android:padding="50dp"
     tools:context="loginActivity">
 
     <LinearLayout
@@ -13,13 +14,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/login_layout1">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Log In"
-            android:textSize="25dp"
+            android:textSize="51px"
+            android:fontFamily="@font/notosans_demilight"
             android:textColor="@android:color/black"
             android:layout_marginBottom="10dp"
             android:layout_centerHorizontal="true"/>
@@ -27,7 +29,7 @@
 
     <LinearLayout
         android:id="@+id/login_layout2"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/login_layout1"
         android:layout_centerHorizontal="true"
@@ -38,13 +40,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:textSize="26px"
+            android:fontFamily="@font/notosans_demilight"
             android:text="아이디" />
 
         <EditText
             android:id="@+id/etEmail"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtEmail"
+            android:fontFamily="@font/notosans_light"
+            android:textSize="32px"
             android:ems="10"
             android:hint="ID"
             android:inputType="textEmailAddress" />
@@ -53,6 +59,8 @@
             android:id="@+id/txtPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/notosans_demilight"
+            android:textSize="26px"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/etEmail"
@@ -62,9 +70,11 @@
 
         <EditText
             android:id="@+id/etPassword"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtPassword"
+            android:fontFamily="@font/notosans_light"
+            android:textSize="32px"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword" />
@@ -76,16 +86,19 @@
             android:textSize="12dp"
             android:text="아이디 / 비밀번호 찾기"
             android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/notosans_medium"
             android:id="@+id/findId"/>
 
         <Button
             android:id="@+id/btnLogin"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="125dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="25dp"
-            android:text="LOGIN" />
+            android:fontFamily="@font/notosans_bold"
+            android:text="L O G I N"
+            android:textSize="32px"/>
 
     </LinearLayout>
 

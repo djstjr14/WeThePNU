@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListViewAdapter extends BaseAdapter{
@@ -55,17 +56,29 @@ public class ListViewAdapter extends BaseAdapter{
     public long getItemId(int position) { return position; }
 
     @Override
-    public Object getItem(int position){ return listviewItemList.get(position);}
+    public ListViewItem getItem(int position){ return listviewItemList.get(position);}
 
-    public void addItem(String title, String recommend, String date){
-
+    public void addItem(String key, String title, String recommend, String date){
 
         ListViewItem item = new ListViewItem();
 
+        item.setKey(key);
         item.setTitle(title);
         item.setRecommend(recommend);
         item.setDate(date);
-
+        Collections.reverse(listviewItemList);
         listviewItemList.add(item);
+        Collections.reverse(listviewItemList);
+    }
+    public int findItem(String key) {
+        for(int i=0; i<listviewItemList.size(); i++) {
+            if(listviewItemList.get(i).getKey().equals(key)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public void removeItem(int position) {
+        listviewItemList.remove(position);
     }
 }

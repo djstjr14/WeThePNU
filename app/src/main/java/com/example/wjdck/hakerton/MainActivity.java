@@ -1,63 +1,93 @@
 package com.example.wjdck.hakerton;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean flag = true;
+    FirebaseDatabase mFirebaseDatabase;
+    DatabaseReference mDatabaseReference;
+    ChildEventListener mChildEventListener;
 
+    ListView listView;
+    ListViewAdapter adapter;
+
+    SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* 리스트 나열 */
-        ListView listview = (ListView) findViewById(R.id.agenda_listview);
-        ListViewAdapter adapter;
+        listView = (ListView) findViewById(R.id.agenda_listview);
 
         adapter = new ListViewAdapter();
-        listview.setAdapter(adapter);
+        listView.setAdapter(adapter);
+//
+//        adapter.addItem("슬리핑 차일드 체크 제도를 도입해주세요.", "102,350 명", "18.07.17 ~ 18.08.16");
+//        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
+//        adapter.addItem("웹하드 카르텔과 디지털 성범죄 산업에 대해 특별수사 해주세요.", "73,483 명", "18.07.19 ~ 18.08.16");
+//        adapter.addItem("슬리핑 차일드 체크 제도를 도입해주세요.", "102,350 명", "18.07.17 ~ 18.08.16");
+//        adapter.addItem("슬리핑 차일드 체크 제도를 도입해주세요.", "102,350 명", "18.07.17 ~ 18.08.16");
+//        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
+//        adapter.addItem("웹하드 카르텔과 디지털 성범죄 산업에 대해 특별수사 해주세요.", "73,483 명", "18.07.19 ~ 18.08.16");
+//        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
+//        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
+//        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
 
-        adapter.addItem("슬리핑 차일드 체크 제도를 도입해주세요.", "102,350 명", "18.07.17 ~ 18.08.16");
-        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
-        adapter.addItem("웹하드 카르텔과 디지털 성범죄 산업에 대해 특별수사 해주세요.", "73,483 명", "18.07.19 ~ 18.08.16");
-        adapter.addItem("슬리핑 차일드 체크 제도를 도입해주세요.", "102,350 명", "18.07.17 ~ 18.08.16");
-        adapter.addItem("슬리핑 차일드 체크 제도를 도입해주세요.", "102,350 명", "18.07.17 ~ 18.08.16");
-        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
-        adapter.addItem("웹하드 카르텔과 디지털 성범죄 산업에 대해 특별수사 해주세요.", "73,483 명", "18.07.19 ~ 18.08.16");
-        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
-        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
-        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
-
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-
-                ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
-
-                Intent intent = new Intent(MainActivity.this, detailAcivity.class);
-                startActivity(intent);
-
-
+                Toast.makeText(MainActivity.this, adapter.getItem(position).getKey(), Toast.LENGTH_SHORT).show();
             }
         });
 
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference("agenda");
+        mChildEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Agenda item = dataSnapshot.getValue(Agenda.class);
+                adapter.addItem(dataSnapshot.getKey(), item.title, Long.toString(item.recommend), mSimpleDateFormat.format(item.date));
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                int position = adapter.findItem(dataSnapshot.getKey());
+                adapter.removeItem(position);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        mDatabaseReference.addChildEventListener(mChildEventListener);
     }
-    public void Field_Click(View view){
-
-        LinearLayout field = (LinearLayout) findViewById(R.id.field_layout);
-
-        if(flag) field.setVisibility(View.VISIBLE);
-        else field.setVisibility(View.INVISIBLE);
-        flag = !flag;
-
-    }
-
 }
