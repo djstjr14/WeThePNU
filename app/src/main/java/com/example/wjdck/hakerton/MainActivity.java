@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, adapter.getItem(position).getKey(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getBaseContext(), detailActivity.class);
                 intent.putExtra("ITEM", adapter.getItem(position));
                 startActivity(intent);
