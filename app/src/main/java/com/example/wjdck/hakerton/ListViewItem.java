@@ -1,11 +1,14 @@
 package com.example.wjdck.hakerton;
 
-public class ListViewItem {
+import java.io.Serializable;
+
+public class ListViewItem implements Serializable {
 
     private String key;
-    private String titleStr;
-    private String recommendStr;
-    private String dateStr;
+    private String title;
+    private String text;
+    private String recommend;
+    private String date;
 
     /*
     public ListViewItem(String titleStr, String recommendStr, String dateStr){
@@ -23,39 +26,35 @@ public class ListViewItem {
         this.key = key;
     }
 
-    public String getTitleStr() {
-        return titleStr;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitleStr(String titleStr) {
-        this.titleStr = titleStr;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getRecommendStr() {
-        return recommendStr;
+    public String getText() {
+        return text;
     }
 
-    public void setRecommendStr(String recommendStr) {
-        this.recommendStr = recommendStr;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getDateStr() {
-        return dateStr;
+    public String getRecommend() {
+        return recommend;
     }
 
-    public void setDateStr(String dateStr) {
-        this.dateStr = dateStr;
+    public void setRecommend(String recommend) {
+        this.recommend = recommend;
     }
 
-    public void setTitle(String title){ titleStr = title; }
+    public String getDate() {
+        return date;
+    }
 
-   public void setRecommend(String recommend){ recommendStr = recommend; }
-
-    public void setDate(String date){ dateStr = date; }
-
-    public String getTitle(){ return this.titleStr; }
-
-    public String getRecommend(){ return this.recommendStr; }
-
-    public String getDate(){ return this.dateStr; }
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.wjdck.hakerton;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = (ListView) findViewById(R.id.agenda_listview);
+        listView = findViewById(R.id.agenda_listview);
 
         adapter = new ListViewAdapter();
         listView.setAdapter(adapter);
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Toast.makeText(MainActivity.this, adapter.getItem(position).getKey(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getBaseContext(), detailActivity.class);
+                intent.putExtra("ITEM", adapter.getItem(position));
+                startActivity(intent);
             }
         });
 
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Agenda item = dataSnapshot.getValue(Agenda.class);
-                adapter.addItem(dataSnapshot.getKey(), item.title, Long.toString(item.recommend), mSimpleDateFormat.format(item.date));
+                adapter.addItem(dataSnapshot.getKey(), item.title, item.agenda, Long.toString(item.recommend), mSimpleDateFormat.format(item.date));
                 adapter.notifyDataSetChanged();
             }
 

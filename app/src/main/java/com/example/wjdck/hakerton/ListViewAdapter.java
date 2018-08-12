@@ -58,12 +58,13 @@ public class ListViewAdapter extends BaseAdapter{
     @Override
     public ListViewItem getItem(int position){ return listviewItemList.get(position);}
 
-    public void addItem(String key, String title, String recommend, String date){
+    public void addItem(String key, String title, String text, String recommend, String date){
 
         ListViewItem item = new ListViewItem();
 
         item.setKey(key);
         item.setTitle(title);
+        item.setText(text);
         item.setRecommend(recommend);
         item.setDate(date);
         Collections.reverse(listviewItemList);
