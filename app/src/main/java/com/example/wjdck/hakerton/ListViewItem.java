@@ -1,10 +1,14 @@
 package com.example.wjdck.hakerton;
 
-public class ListViewItem {
+import java.io.Serializable;
 
-    private String titleStr;
-    private String recommendStr;
-    private String dateStr;
+public class ListViewItem implements Serializable {
+
+    private String key;
+    private String title;
+    private String text;
+    private String recommend;
+    private String date;
 
     /*
     public ListViewItem(String titleStr, String recommendStr, String dateStr){
@@ -14,16 +18,43 @@ public class ListViewItem {
     }
     */
 
+    public String getKey() {
+        return key;
+    }
 
-    public void setTitle(String title){ titleStr = title; }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-   public void setRecommend(String recommend){ recommendStr = recommend; }
+    public String getTitle() {
+        return title;
+    }
 
-    public void setDate(String date){ dateStr = date; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getTitle(){ return this.titleStr; }
+    public String getText() {
+        return text;
+    }
 
-    public String getRecommend(){ return this.recommendStr; }
+    public void setText(String text) {
+        this.text = text;
+    }
 
-    public String getDate(){ return this.dateStr; }
+    public String getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(String recommend) {
+        this.recommend = recommend;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

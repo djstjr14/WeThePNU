@@ -1,71 +1,132 @@
 package com.example.wjdck.hakerton;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Locale;
 
-public class CommentViewAdapter extends BaseAdapter{
+public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
+    Context context;
+    private String title, body;
+    private ArrayList<CommentItem> commentItems;
+    SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    private ArrayList<ListViewItem> listviewItemList = new ArrayList<ListViewItem>();
+    public CommentViewAdapter(Context context, ArrayList<CommentItem> items, String title, String body){
+        this.context = context;
+        this.commentItems = items;
+        this.title = title;
+        this.body = body;
+        commentItems.add(new CommentItem());
+        commentItems.add(new CommentItem());
+    }
 
-    public CommentViewAdapter(){
-
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setBody(String body) {
+        this.body = body;
     }
 
     @Override
-    public int getCount(){
-        return listviewItemList.size();
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent){
-        final int pos = position;
-        final Context context = parent.getContext();
-
-
-        // "listview_item" Layout을 inflate하여 convertView 참조 획득
-        if(convertView == null){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.comment_item, parent,false);
+    public int getItemViewType(int position) {
+        if(position == 0) {
+            return 0;
+        } else if (position == 1) {
+            return 1;
+        } else {
+            return 2;
         }
-
-        TextView useridTextView = (TextView) convertView.findViewById(R.id.comment_userid);
-        TextView bodyTextView = (TextView) convertView.findViewById(R.id.comment_body);
-        TextView datetimeTextView = (TextView) convertView.findViewById(R.id.comment_datetime);
-
-        ListViewItem listViewItem = listviewItemList.get(position);
-
-        useridTextView.setText(listViewItem.getTitle());
-        bodyTextView.setText(listViewItem.getRecommend());
-        datetimeTextView.setText(listViewItem.getDate());
-
-
-        return convertView;
     }
 
     @Override
-    public long getItemId(int position) { return position; }
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v;
+        if(viewType == 0) {
+            v = inflater.inflate(R.layout.item_detail_title, parent, false);
+            return new DetailTitleViewHolder(v);
+        } else if(viewType == 1) {
+            v = inflater.inflate(R.layout.item_detail_body, parent, false);
+            return new DetailBodyViewHolder(v);
+        } else {
+            v = inflater.inflate(R.layout.item_comment, parent, false);
+            return new CommentViewHolder(v);
+        }
+    }
 
     @Override
-    public Object getItem(int position){ return listviewItemList.get(position);}
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if(position == 0) {
+            ((DetailTitleViewHolder)holder).title.setText(title);
+        } else if(position == 1) {
+            ((DetailBodyViewHolder)holder).body.setText(body);
+        } else {
+            ((CommentViewHolder)holder).userId.setText(commentItems.get(position).getUserid());
+            ((CommentViewHolder)holder).body.setText(commentItems.get(position).getBody());
+            ((CommentViewHolder)holder).date.setText(mSimpleDateFormat.format(commentItems.get(position).getDate()));
+        }
+    }
 
-    public void addItem(String userid, String body, String datetime){
+    @Override
+    public int getItemCount() {
+        return commentItems.size();
+    }
 
+    public void addItem(CommentItem item){
+        commentItems.add(item);
+    }
 
-        ListViewItem item = new ListViewItem();
+    public int findItem(String key) {
+        for(int i=0; i<commentItems.size(); i++) {
+            if(commentItems.get(i).getKey().equals(key)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public void removeItem(int position) {
+        commentItems.remove(position);
+    }
+}
 
-        item.setTitle(userid);
-        item.setRecommend(body);
-        item.setDate(datetime);
+class CommentViewHolder extends RecyclerView.ViewHolder {
+    public TextView userId;
+    public TextView date;
+    public TextView body;
 
-        listviewItemList.add(item);
+    public CommentViewHolder(View itemView) {
+        super(itemView);
+        this.userId = itemView.findViewById(R.id.item_comment_userid);
+        this.body = itemView.findViewById(R.id.item_comment_body);
+        this.date = itemView.findViewById(R.id.item_comment_date);
+    }
+}
+class DetailTitleViewHolder extends RecyclerView.ViewHolder {
+    public TextView title;
+
+    public DetailTitleViewHolder(View itemView) {
+        super(itemView);
+        this.title = itemView.findViewById(R.id.title);
+    }
+}
+
+class DetailBodyViewHolder extends RecyclerView.ViewHolder {
+    public TextView body;
+    public DetailBodyViewHolder(View itemView) {
+        super(itemView);
+        this.body = itemView.findViewById(R.id.body);
     }
 }

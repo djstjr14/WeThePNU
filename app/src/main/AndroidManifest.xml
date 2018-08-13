@@ -13,15 +13,18 @@
             android:name=".splashActivity"
             android:label="splashActivity"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+
         <activity
-            android:name=".detailAcivity"
+            android:name=".detailActivity"
             android:label="@string/title_activity_detail_acivity"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".loginActivity"
