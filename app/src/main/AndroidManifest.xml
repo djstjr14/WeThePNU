@@ -17,10 +17,10 @@
         <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".detailActivity"
             android:label="@string/title_activity_detail_acivity"
@@ -42,6 +42,7 @@
             android:name=".addAgendaActivity"
             android:label="@string/title_activity_add_agenda"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
     </application>
 

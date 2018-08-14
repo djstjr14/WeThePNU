@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     ListViewAdapter adapter;
 
-    SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,25 +52,29 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Intent intent = new Intent(getBaseContext(), detailActivity.class);
+                Intent intent = new Intent(MainActivity.this, detailActivity.class);
                 intent.putExtra("ITEM", adapter.getItem(position));
                 startActivity(intent);
             }
         });
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("agenda");
+        mDatabaseReference = mFirebaseDatabase.getReference("Agenda");
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Agenda item = dataSnapshot.getValue(Agenda.class);
-                adapter.addItem(dataSnapshot.getKey(), item.title, item.agenda, Long.toString(item.recommend), mSimpleDateFormat.format(item.date));
+                ListViewItem item = dataSnapshot.getValue(ListViewItem.class);
+                item.setKey(dataSnapshot.getKey());
+                adapter.addItem(item);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                ListViewItem item = dataSnapshot.getValue(ListViewItem.class);
+                item.setKey(dataSnapshot.getKey());
+                adapter.replaceItem(item);
+                adapter.notifyDataSetChanged();
             }
 
             @Override

@@ -4,18 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0E75BC"
+    android:background="#447399"
     android:orientation="vertical"
     android:weightSum="1"
     tools:context=".splashActivity">
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="0.2"
-        android:src="@drawable/icon" />
 
     <ImageView
         android:id="@+id/logo"

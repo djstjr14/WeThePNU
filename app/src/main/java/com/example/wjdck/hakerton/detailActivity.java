@@ -35,6 +35,7 @@ public class detailActivity extends AppCompatActivity {
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference;
     ChildEventListener mChildEventListener;
+    private DatabaseReference ref;
 
     RecyclerView recyclerView;
     CommentViewAdapter adapter;
@@ -45,7 +46,7 @@ public class detailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
-        ListViewItem item = (ListViewItem) intent.getSerializableExtra("ITEM");
+        final ListViewItem item = (ListViewItem) intent.getSerializableExtra("ITEM");
 
         btn_agree = findViewById(R.id.agree_btn);
         edit_agree = findViewById(R.id.agree_edit);
@@ -70,12 +71,15 @@ public class detailActivity extends AppCompatActivity {
 
                 edit_agree.setText("");
                 recyclerView.smoothScrollToPosition(adapter.getItemCount());
+
+                ref.child("Agenda").child(item.getKey()).child("recommend").setValue(item.getRecommend()+1);
             }
         });
     }
 
     private void initFirebase(String key) {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        ref = mFirebaseDatabase.getReference();
         mDatabaseReference = mFirebaseDatabase.getReference(key);
         mChildEventListener = new ChildEventListener() {
             @Override
