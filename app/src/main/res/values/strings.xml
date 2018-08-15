@@ -8,4 +8,8 @@
     <string name="title_activity_discuss_detail">discussDetailActivity</string>
     <string name="title_activity_add_agenda">국 민 청 원</string>
     <string name="title_activity_splash">splashActivity</string>
+    <string name="nav_menu_1">즐겨찾기목록</string>
+    <string name="nav_menu_2">푸쉬알림목록</string>
+    <string name="nav_menu_3">토론게시판</string>
+
 </resources>

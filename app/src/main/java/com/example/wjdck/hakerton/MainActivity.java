@@ -2,9 +2,16 @@ package com.example.wjdck.hakerton;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -29,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     ListViewAdapter adapter;
     Toolbar toolbar_main;
+    DrawerLayout drawer;
+    NavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.agenda_listview);
         toolbar_main = findViewById(R.id.main_toolbar);
+        drawer = findViewById(R.id.drawer_main);
+        navigation = findViewById(R.id.navigation_main);
 
         //Toolbar 추가
         setSupportActionBar(toolbar_main);
@@ -50,6 +61,28 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, detailActivity.class);
                 intent.putExtra("ITEM", adapter.getItem(position));
                 startActivity(intent);
+            }
+        });
+
+        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawer.closeDrawers();
+
+                int id = item.getItemId();
+                switch(id){
+                    case R.id.navigation_item1:
+                        break;
+
+                    case R.id.navigation_item2:
+                        break;
+
+                    case R.id.navigation_item3:
+                        break;
+                }
+
+                return true;
             }
         });
 
@@ -90,5 +123,30 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mDatabaseReference.addChildEventListener(mChildEventListener);
+    }
+
+    //추가된 소스, ToolBar에 main.xml을 인플레이트함
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        drawer.openDrawer(GravityCompat.END);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
+        if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

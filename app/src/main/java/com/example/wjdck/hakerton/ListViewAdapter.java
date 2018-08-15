@@ -46,9 +46,8 @@ public class ListViewAdapter extends BaseAdapter{
         ListViewItem listViewItem = listviewItemList.get(position);
 
         titleTextView.setText(listViewItem.getTitle());
-        recommendTextView.setText(Long.toString(listViewItem.getRecommend()));
+        recommendTextView.setText(Long.toString(listViewItem.getRecommend()) + " 명");
         dateTextView.setText(mSimpleDateFormat.format(Long.parseLong(listViewItem.getDate())));
-
 
         return convertView;
     }
