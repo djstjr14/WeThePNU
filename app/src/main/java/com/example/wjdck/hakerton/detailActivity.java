@@ -6,6 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +18,7 @@ import android.widget.AdapterView;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +35,7 @@ public class detailActivity extends AppCompatActivity {
     TextView Body;
     Button btn_agree;
     EditText edit_agree;
+    Toolbar toolbar_detail;
 
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference;
@@ -50,11 +55,21 @@ public class detailActivity extends AppCompatActivity {
 
         btn_agree = findViewById(R.id.agree_btn);
         edit_agree = findViewById(R.id.agree_edit);
+        toolbar_detail = findViewById(R.id.detail_toolbar);
+        Title = findViewById(R.id.detail_title);
 
         items = new ArrayList<>();
         recyclerView = findViewById(R.id.comment);
         adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText());
         recyclerView.setAdapter(adapter);
+        Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
+
+        //Toolbar 추가
+        setSupportActionBar(toolbar_detail);
+        //Toolbar의 왼쪽에 뒤로가기 버튼을 추가
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_black_18dp);
+
 
         initFirebase(item.getKey());
 
@@ -113,6 +128,30 @@ public class detailActivity extends AppCompatActivity {
             }
         };
         mDatabaseReference.addChildEventListener(mChildEventListener);
+    }
+
+    //추가된 소스, ToolBar에 menu.xml을 인플레이트함
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //추가된 소스, ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
+            case R.id.action_menu:{
+
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

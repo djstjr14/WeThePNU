@@ -6,10 +6,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,9 +35,13 @@ public class addAgendaActivity extends AppCompatActivity {
         final Spinner category_spinner = this.findViewById(R.id.spinner_category);
         final EditText edit_title = this.findViewById(R.id.title_edit);
         final EditText edit_agenda = this.findViewById(R.id.agenda_edit);
+        Toolbar toolbar_agenda = findViewById(R.id.agenda_toolbar);
 
         database = FirebaseDatabase.getInstance();
         ref = database.getReference("Agenda");
+
+        //Toolbar 추가
+        setSupportActionBar(toolbar_agenda);
 
         btn_cancle.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -60,5 +68,4 @@ public class addAgendaActivity extends AppCompatActivity {
         });
 
     }
-
 }
