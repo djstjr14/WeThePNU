@@ -68,7 +68,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:id="@+id/agree_btn"
-                android:text="청원하기"
+                android:text="동의하기"
                 android:textAlignment="center" />
 
         </LinearLayout>

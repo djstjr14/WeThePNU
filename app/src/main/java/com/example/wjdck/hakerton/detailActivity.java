@@ -1,11 +1,9 @@
 package com.example.wjdck.hakerton;
 
-import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,15 +13,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.view.View;
-import android.widget.AdapterView;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -77,7 +71,7 @@ public class detailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar_detail);
         //Toolbar의 왼쪽에 뒤로가기 버튼을 추가
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_black_18dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_white_18dp);
 
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -117,7 +111,13 @@ public class detailActivity extends AppCompatActivity {
                 edit_agree.setText("");
                 recyclerView.smoothScrollToPosition(adapter.getItemCount());
 
-                ref.child("Agenda").child(item.getKey()).child("recommend").setValue(item.getRecommend()+1);
+                item.setRecommend(item.getRecommend()+1);
+                ref.child("Agenda").child(item.getKey()).child("recommend").setValue(item.getRecommend());
+                Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
+
+                //키보드 내리기
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
     }
