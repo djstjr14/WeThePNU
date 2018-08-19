@@ -28,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.wjdck.hakerton.loginActivity.Uid;
+
 public class detailActivity extends AppCompatActivity {
 
     TextView Title;
@@ -100,7 +102,7 @@ public class detailActivity extends AppCompatActivity {
         btn_agree.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String userid = "김관우";
+                String userid = "김관우"; //login Acvity 만들어지면 변수 Uid 넣으면됨
                 String text = edit_agree.getText().toString();
                 long date = Calendar.getInstance().getTimeInMillis();
 
