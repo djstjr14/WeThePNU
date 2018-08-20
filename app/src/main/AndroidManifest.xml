@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.wjdck.hakerton">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.wjdck.hakerton"
+    >
 
     <application
         android:allowBackup="true"
+        android:label=""
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
         <activity
             android:name=".splashActivity"
             android:label="splashActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
         <activity
             android:name=".MainActivity"
@@ -25,25 +27,20 @@
         </activity>
         <activity
             android:name=".detailActivity"
-            android:label="@string/title_activity_detail_acivity"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".loginActivity"
-            android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".discussActivity"
-            android:label="@string/title_activity_discuss"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".discussDetailActivity"
-            android:label="@string/title_activity_discuss_detail"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".addAgendaActivity"
-            android:label="@string/title_activity_add_agenda"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
     </application>
 

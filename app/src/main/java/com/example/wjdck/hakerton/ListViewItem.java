@@ -7,16 +7,20 @@ public class ListViewItem implements Serializable {
     private String key;
     private String title;
     private String text;
-    private String recommend;
+    private String category;
+    private long recommend;
     private String date;
 
-    /*
-    public ListViewItem(String titleStr, String recommendStr, String dateStr){
-        this.titleStr = titleStr;
-        this.recommendStr = recommendStr;
-        this.dateStr = dateStr;
+    public ListViewItem() {}
+
+    public ListViewItem(String key, String title, String text, String category, long recommend, String date){
+        this.key = key;
+        this.title = title;
+        this.text = text;
+        this.category = category;
+        this.recommend = recommend;
+        this.date = date;
     }
-    */
 
     public String getKey() {
         return key;
@@ -34,6 +38,14 @@ public class ListViewItem implements Serializable {
         this.title = title;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getText() {
         return text;
     }
@@ -42,11 +54,11 @@ public class ListViewItem implements Serializable {
         this.text = text;
     }
 
-    public String getRecommend() {
+    public long getRecommend() {
         return recommend;
     }
 
-    public void setRecommend(String recommend) {
+    public void setRecommend(long recommend) {
         this.recommend = recommend;
     }
 

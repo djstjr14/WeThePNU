@@ -9,6 +9,8 @@ import android.view.View;
 
 public class loginActivity extends AppCompatActivity {
 
+    public static String Uid = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
