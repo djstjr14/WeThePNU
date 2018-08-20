@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/agenda_listview"
+        app:layout_anchorGravity="bottom|right"
+        android:src="@drawable/add"/>
+
     <LinearLayout
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
@@ -20,7 +29,8 @@
             android:choiceMode="singleChoice"
             android:divider="#EAEAEA"
             android:dividerHeight="1.5dp"
-        />
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -34,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:background="@android:color/holo_blue_dark"
+                android:onClick="recommendClick"
                 android:layout_weight="1" />
 
             <ImageButton
@@ -42,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_weight="1"
+                android:onClick="newClick"
                 android:background="@android:color/holo_blue_dark"
                 />
 
@@ -51,9 +63,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_weight="1"
-                android:onClick="Field_Click"
+                android:onClick="fieldClick"
                 android:background="@android:color/holo_blue_dark"
-                 />
+                />
         </LinearLayout>
 
         <HorizontalScrollView
@@ -81,7 +93,7 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:fontFamily="@font/notosans_black"
-                    android:text="정치개혁"
+                    android:text="행정"
                     android:textSize="17dp"/>
                 <TextView
                     android:layout_width="100dp"
@@ -89,7 +101,7 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:fontFamily="@font/notosans_black"
-                    android:text="외교/통일/국방"
+                    android:text="복지"
                     android:textSize="17dp"/>
                 <TextView
                     android:layout_width="100dp"
@@ -97,7 +109,7 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:fontFamily="@font/notosans_black"
-                    android:text="일자리"
+                    android:text="인권"
                     android:textSize="17dp"/>
                 <TextView
                     android:layout_width="100dp"
@@ -105,7 +117,7 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:fontFamily="@font/notosans_black"
-                    android:text="미래"
+                    android:text="시설"
                     android:textSize="17dp"/>
                 <TextView
                     android:layout_width="100dp"
@@ -113,7 +125,7 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:fontFamily="@font/notosans_black"
-                    android:text="성장동력"
+                    android:text="문화"
                     android:textSize="17dp"/>
 
                 <TextView
@@ -122,18 +134,8 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:fontFamily="@font/notosans_black"
-                    android:text="육아/교육"
+                    android:text="기타"
                     android:textSize="17dp"/>
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center"
-                    android:fontFamily="@font/notosans_black"
-                    android:text="안전/환경"
-                    android:textSize="17dp"/>
-
 
             </LinearLayout>
 
@@ -142,4 +144,6 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

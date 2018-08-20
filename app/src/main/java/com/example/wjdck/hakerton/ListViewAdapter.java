@@ -62,6 +62,8 @@ public class ListViewAdapter extends BaseAdapter{
 
         ListViewItem item = new ListViewItem();
 
+        recommend = recommend + " 명";
+
         item.setKey(key);
         item.setTitle(title);
         item.setText(text);
@@ -70,6 +72,7 @@ public class ListViewAdapter extends BaseAdapter{
         Collections.reverse(listviewItemList);
         listviewItemList.add(item);
         Collections.reverse(listviewItemList);
+
     }
     public int findItem(String key) {
         for(int i=0; i<listviewItemList.size(); i++) {
