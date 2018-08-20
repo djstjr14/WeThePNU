@@ -23,7 +23,7 @@
 
         <activity
             android:name=".detailActivity"
-            android:label="@string/title_activity_detail_acivity"
+            android:label="detailActivity"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
@@ -42,6 +42,7 @@
             android:name=".addAgendaActivity"
             android:label="@string/title_activity_add_agenda"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
     </application>
 
