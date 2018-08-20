@@ -1,6 +1,7 @@
 package com.example.wjdck.hakerton;
 
 import android.content.Context;
+import android.support.annotation.IntegerRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,29 +9,29 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class ListViewAdapter extends BaseAdapter{
 
 
     private ArrayList<ListViewItem> listviewItemList = new ArrayList<ListViewItem>();
 
-    public ListViewAdapter(){
-
-    }
+    public ListViewAdapter(){}
 
     @Override
     public int getCount(){
         return listviewItemList.size();
     }
 
+    SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         final int pos = position;
         final Context context = parent.getContext();
-
 
         // "listview_item" Layout을 inflate하여 convertView 참조 획득
         if(convertView == null){
@@ -45,9 +46,8 @@ public class ListViewAdapter extends BaseAdapter{
         ListViewItem listViewItem = listviewItemList.get(position);
 
         titleTextView.setText(listViewItem.getTitle());
-        recommendTextView.setText(listViewItem.getRecommend());
-        dateTextView.setText(listViewItem.getDate());
-
+        recommendTextView.setText(Long.toString(listViewItem.getRecommend()) + " 명");
+        dateTextView.setText(mSimpleDateFormat.format(Long.parseLong(listViewItem.getDate())));
 
         return convertView;
     }
@@ -58,15 +58,7 @@ public class ListViewAdapter extends BaseAdapter{
     @Override
     public ListViewItem getItem(int position){ return listviewItemList.get(position);}
 
-    public void addItem(String key, String title, String text, String recommend, String date){
-
-        ListViewItem item = new ListViewItem();
-
-        item.setKey(key);
-        item.setTitle(title);
-        item.setText(text);
-        item.setRecommend(recommend);
-        item.setDate(date);
+    public void addItem(ListViewItem item){
         Collections.reverse(listviewItemList);
         listviewItemList.add(item);
         Collections.reverse(listviewItemList);
@@ -81,5 +73,11 @@ public class ListViewAdapter extends BaseAdapter{
     }
     public void removeItem(int position) {
         listviewItemList.remove(position);
+    }
+
+    public void replaceItem(ListViewItem newItem) {
+        int index = findItem(newItem.getKey());
+        listviewItemList.remove(index);
+        listviewItemList.add(index, newItem);
     }
 }

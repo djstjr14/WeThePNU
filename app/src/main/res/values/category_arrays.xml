@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="category">
-        <item >정치개혁</item>
-        <item >외교</item>
-        <item >일자리</item>
-        <item >미래</item>
+        <item >전체</item>
+        <item >행정</item>
+        <item >보건복지</item>
+        <item >교내시설</item>
+        <item >인권/평등</item>
+        <item >예술/문화</item>
+        <item >기타</item>
     </string-array>
 </resources>

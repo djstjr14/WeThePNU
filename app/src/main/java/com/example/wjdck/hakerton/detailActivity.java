@@ -1,19 +1,22 @@
 package com.example.wjdck.hakerton;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.view.View;
-import android.widget.AdapterView;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -25,16 +28,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.wjdck.hakerton.loginActivity.Uid;
+
 public class detailActivity extends AppCompatActivity {
 
     TextView Title;
     TextView Body;
     Button btn_agree;
     EditText edit_agree;
+    Toolbar toolbar_detail;
+    DrawerLayout drawer;
+    NavigationView navigation;
 
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference;
     ChildEventListener mChildEventListener;
+    private DatabaseReference ref;
 
     RecyclerView recyclerView;
     CommentViewAdapter adapter;
@@ -45,22 +54,55 @@ public class detailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
-        ListViewItem item = (ListViewItem) intent.getSerializableExtra("ITEM");
+        final ListViewItem item = (ListViewItem) intent.getSerializableExtra("ITEM");
 
         btn_agree = findViewById(R.id.agree_btn);
         edit_agree = findViewById(R.id.agree_edit);
+        Title = findViewById(R.id.detail_title);
+        toolbar_detail = findViewById(R.id.detail_toolbar);
+        drawer= findViewById(R.id.drawer);
+        navigation= findViewById(R.id.navigation);
 
         items = new ArrayList<>();
         recyclerView = findViewById(R.id.comment);
         adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText());
         recyclerView.setAdapter(adapter);
+        Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
+
+        //Toolbar 추가
+        setSupportActionBar(toolbar_detail);
+        //Toolbar의 왼쪽에 뒤로가기 버튼을 추가
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_white_18dp);
+
+        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawer.closeDrawers();
+
+                int id = item.getItemId();
+                switch(id){
+                    case R.id.navigation_item1:
+                        break;
+
+                    case R.id.navigation_item2:
+                        break;
+
+                    case R.id.navigation_item3:
+                        break;
+                }
+
+                return true;
+            }
+        });
 
         initFirebase(item.getKey());
 
         btn_agree.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String userid = "김관우";
+                String userid = "김관우"; //login Acvity 만들어지면 변수 Uid 넣으면됨
                 String text = edit_agree.getText().toString();
                 long date = Calendar.getInstance().getTimeInMillis();
 
@@ -70,12 +112,21 @@ public class detailActivity extends AppCompatActivity {
 
                 edit_agree.setText("");
                 recyclerView.smoothScrollToPosition(adapter.getItemCount());
+
+                item.setRecommend(item.getRecommend()+1);
+                ref.child("Agenda").child(item.getKey()).child("recommend").setValue(item.getRecommend());
+                Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
+
+                //키보드 내리기
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
     }
 
     private void initFirebase(String key) {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        ref = mFirebaseDatabase.getReference();
         mDatabaseReference = mFirebaseDatabase.getReference(key);
         mChildEventListener = new ChildEventListener() {
             @Override
@@ -109,6 +160,41 @@ public class detailActivity extends AppCompatActivity {
             }
         };
         mDatabaseReference.addChildEventListener(mChildEventListener);
+    }
+
+    //추가된 소스, ToolBar에 main.xml을 인플레이트함
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //추가된 소스, ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
+            case R.id.action_menu:{
+                drawer.openDrawer(GravityCompat.END);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
+        if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
+        } else {
+            super.onBackPressed();
+        }
     }
 
 }

@@ -2,8 +2,16 @@ package com.example.wjdck.hakerton;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -27,51 +35,74 @@ public class MainActivity extends AppCompatActivity {
 
     ListView listView;
     ListViewAdapter adapter;
+    Toolbar toolbar_main;
+    DrawerLayout drawer;
+    NavigationView navigation;
 
-    SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.agenda_listview);
+        toolbar_main = findViewById(R.id.main_toolbar);
+        drawer = findViewById(R.id.drawer_main);
+        navigation = findViewById(R.id.navigation_main);
+
+        //Toolbar 추가
+        setSupportActionBar(toolbar_main);
 
         adapter = new ListViewAdapter();
         listView.setAdapter(adapter);
-//
-//        adapter.addItem("슬리핑 차일드 체크 제도를 도입해주세요.", "102,350 명", "18.07.17 ~ 18.08.16");
-//        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
-//        adapter.addItem("웹하드 카르텔과 디지털 성범죄 산업에 대해 특별수사 해주세요.", "73,483 명", "18.07.19 ~ 18.08.16");
-//        adapter.addItem("슬리핑 차일드 체크 제도를 도입해주세요.", "102,350 명", "18.07.17 ~ 18.08.16");
-//        adapter.addItem("슬리핑 차일드 체크 제도를 도입해주세요.", "102,350 명", "18.07.17 ~ 18.08.16");
-//        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
-//        adapter.addItem("웹하드 카르텔과 디지털 성범죄 산업에 대해 특별수사 해주세요.", "73,483 명", "18.07.19 ~ 18.08.16");
-//        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
-//        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
-//        adapter.addItem("희귀 난치병 보험 혜택 절실합니다..", "107,328 명", "18.07.19 ~ 18.08.19");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Intent intent = new Intent(getBaseContext(), detailActivity.class);
+                Intent intent = new Intent(MainActivity.this, detailActivity.class);
                 intent.putExtra("ITEM", adapter.getItem(position));
                 startActivity(intent);
             }
         });
 
+        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawer.closeDrawers();
+
+                int id = item.getItemId();
+                switch(id){
+                    case R.id.navigation_item1:
+                        break;
+
+                    case R.id.navigation_item2:
+                        break;
+
+                    case R.id.navigation_item3:
+                        break;
+                }
+
+                return true;
+            }
+        });
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("agenda");
+        mDatabaseReference = mFirebaseDatabase.getReference("Agenda");
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Agenda item = dataSnapshot.getValue(Agenda.class);
-                adapter.addItem(dataSnapshot.getKey(), item.title, item.agenda, Long.toString(item.recommend), mSimpleDateFormat.format(item.date));
+                ListViewItem item = dataSnapshot.getValue(ListViewItem.class);
+                item.setKey(dataSnapshot.getKey());
+                adapter.addItem(item);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                ListViewItem item = dataSnapshot.getValue(ListViewItem.class);
+                item.setKey(dataSnapshot.getKey());
+                adapter.replaceItem(item);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -92,5 +123,30 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mDatabaseReference.addChildEventListener(mChildEventListener);
+    }
+
+    //추가된 소스, ToolBar에 main.xml을 인플레이트함
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        drawer.openDrawer(GravityCompat.END);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
+        if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
