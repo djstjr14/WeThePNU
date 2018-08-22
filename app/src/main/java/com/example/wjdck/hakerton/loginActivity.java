@@ -2,10 +2,7 @@ package com.example.wjdck.hakerton;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +12,6 @@ import android.widget.TextView;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.Map;
@@ -29,7 +25,7 @@ public class loginActivity extends AppCompatActivity {
     String userId,userPw;
     TextView findIdAndPw;
 
-    public static String Uid = "김관우";
+    public static String Uid = "djstjr14";
     private final static String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36";
 
     @Override

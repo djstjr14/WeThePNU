@@ -34,6 +34,7 @@ import com.google.firebase.database.Transaction;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 
@@ -52,6 +53,7 @@ public class detailActivity extends AppCompatActivity {
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference;
     DatabaseReference ref;
+    DatabaseReference userRef;
     ChildEventListener mChildEventListener;
 
     RecyclerView recyclerView;
@@ -60,6 +62,7 @@ public class detailActivity extends AppCompatActivity {
 
     String thisKey = "";
     Boolean toastFlag = false;
+
     Toast toast;
 
     @Override
@@ -133,7 +136,7 @@ public class detailActivity extends AppCompatActivity {
 
                 onAgreeClicked(ref.child(thisKey));
                 if(toastFlag){
-                    toast = Toast.makeText(getApplicationContext(), "이미 동의하셨습니다.", Toast.LENGTH_LONG);
+                    toast = Toast.makeText(getApplicationContext(), "동의는 한 번만 할 수 있습니다.", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.TOP, 0, 0);
                     toast.show();
                     toastFlag = false;
@@ -155,6 +158,7 @@ public class detailActivity extends AppCompatActivity {
                         btn_bookmark.setChecked(false);
                     }
                     onBookmarkClicked(ref.child(thisKey));
+                    onBookmarkSave(userRef);
                 }
             }
         });
@@ -168,6 +172,7 @@ public class detailActivity extends AppCompatActivity {
                         btn_push.setChecked(false);
                      }
                     onPushClicked(ref.child(thisKey));
+                    onPushSave(userRef);
                 }
             }
         });
@@ -176,6 +181,7 @@ public class detailActivity extends AppCompatActivity {
     private void initFirebase(String key) {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         ref = mFirebaseDatabase.getReference("Agenda");
+        userRef = mFirebaseDatabase.getReference("User").child(Uid);
         mDatabaseReference = mFirebaseDatabase.getReference(key);
         mChildEventListener = new ChildEventListener() {
             @Override
@@ -236,9 +242,11 @@ public class detailActivity extends AppCompatActivity {
                     long date = Calendar.getInstance().getTimeInMillis();
 
                     CommentItem comment = new CommentItem(Uid, text, date);
-
                     mDatabaseReference.push().setValue(comment);
+
+                    item.setRecommend(item.getRecommend()+1);
                     item.getAgree().put(Uid, true);
+                    Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
                 }
                 mutableData.setValue(item);
                 return Transaction.success(mutableData);
@@ -249,6 +257,8 @@ public class detailActivity extends AppCompatActivity {
                 Log.d("DetailActivity", "Agree Transaction : onComplete:" + databaseError);
             }
         });
+
+
     }
 
     private void onBookmarkClicked(DatabaseReference agendaRef) {
@@ -274,6 +284,35 @@ public class detailActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void onBookmarkSave(DatabaseReference userRef) {
+        userRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                UserItem ui = mutableData.getValue(UserItem.class);
+                if(ui == null) {
+                    ui = new UserItem();
+                    mutableData.setValue(ui.toMap());
+                }
+                if(ui.getBookmark().containsKey(thisKey)){
+                    ui.getBookmark().remove(thisKey);
+                }else{
+                    ui.getBookmark().put(thisKey, true);
+                }
+                mutableData.setValue(ui);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                Log.d("DetailActivity", "Agenda Transaction : onComplete:" + databaseError);
+            }
+        });
+    }
+
+
+
+
     private void onPushClicked(DatabaseReference agendaRef) {
         agendaRef.runTransaction(new Transaction.Handler() {
             @Override
@@ -282,12 +321,37 @@ public class detailActivity extends AppCompatActivity {
                 if(item == null) {
                     return Transaction.success(mutableData);
                 }
-                if (item.getBookmark().containsKey(Uid)) {
+                if (item.getPushalarm().containsKey(Uid)) {
                     item.getPushalarm().remove(Uid);
                 } else {
                     item.getPushalarm().put(Uid, true);
                 }
                 mutableData.setValue(item);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                Log.d("DetailActivity", "Agenda Transaction : onComplete:" + databaseError);
+            }
+        });
+    }
+
+    private void onPushSave(DatabaseReference userRef) {
+        userRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                UserItem ui = mutableData.getValue(UserItem.class);
+                if(ui == null) {
+                    ui = new UserItem();
+                    mutableData.setValue(ui.toMap());
+                }
+                if(ui.getPushalarm().containsKey(thisKey)){
+                    ui.getPushalarm().remove(thisKey);
+                }else{
+                    ui.getPushalarm().put(thisKey, true);
+                }
+                mutableData.setValue(ui);
                 return Transaction.success(mutableData);
             }
 
