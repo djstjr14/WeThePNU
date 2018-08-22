@@ -28,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static com.example.wjdck.hakerton.loginActivity.Uid;
 
 public class detailActivity extends AppCompatActivity {
 
