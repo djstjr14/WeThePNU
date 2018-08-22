@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.melnykov.fab.FloatingActionButton;
 
+
 public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase mFirebaseDatabase;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ListViewAdapter();
         listView.setAdapter(adapter);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.attachToListView(listView);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,7 +93,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ListViewItem item = dataSnapshot.getValue(ListViewItem.class);
-                item.setKey(dataSnapshot.getKey());
+                if(item.getKey().equalsIgnoreCase("")) {
+                    item.setKey(dataSnapshot.getKey());
+                    mDatabaseReference.child(dataSnapshot.getKey()).child("key").setValue(dataSnapshot.getKey());
+                }
                 adapter.addItem(item);
                 adapter.notifyDataSetChanged();
             }
@@ -100,7 +104,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 ListViewItem item = dataSnapshot.getValue(ListViewItem.class);
-                item.setKey(dataSnapshot.getKey());
+                if(item.getKey().equalsIgnoreCase("")){
+                    item.setKey(dataSnapshot.getKey());
+                    mDatabaseReference.child(dataSnapshot.getKey()).child("key").setValue(dataSnapshot.getKey());
+                }
                 adapter.replaceItem(item);
                 adapter.notifyDataSetChanged();
             }

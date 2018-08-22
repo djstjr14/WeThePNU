@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class addAgendaActivity extends AppCompatActivity {
 
@@ -55,7 +56,7 @@ public class addAgendaActivity extends AppCompatActivity {
 
                 ListViewItem agenda = new ListViewItem(key, title, text, category, recommend, Long.toString(date));
 
-                ref.push().setValue(agenda);
+                ref.push().setValue(agenda.toMap());
                 finish();
             }
         });

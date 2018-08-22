@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer"
     android:orientation="vertical"
-    tools:openDrawer="end">
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/ll2"
             >
 
             <EditText
@@ -70,8 +70,31 @@
                 android:id="@+id/agree_btn"
                 android:text="동의하기"
                 android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:id="@+id/ll2"
+            android:layout_alignParentBottom="true">
+
+            <ToggleButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/bookmark_btn"
+                android:background="@drawable/bookmark"/>
+
+            <ToggleButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/push_btn"
+                android:background="@drawable/pushalarm" />
 
         </LinearLayout>
+
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
