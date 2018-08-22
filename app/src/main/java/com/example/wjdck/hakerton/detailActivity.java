@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.content.Intent;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.firebase.database.ChildEventListener;
@@ -57,6 +59,8 @@ public class detailActivity extends AppCompatActivity {
     ArrayList<CommentItem> items;
 
     String thisKey = "";
+    Boolean toastFlag = false;
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,25 +127,22 @@ public class detailActivity extends AppCompatActivity {
         btn_agree.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String userid = "김관우"; //login Acvity 만들어지면 변수 Uid 넣으면됨
-                String text = edit_agree.getText().toString();
-                long date = Calendar.getInstance().getTimeInMillis();
-
-                CommentItem comment = new CommentItem(userid, text, date);
-
-                mDatabaseReference.push().setValue(comment);
-
-                edit_agree.setText("");
-                recyclerView.smoothScrollToPosition(adapter.getItemCount());
-
-                item.setRecommend(item.getRecommend()+1);
-                ref.child(item.getKey()).child("recommend").setValue(item.getRecommend());
-                Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
-
                 //키보드 내리기
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+                onAgreeClicked(ref.child(thisKey));
+                if(toastFlag){
+                    toast = Toast.makeText(getApplicationContext(), "이미 동의하셨습니다.", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 0);
+                    toast.show();
+                    toastFlag = false;
+                }
+
+                edit_agree.setText("");
+                recyclerView.smoothScrollToPosition(adapter.getItemCount());
             }
+
         });
 
         btn_bookmark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -217,6 +218,37 @@ public class detailActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void onAgreeClicked(DatabaseReference agreeRef) {
+        agreeRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                ListViewItem item = mutableData.getValue(ListViewItem.class);
+                if(item == null) {
+                    return Transaction.success(mutableData);
+                }
+                if (item.getAgree().containsKey(Uid)) {
+                    toastFlag = true;
+                    return Transaction.success(mutableData);
+                } else {
+                    String text = edit_agree.getText().toString();
+                    long date = Calendar.getInstance().getTimeInMillis();
+
+                    CommentItem comment = new CommentItem(Uid, text, date);
+
+                    mDatabaseReference.push().setValue(comment);
+                    item.getAgree().put(Uid, true);
+                }
+                mutableData.setValue(item);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                Log.d("DetailActivity", "Agree Transaction : onComplete:" + databaseError);
+            }
+        });
     }
 
     private void onBookmarkClicked(DatabaseReference agendaRef) {

@@ -36,7 +36,6 @@
             android:textColor="#BDBDBD"
             android:textSize="12dp" />
 
-
         <TextView
             android:id="@+id/agenda_num"
             android:layout_width="match_parent"
