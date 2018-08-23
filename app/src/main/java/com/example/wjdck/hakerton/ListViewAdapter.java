@@ -5,7 +5,10 @@ import android.support.annotation.IntegerRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.lang.reflect.Array;
@@ -57,6 +60,12 @@ public class ListViewAdapter extends BaseAdapter{
 
     @Override
     public ListViewItem getItem(int position){ return listviewItemList.get(position);}
+
+    public void clickedList(View view){
+        RelativeLayout relative = (RelativeLayout) view.findViewById(R.id.clickedFlag);
+        relative.setBackgroundResource(R.color.clicked);
+
+    };
 
     public void addItem(ListViewItem item){
         Collections.reverse(listviewItemList);

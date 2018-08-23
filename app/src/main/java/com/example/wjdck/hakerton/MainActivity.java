@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -59,8 +60,10 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
+
                 Intent intent = new Intent(MainActivity.this, detailActivity.class);
                 intent.putExtra("ITEM", adapter.getItem(position));
+                adapter.clickedList(view);
                 startActivity(intent);
             }
         });
