@@ -6,35 +6,32 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
-public class addAgendaActivity extends AppCompatActivity {
-
+public class addDiscussActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_agenda);
+        setContentView(R.layout.activity_add_discuss);
 
-        Button btn_cancle = this.findViewById(R.id.cancle_btn);
-        Button btn_regist = this.findViewById(R.id.regist_btn);
-        final Spinner category_spinner = this.findViewById(R.id.spinner_category);
-        final EditText edit_title = this.findViewById(R.id.title_edit);
-        final EditText edit_agenda = this.findViewById(R.id.agenda_edit);
-        Toolbar toolbar_agenda = findViewById(R.id.agenda_toolbar);
+        Button btn_cancle = this.findViewById(R.id.add_discuss_cancle_btn);
+        Button btn_regist = this.findViewById(R.id.add_discuss_regist_btn);
+        final EditText edit_title = this.findViewById(R.id.add_discuss_title);
+        final EditText edit_agenda = this.findViewById(R.id.add_discuss_content);
+        Toolbar toolbar = findViewById(R.id.add_discuss_toolbar);
 
         database = FirebaseDatabase.getInstance();
-        ref = database.getReference("Agenda");
+        ref = database.getReference("Discuss");
 
         //Toolbar 추가
-        setSupportActionBar(toolbar_agenda);
+        setSupportActionBar(toolbar);
 
         btn_cancle.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -49,13 +46,13 @@ public class addAgendaActivity extends AppCompatActivity {
                 String key = "";
                 String title = edit_title.getText().toString();
                 String text = edit_agenda.getText().toString();
-                String category = category_spinner.getSelectedItem().toString();
                 long recommend = 0;
+                long unrecommend = 0;
                 long date = Calendar.getInstance().getTimeInMillis();
 
-                ListViewItem agenda = new ListViewItem(key, title, text, category, recommend, Long.toString(date));
+                discussItem item = new discussItem(key, title, text, recommend, unrecommend, Long.toString(date));
 
-                ref.push().setValue(agenda.toMap());
+                ref.push().setValue(item);
                 finish();
             }
         });

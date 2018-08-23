@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item3:
+                        Intent intent = new Intent(MainActivity.this, discussActivity.class);
+                        startActivity(intent);
                         break;
                 }
 

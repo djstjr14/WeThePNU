@@ -118,6 +118,8 @@ public class detailActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item3:
+                        Intent intent = new Intent(detailActivity.this, discussActivity.class);
+                        startActivity(intent);
                         break;
                 }
 
