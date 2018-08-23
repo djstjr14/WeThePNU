@@ -134,7 +134,11 @@ public class detailActivity extends AppCompatActivity {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-                onAgreeClicked(ref.child(thisKey));
+                String text = edit_agree.getText().toString();
+                long date = Calendar.getInstance().getTimeInMillis();
+
+                CommentItem comment = new CommentItem(Uid, text, date);
+                onAgreeClicked(ref.child(thisKey), comment);
                 if(toastFlag){
                     toast = Toast.makeText(getApplicationContext(), "동의는 한 번만 할 수 있습니다.", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.TOP, 0, 0);
@@ -142,6 +146,7 @@ public class detailActivity extends AppCompatActivity {
                     toastFlag = false;
                 }
 
+                Title.setText("참여인원 : ["+Long.toString(item.getRecommend()+1)+"명]");
                 edit_agree.setText("");
                 recyclerView.smoothScrollToPosition(adapter.getItemCount());
             }
@@ -226,7 +231,7 @@ public class detailActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void onAgreeClicked(DatabaseReference agreeRef) {
+    private void onAgreeClicked(DatabaseReference agreeRef, final CommentItem comment) {
         agreeRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -238,15 +243,10 @@ public class detailActivity extends AppCompatActivity {
                     toastFlag = true;
                     return Transaction.success(mutableData);
                 } else {
-                    String text = edit_agree.getText().toString();
-                    long date = Calendar.getInstance().getTimeInMillis();
-
-                    CommentItem comment = new CommentItem(Uid, text, date);
                     mDatabaseReference.push().setValue(comment);
 
                     item.setRecommend(item.getRecommend()+1);
                     item.getAgree().put(Uid, true);
-                    Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
                 }
                 mutableData.setValue(item);
                 return Transaction.success(mutableData);
