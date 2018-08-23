@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.wjdck.hakerton"
-    >
-
+    package="com.example.wjdck.hakerton">
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:label=""
@@ -31,7 +30,10 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".loginActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
         <activity
             android:name=".discussActivity"
             android:theme="@style/AppTheme.NoActionBar"/>

@@ -25,11 +25,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "전 체"
+                android:text = "W E  T H E  P N U"
                 android:layout_gravity="center"
+                android:fontFamily="@font/notosans_black"
                 android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
+
+        <com.melnykov.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fab"
+            android:layout_gravity="bottom|right"
+            android:layout_marginLeft="330dp"
+            android:layout_marginBottom="160dp"
+            android:src="@drawable/add"
+            app:fab_colorNormal="@color/fabPrimary"
+            app:fab_colorPressed="@color/fabPressed"
+            app:fab_colorRipple="@color/fabRipple"
+            android:layout_alignParentBottom="true"/>
 
         <LinearLayout
             android:layout_below="@+id/main_toolbar"
@@ -46,6 +60,7 @@
                 android:divider="#EAEAEA"
                 android:dividerHeight="1.5dp"
             />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -54,7 +69,7 @@
 
 
                 <ImageButton
-                    android:id="@+id/recommend_btn"
+                    android:id="@+id/prog_recommend_btn"
                     android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="70dp"
@@ -62,7 +77,7 @@
                     android:layout_weight="1" />
 
                 <ImageButton
-                    android:id="@+id/new_btn"
+                    android:id="@+id/expir_recommend_btn"
                     android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="70dp"
@@ -71,14 +86,22 @@
                     />
 
                 <ImageButton
-                    android:id="@+id/field_btn"
+                    android:id="@+id/prog_new_btn"
                     android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:onClick="Field_Click"
                     android:background="@android:color/holo_blue_dark"
-                     />
+                    />
+
+                <ImageButton
+                    android:id="@+id/expir_new_btn"
+                    android:layout_margin="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_dark"
+                    />
             </LinearLayout>
 
             <HorizontalScrollView
@@ -89,8 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:orientation="horizontal"
-                    android:id="@+id/field_layout"
-                    android:visibility="invisible">
+                    android:id="@+id/field_layout">
 
                     <TextView
                         android:layout_width="100dp"
@@ -106,7 +128,7 @@
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
                         android:fontFamily="@font/notosans_black"
-                        android:text="정치개혁"
+                        android:text="행정"
                         android:textSize="17dp"/>
                     <TextView
                         android:layout_width="100dp"
@@ -114,7 +136,7 @@
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
                         android:fontFamily="@font/notosans_black"
-                        android:text="외교/통일/국방"
+                        android:text="보건/복지"
                         android:textSize="17dp"/>
                     <TextView
                         android:layout_width="100dp"
@@ -122,7 +144,7 @@
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
                         android:fontFamily="@font/notosans_black"
-                        android:text="일자리"
+                        android:text="교내 시설"
                         android:textSize="17dp"/>
                     <TextView
                         android:layout_width="100dp"
@@ -130,7 +152,7 @@
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
                         android:fontFamily="@font/notosans_black"
-                        android:text="미래"
+                        android:text="인권/평등"
                         android:textSize="17dp"/>
                     <TextView
                         android:layout_width="100dp"
@@ -138,7 +160,7 @@
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
                         android:fontFamily="@font/notosans_black"
-                        android:text="성장동력"
+                        android:text="예술/문화"
                         android:textSize="17dp"/>
 
                     <TextView
@@ -147,25 +169,14 @@
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
                         android:fontFamily="@font/notosans_black"
-                        android:text="육아/교육"
+                        android:text="기타"
                         android:textSize="17dp"/>
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
-                        android:fontFamily="@font/notosans_black"
-                        android:text="안전/환경"
-                        android:textSize="17dp"/>
-
-
                 </LinearLayout>
-
             </HorizontalScrollView>
 
         </LinearLayout>
     </RelativeLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_main"
