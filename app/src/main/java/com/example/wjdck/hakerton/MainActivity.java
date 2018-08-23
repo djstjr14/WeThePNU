@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.melnykov.fab.FloatingActionButton;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,14 +54,16 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ListViewAdapter();
         listView.setAdapter(adapter);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.attachToListView(listView);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
+
                 Intent intent = new Intent(MainActivity.this, detailActivity.class);
                 intent.putExtra("ITEM", adapter.getItem(position));
+                adapter.clickedList(view);
                 startActivity(intent);
             }
         });
@@ -92,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ListViewItem item = dataSnapshot.getValue(ListViewItem.class);
-                item.setKey(dataSnapshot.getKey());
+                if(item.getKey().equalsIgnoreCase("")) {
+                    item.setKey(dataSnapshot.getKey());
+                    mDatabaseReference.child(dataSnapshot.getKey()).child("key").setValue(dataSnapshot.getKey());
+                }
                 adapter.addItem(item);
                 adapter.notifyDataSetChanged();
             }
@@ -100,7 +107,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 ListViewItem item = dataSnapshot.getValue(ListViewItem.class);
-                item.setKey(dataSnapshot.getKey());
+                if(item.getKey().equalsIgnoreCase("")){
+                    item.setKey(dataSnapshot.getKey());
+                    mDatabaseReference.child(dataSnapshot.getKey()).child("key").setValue(dataSnapshot.getKey());
+                }
                 adapter.replaceItem(item);
                 adapter.notifyDataSetChanged();
             }

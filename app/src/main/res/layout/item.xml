@@ -5,17 +5,13 @@
     android:orientation="horizontal">
 
     <RelativeLayout
+        android:id="@+id/clickedFlag"
         android:layout_width="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_bright"/>
-
+        android:layout_marginLeft="10dp"
+        android:layout_height="55dp"
+        android:background="#98C1D6">
     </RelativeLayout>
-
+'
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,7 +54,7 @@
                 android:id="@+id/agenda_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="30dp"
                 android:fontFamily="@font/notosans_regular"
                 android:gravity="center_vertical|right"
                 android:text="379,300 명"
