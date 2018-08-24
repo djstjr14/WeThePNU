@@ -98,6 +98,7 @@ public class detailActivity extends AppCompatActivity {
         Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
 
         //Toolbar 추가
+
         setSupportActionBar(toolbar_detail);
         //Toolbar의 왼쪽에 뒤로가기 버튼을 추가
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -380,7 +381,7 @@ public class detailActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
         } else {
