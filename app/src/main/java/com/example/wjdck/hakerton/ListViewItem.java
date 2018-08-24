@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 @IgnoreExtraProperties
 public class ListViewItem implements Serializable {
-
     private String key;
     private String title;
     private String text;
@@ -28,9 +27,6 @@ public class ListViewItem implements Serializable {
         this.category = category;
         this.recommend = recommend;
         this.date = date;
-        agree.put("admin", false);
-        bookmark.put("admin", false);
-        pushalarm.put("admin", false);
     }
     @Exclude
     public Map<String, Object> toMap() {
@@ -111,6 +107,7 @@ public class ListViewItem implements Serializable {
     public void setRecommend(long recommend) {
         this.recommend = recommend;
     }
+
 
     public String getDate() {
         return date;

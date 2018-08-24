@@ -64,7 +64,6 @@ public class ListViewAdapter extends BaseAdapter{
     public void clickedList(View view){
         RelativeLayout relative = (RelativeLayout) view.findViewById(R.id.clickedFlag);
         relative.setBackgroundResource(R.color.clicked);
-
     };
 
     public void addItem(ListViewItem item){

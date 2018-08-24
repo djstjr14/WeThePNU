@@ -71,6 +71,7 @@ public class detailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
         final ListViewItem item = (ListViewItem) intent.getSerializableExtra("ITEM");
+        final PostItem post = new PostItem(item.getKey(), item.getTitle(), item.getText(), item.getCategory(), item.getRecommend(), item.getDate());
         thisKey = item.getKey();
 
         btn_agree = findViewById(R.id.agree_btn);
@@ -166,7 +167,7 @@ public class detailActivity extends AppCompatActivity {
                         btn_bookmark.setChecked(false);
                     }
                     onBookmarkClicked(ref.child(thisKey));
-                    onBookmarkSave(userRef);
+                    onBookmarkSave(userRef, post);
                 }
             }
         });
@@ -180,7 +181,7 @@ public class detailActivity extends AppCompatActivity {
                         btn_push.setChecked(false);
                      }
                     onPushClicked(ref.child(thisKey));
-                    onPushSave(userRef);
+                    onPushSave(userRef, post);
                 }
             }
         });
@@ -288,7 +289,7 @@ public class detailActivity extends AppCompatActivity {
         });
     }
 
-    private void onBookmarkSave(DatabaseReference userRef) {
+    private void onBookmarkSave(DatabaseReference userRef, final PostItem post) {
         userRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -300,7 +301,7 @@ public class detailActivity extends AppCompatActivity {
                 if(ui.getBookmark().containsKey(thisKey)){
                     ui.getBookmark().remove(thisKey);
                 }else{
-                    ui.getBookmark().put(thisKey, true);
+                    ui.getBookmark().put(thisKey, post);
                 }
                 mutableData.setValue(ui);
                 return Transaction.success(mutableData);
@@ -340,7 +341,7 @@ public class detailActivity extends AppCompatActivity {
         });
     }
 
-    private void onPushSave(DatabaseReference userRef) {
+    private void onPushSave(DatabaseReference userRef, final PostItem post) {
         userRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -352,7 +353,7 @@ public class detailActivity extends AppCompatActivity {
                 if(ui.getPushalarm().containsKey(thisKey)){
                     ui.getPushalarm().remove(thisKey);
                 }else{
-                    ui.getPushalarm().put(thisKey, true);
+                    ui.getPushalarm().put(thisKey, post);
                 }
                 mutableData.setValue(ui);
                 return Transaction.success(mutableData);
