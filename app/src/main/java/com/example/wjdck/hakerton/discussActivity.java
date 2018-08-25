@@ -152,10 +152,20 @@ public class discussActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    //추가된 소스, ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        drawer.openDrawer(GravityCompat.END);
-        return true;
+        switch(item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
+            case R.id.action_menu:{
+                drawer.openDrawer(GravityCompat.END);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
