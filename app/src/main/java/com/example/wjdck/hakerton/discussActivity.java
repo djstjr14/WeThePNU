@@ -74,12 +74,16 @@ public class discussActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.navigation_item1:
+                        Intent intent1 = new Intent(discussActivity.this, BookmarkActivity.class);
+                        startActivity(intent1);
                         break;
 
                     case R.id.navigation_item2:
                         break;
 
                     case R.id.navigation_item3:
+                        Intent intent3 = new Intent(discussActivity.this, discussActivity.class);
+                        startActivity(intent3);
                         break;
                 }
                 return true;
@@ -156,7 +160,7 @@ public class discussActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_discuss);
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
         } else {

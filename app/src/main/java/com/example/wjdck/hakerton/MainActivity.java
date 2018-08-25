@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.navigation_item1:
-                        //Intent intent1 = new Intent(MainActivity.this, BookmarkActivity.class);
-                        //startActivity(intent1);
+                        Intent intent1 = new Intent(MainActivity.this, BookmarkActivity.class);
+                        startActivity(intent1);
                         break;
 
                     case R.id.navigation_item2:

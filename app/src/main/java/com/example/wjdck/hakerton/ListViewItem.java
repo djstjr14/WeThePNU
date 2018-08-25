@@ -15,8 +15,8 @@ public class ListViewItem implements Serializable {
     private long recommend;
     private String date;
     private Map<String, Boolean> agree = new HashMap<>();
-    private Map<String, Boolean> bookmark = new HashMap<>();
-    private Map<String, Boolean> pushalarm = new HashMap<>();
+    public Map<String, Boolean> bookmark = new HashMap<>();
+    public Map<String, Boolean> pushalarm = new HashMap<>();
 
     public ListViewItem() {}
 

@@ -7,6 +7,24 @@ public class PostItem {
     private String category;
     private long recommend;
     private String date;
+    private boolean book;
+    private boolean push;
+
+    public boolean isBookmark() {
+        return book;
+    }
+
+    public void setBookmark(boolean book) {
+        this.book = book;
+    }
+
+    public boolean isPush() {
+        return push;
+    }
+
+    public void setPush(boolean push) {
+        this.push = push;
+    }
 
     public String getKey() {
         return key;
@@ -65,5 +83,7 @@ public class PostItem {
         this.category = category;
         this.recommend = recommend;
         this.date = date;
+        this.book = false;
+        this.push = false;
     }
 }

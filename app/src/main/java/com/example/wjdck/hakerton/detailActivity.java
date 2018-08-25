@@ -86,10 +86,12 @@ public class detailActivity extends AppCompatActivity {
         //즐겨찾기 버튼 초기셋팅
         if(item.getBookmark().containsKey(Uid)){
             btn_bookmark.setChecked(true);
+            post.setBookmark(true);
         }
         //푸쉬알람 버튼 초기셋팅
         if(item.getPushalarm().containsKey(Uid)){
             btn_push.setChecked(true);
+            post.setPush(true);
         }
 
         items = new ArrayList<>();
@@ -114,14 +116,16 @@ public class detailActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.navigation_item1:
+                        Intent intent1 = new Intent(detailActivity.this, BookmarkActivity.class);
+                        startActivity(intent1);
                         break;
 
                     case R.id.navigation_item2:
                         break;
 
                     case R.id.navigation_item3:
-                        Intent intent = new Intent(detailActivity.this, discussActivity.class);
-                        startActivity(intent);
+                        Intent intent3 = new Intent(detailActivity.this, discussActivity.class);
+                        startActivity(intent3);
                         break;
                 }
 
@@ -300,8 +304,16 @@ public class detailActivity extends AppCompatActivity {
                 }
                 if(ui.getBookmark().containsKey(thisKey)){
                     ui.getBookmark().remove(thisKey);
+                    if(ui.getPushalarm().containsKey(thisKey)){
+                        post.setBookmark(false);
+                        ui.getPushalarm().put(thisKey, post);
+                    }
                 }else{
+                    post.setBookmark(true);
                     ui.getBookmark().put(thisKey, post);
+                    if(ui.getPushalarm().containsKey(thisKey)){
+                        ui.getPushalarm().put(thisKey, post);
+                    }
                 }
                 mutableData.setValue(ui);
                 return Transaction.success(mutableData);
@@ -351,9 +363,17 @@ public class detailActivity extends AppCompatActivity {
                     mutableData.setValue(ui.toMap());
                 }
                 if(ui.getPushalarm().containsKey(thisKey)){
+                    if(ui.getBookmark().containsKey(thisKey)){
+                        post.setPush(false);
+                        ui.getBookmark().put(thisKey, post);
+                    }
                     ui.getPushalarm().remove(thisKey);
                 }else{
+                    post.setPush(true);
                     ui.getPushalarm().put(thisKey, post);
+                    if(ui.getBookmark().containsKey(thisKey)){
+                        ui.getBookmark().put(thisKey, post);
+                    }
                 }
                 mutableData.setValue(ui);
                 return Transaction.success(mutableData);
@@ -384,7 +404,7 @@ public class detailActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
         } else {
