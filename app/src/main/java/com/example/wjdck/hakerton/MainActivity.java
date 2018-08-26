@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -76,11 +75,15 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.navigation_item1:
-                        Intent intent1 = new Intent(MainActivity.this, BookmarkActivity.class);
+                        Intent intent1 = new Intent(MainActivity.this, MyListActivity.class);
+                        intent1.putExtra("OPTION", 1);
                         startActivity(intent1);
                         break;
 
                     case R.id.navigation_item2:
+                        Intent intent2 = new Intent(MainActivity.this, MyListActivity.class);
+                        intent2.putExtra("OPTION", 2);
+                        startActivity(intent2);
                         break;
 
                     case R.id.navigation_item3:

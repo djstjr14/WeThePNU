@@ -7,8 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 
 
-public class BookmarkActivity extends AppCompatActivity {
+public class MyListActivity extends AppCompatActivity {
 
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference UserRef;
@@ -28,22 +28,27 @@ public class BookmarkActivity extends AppCompatActivity {
     ListView listView;
     PostItemAdapter adapter;
     Toolbar toolbar;
-    Button btn_rec;
-    Button btn_latest;
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bookmark);
+        setContentView(R.layout.activity_mylist);
+        Intent intent = getIntent();
+        int option = (int) intent.getSerializableExtra("OPTION");
 
-        listView = findViewById(R.id.bookmark_listview);
-        toolbar = findViewById(R.id.bookmark_toolbar);
+        listView = findViewById(R.id.mylist_listview);
+        toolbar = findViewById(R.id.mylist_toolbar);
+        title = findViewById(R.id.mylist_title);
 
         //Toolbar 추가
         setSupportActionBar(toolbar);
         //Toolbar의 왼쪽에 뒤로가기 버튼을 추가
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_white_18dp);
+        if(option == 2){
+            title.setText("푸쉬알림 목록");
+        }
 
         adapter = new PostItemAdapter();
         listView.setAdapter(adapter);
@@ -51,7 +56,7 @@ public class BookmarkActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Intent intent = new Intent(BookmarkActivity.this, detailActivity.class);
+                Intent intent = new Intent(MyListActivity.this, detailActivity.class);
                 PostItem post = adapter.getItem(position);
                 ListViewItem item = new ListViewItem(post.getKey(), post.getTitle(), post.getText(), post.getCategory(), post.getRecommend(), post.getDate());
                 if(post.isBookmark()){
@@ -66,7 +71,12 @@ public class BookmarkActivity extends AppCompatActivity {
         });
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("bookmark");
+        if(option == 1){
+            UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("bookmark");
+        }
+        else if(option == 2){
+            UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("pushalarm");
+        }
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
