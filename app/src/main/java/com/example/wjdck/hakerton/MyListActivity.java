@@ -50,7 +50,15 @@ public class MyListActivity extends AppCompatActivity {
             title.setText("푸쉬알림 목록");
         }
 
-        adapter = new PostItemAdapter();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        if(option == 1){
+            UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("bookmark");
+        }
+        else if(option == 2){
+            UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("pushalarm");
+        }
+
+        adapter = new PostItemAdapter(option);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,13 +78,6 @@ public class MyListActivity extends AppCompatActivity {
             }
         });
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        if(option == 1){
-            UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("bookmark");
-        }
-        else if(option == 2){
-            UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("pushalarm");
-        }
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
