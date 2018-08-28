@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -32,6 +33,9 @@ public class discussActivity extends AppCompatActivity {
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigation;
+    Button btn_rec;
+    Button btn_latest;
+
     private FloatingActionButton fab;
 
     @Override
@@ -74,12 +78,20 @@ public class discussActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.navigation_item1:
+                        Intent intent1 = new Intent(discussActivity.this, MyListActivity.class);
+                        intent1.putExtra("OPTION", 1);
+                        startActivity(intent1);
                         break;
 
                     case R.id.navigation_item2:
+                        Intent intent2 = new Intent(discussActivity.this, MyListActivity.class);
+                        intent2.putExtra("OPTION", 2);
+                        startActivity(intent2);
                         break;
 
                     case R.id.navigation_item3:
+                        Intent intent3 = new Intent(discussActivity.this, discussActivity.class);
+                        startActivity(intent3);
                         break;
                 }
                 return true;
@@ -148,15 +160,25 @@ public class discussActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    //추가된 소스, ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        drawer.openDrawer(GravityCompat.END);
-        return true;
+        switch(item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
+            case R.id.action_menu:{
+                drawer.openDrawer(GravityCompat.END);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_discuss);
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
         } else {

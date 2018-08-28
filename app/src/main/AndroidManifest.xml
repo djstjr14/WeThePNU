@@ -47,8 +47,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".BookmarkActivity"
-            android:label="@string/title_activity_bookmark"
+            android:name=".MyListActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
