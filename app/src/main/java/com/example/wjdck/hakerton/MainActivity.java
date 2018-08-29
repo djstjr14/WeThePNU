@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.melnykov.fab.FloatingActionButton;
+
+import static com.example.wjdck.hakerton.loginActivity.Uid;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -57,11 +58,23 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         fab.attachToListView(listView);
 
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference("Agenda");
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
+
                 Intent intent = new Intent(MainActivity.this, detailActivity.class);
-                intent.putExtra("ITEM", adapter.getItem(position));
+                ListViewItem item = adapter.getItem(position);
+                intent.putExtra("ITEM", item);
+
+                if(!item.getClicked().containsKey(Uid)){
+                    item.getClicked().put(Uid, true);
+                    mDatabaseReference.child(item.getKey()).setValue(item);
+                    //item.clicked.put(Uid, true);
+                }
+                //ListViewItem item = new ListViewItem(); // clicked call
                 adapter.clickedList(view);
                 startActivity(intent);
             }
@@ -92,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("Agenda");
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {

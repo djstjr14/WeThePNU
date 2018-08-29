@@ -1,6 +1,7 @@
 package com.example.wjdck.hakerton;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +9,21 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
+import static com.example.wjdck.hakerton.loginActivity.Uid;
+
 public class ListViewAdapter extends BaseAdapter{
     private ArrayList<ListViewItem> listviewItemList = new ArrayList<ListViewItem>();
+    FirebaseDatabase mFirebaseDatabase;
+    DatabaseReference mDatabaseReference;
 
     public ListViewAdapter(){}
 
@@ -29,6 +38,7 @@ public class ListViewAdapter extends BaseAdapter{
         final int pos = position;
         final Context context = parent.getContext();
 
+
         // "listview_item" Layout을 inflate하여 convertView 참조 획득
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,10 +50,28 @@ public class ListViewAdapter extends BaseAdapter{
         TextView dateTextView = (TextView) convertView.findViewById(R.id.agenda_date);
 
         ListViewItem listViewItem = listviewItemList.get(position);
-
         titleTextView.setText(listViewItem.getTitle());
         recommendTextView.setText(Long.toString(listViewItem.getRecommend()) + " 명");
         dateTextView.setText(mSimpleDateFormat.format(Long.parseLong(listViewItem.getDate())));
+
+        if(listViewItem.getClicked().containsKey(Uid)){
+            clickedList(convertView);
+        }
+        /*
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference("Agenda");
+
+        clickedQuery = mDatabaseReference.child(listViewItem.getKey()).orderByChild("clicked");
+        Log.d("checked true --> ", String.valueOf(clickedQuery));
+        */
+
+        /*
+        if(Boolean.TRUE.equals(listViewItem.clicked.get("clicked"))){
+            Log.d("checked true : ", "############################");
+            clickedList(convertView);
+        }
+        */
 
         return convertView;
     }
@@ -55,6 +83,7 @@ public class ListViewAdapter extends BaseAdapter{
     public ListViewItem getItem(int position){ return listviewItemList.get(position);}
 
     public void clickedList(View view){
+
         RelativeLayout relative = (RelativeLayout) view.findViewById(R.id.clickedFlag);
         relative.setBackgroundResource(R.color.clicked);
     };

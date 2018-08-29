@@ -9,7 +9,6 @@ public class PostItem {
     private String date;
     private boolean book;
     private boolean push;
-
     public boolean isBookmark() {
         return book;
     }
