@@ -34,7 +34,6 @@ import com.google.firebase.database.Transaction;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 
@@ -46,7 +45,7 @@ public class detailActivity extends AppCompatActivity {
     ToggleButton btn_push;
     ToggleButton btn_bookmark;
     EditText edit_agree;
-    Toolbar toolbar_detail;
+    Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigation;
 
@@ -79,7 +78,7 @@ public class detailActivity extends AppCompatActivity {
         btn_bookmark = findViewById(R.id.bookmark_btn);
         edit_agree = findViewById(R.id.agree_edit);
         Title = findViewById(R.id.detail_title);
-        toolbar_detail = findViewById(R.id.detail_toolbar);
+        toolbar = findViewById(R.id.detail_toolbar);
         drawer= findViewById(R.id.drawer);
         navigation= findViewById(R.id.navigation);
 
@@ -102,7 +101,7 @@ public class detailActivity extends AppCompatActivity {
 
         //Toolbar 추가
 
-        setSupportActionBar(toolbar_detail);
+        setSupportActionBar(toolbar);
         //Toolbar의 왼쪽에 뒤로가기 버튼을 추가
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_white_18dp);
@@ -116,11 +115,15 @@ public class detailActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.navigation_item1:
-                        Intent intent1 = new Intent(detailActivity.this, BookmarkActivity.class);
+                        Intent intent1 = new Intent(detailActivity.this, MyListActivity.class);
+                        intent1.putExtra("OPTION", 1);
                         startActivity(intent1);
                         break;
 
                     case R.id.navigation_item2:
+                        Intent intent2 = new Intent(detailActivity.this, MyListActivity.class);
+                        intent2.putExtra("OPTION", 2);
+                        startActivity(intent2);
                         break;
 
                     case R.id.navigation_item3:
@@ -265,11 +268,9 @@ public class detailActivity extends AppCompatActivity {
                 Log.d("DetailActivity", "Agree Transaction : onComplete:" + databaseError);
             }
         });
-
-
     }
 
-    private void onBookmarkClicked(DatabaseReference agendaRef) {
+    public static void onBookmarkClicked(DatabaseReference agendaRef) {
         agendaRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -293,7 +294,7 @@ public class detailActivity extends AppCompatActivity {
         });
     }
 
-    private void onBookmarkSave(DatabaseReference userRef, final PostItem post) {
+    public static void onBookmarkSave(DatabaseReference userRef, final PostItem post) {
         userRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -302,17 +303,17 @@ public class detailActivity extends AppCompatActivity {
                     ui = new UserItem();
                     mutableData.setValue(ui.toMap());
                 }
-                if(ui.getBookmark().containsKey(thisKey)){
-                    ui.getBookmark().remove(thisKey);
-                    if(ui.getPushalarm().containsKey(thisKey)){
+                if(ui.getBookmark().containsKey(post.getKey())){
+                    ui.getBookmark().remove(post.getKey());
+                    if(ui.getPushalarm().containsKey(post.getKey())){
                         post.setBookmark(false);
-                        ui.getPushalarm().put(thisKey, post);
+                        ui.getPushalarm().put(post.getKey(), post);
                     }
                 }else{
                     post.setBookmark(true);
-                    ui.getBookmark().put(thisKey, post);
-                    if(ui.getPushalarm().containsKey(thisKey)){
-                        ui.getPushalarm().put(thisKey, post);
+                    ui.getBookmark().put(post.getKey(), post);
+                    if(ui.getPushalarm().containsKey(post.getKey())){
+                        ui.getPushalarm().put(post.getKey(), post);
                     }
                 }
                 mutableData.setValue(ui);
@@ -326,10 +327,7 @@ public class detailActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-    private void onPushClicked(DatabaseReference agendaRef) {
+    public static void onPushClicked(DatabaseReference agendaRef) {
         agendaRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -353,7 +351,7 @@ public class detailActivity extends AppCompatActivity {
         });
     }
 
-    private void onPushSave(DatabaseReference userRef, final PostItem post) {
+    public static void onPushSave(DatabaseReference userRef, final PostItem post) {
         userRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -362,17 +360,17 @@ public class detailActivity extends AppCompatActivity {
                     ui = new UserItem();
                     mutableData.setValue(ui.toMap());
                 }
-                if(ui.getPushalarm().containsKey(thisKey)){
-                    if(ui.getBookmark().containsKey(thisKey)){
+                if(ui.getPushalarm().containsKey(post.getKey())){
+                    if(ui.getBookmark().containsKey(post.getKey())){
                         post.setPush(false);
-                        ui.getBookmark().put(thisKey, post);
+                        ui.getBookmark().put(post.getKey(), post);
                     }
-                    ui.getPushalarm().remove(thisKey);
+                    ui.getPushalarm().remove(post.getKey());
                 }else{
                     post.setPush(true);
-                    ui.getPushalarm().put(thisKey, post);
-                    if(ui.getBookmark().containsKey(thisKey)){
-                        ui.getBookmark().put(thisKey, post);
+                    ui.getPushalarm().put(post.getKey(), post);
+                    if(ui.getBookmark().containsKey(post.getKey())){
+                        ui.getBookmark().put(post.getKey(), post);
                     }
                 }
                 mutableData.setValue(ui);

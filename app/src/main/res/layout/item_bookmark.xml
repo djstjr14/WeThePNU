@@ -86,8 +86,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageButton
-            android:id="@+id/item_bookmark_delete"
+        <ImageView
+            android:id="@+id/item_delete"
+            android:src="@drawable/border"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
