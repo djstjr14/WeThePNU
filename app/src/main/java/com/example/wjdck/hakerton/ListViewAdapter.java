@@ -57,21 +57,6 @@ public class ListViewAdapter extends BaseAdapter{
         if(listViewItem.getClicked().containsKey(Uid)){
             clickedList(convertView);
         }
-        /*
-
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("Agenda");
-
-        clickedQuery = mDatabaseReference.child(listViewItem.getKey()).orderByChild("clicked");
-        Log.d("checked true --> ", String.valueOf(clickedQuery));
-        */
-
-        /*
-        if(Boolean.TRUE.equals(listViewItem.clicked.get("clicked"))){
-            Log.d("checked true : ", "############################");
-            clickedList(convertView);
-        }
-        */
 
         return convertView;
     }

@@ -1,13 +1,16 @@
 package com.example.wjdck.hakerton;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -25,6 +28,8 @@ public class loginActivity extends AppCompatActivity {
     String userId,userPw;
     TextView findIdAndPw;
 
+    private long backKeyPressedTime = 0;
+    private Toast toast;
     public static String Uid = "djstjr14";
     private final static String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36";
 
@@ -37,7 +42,6 @@ public class loginActivity extends AppCompatActivity {
         PW = (EditText) findViewById(R.id.etPassword);
         loginButton = (Button) findViewById(R.id.btn_login);
         findIdAndPw = (TextView)findViewById(R.id.findId);
-
 
         loginButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -151,5 +155,24 @@ public class loginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+            backKeyPressedTime = System.currentTimeMillis();
+            showGuide();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            ActivityCompat.finishAffinity(this);
+            System.runFinalizersOnExit(true);
+            System.exit(0);
+        }
+    }
 
+    public void showGuide() {
+        toast = Toast.makeText(this, "\'뒤로\'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+        toast.show();
+    }
 }
+
+

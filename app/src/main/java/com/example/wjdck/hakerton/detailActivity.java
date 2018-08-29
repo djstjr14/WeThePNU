@@ -130,6 +130,15 @@ public class detailActivity extends AppCompatActivity {
                         Intent intent3 = new Intent(detailActivity.this, discussActivity.class);
                         startActivity(intent3);
                         break;
+
+                    case R.id.navigation_item4:
+                        break;
+
+                    case R.id.navigation_item5:
+                        Intent intent5 = new Intent(detailActivity.this, loginActivity.class);
+                        Uid = null;
+                        startActivity(intent5);
+                        break;
                 }
 
                 return true;
