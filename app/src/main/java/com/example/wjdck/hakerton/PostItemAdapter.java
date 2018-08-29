@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -13,15 +12,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
-public class ListViewAdapter extends BaseAdapter{
-    private ArrayList<ListViewItem> listviewItemList = new ArrayList<ListViewItem>();
+public class PostItemAdapter extends BaseAdapter {
+    private ArrayList<PostItem> listviewItemList = new ArrayList<PostItem>();
 
-    public ListViewAdapter(){}
+    public PostItemAdapter(){}
 
     @Override
-    public int getCount(){
+    public int getCount() {
         return listviewItemList.size();
     }
+
+    @Override
+    public PostItem getItem(int position) {
+        return listviewItemList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) { return position; }
 
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     @Override
@@ -39,7 +46,7 @@ public class ListViewAdapter extends BaseAdapter{
         TextView recommendTextView = (TextView) convertView.findViewById(R.id.agenda_num);
         TextView dateTextView = (TextView) convertView.findViewById(R.id.agenda_date);
 
-        ListViewItem listViewItem = listviewItemList.get(position);
+        PostItem listViewItem = listviewItemList.get(position);
 
         titleTextView.setText(listViewItem.getTitle());
         recommendTextView.setText(Long.toString(listViewItem.getRecommend()) + " 명");
@@ -48,18 +55,7 @@ public class ListViewAdapter extends BaseAdapter{
         return convertView;
     }
 
-    @Override
-    public long getItemId(int position) { return position; }
-
-    @Override
-    public ListViewItem getItem(int position){ return listviewItemList.get(position);}
-
-    public void clickedList(View view){
-        RelativeLayout relative = (RelativeLayout) view.findViewById(R.id.clickedFlag);
-        relative.setBackgroundResource(R.color.clicked);
-    };
-
-    public void addItem(ListViewItem item){
+    public void addItem(PostItem item){
         Collections.reverse(listviewItemList);
         listviewItemList.add(item);
         Collections.reverse(listviewItemList);
@@ -76,7 +72,7 @@ public class ListViewAdapter extends BaseAdapter{
         listviewItemList.remove(position);
     }
 
-    public void replaceItem(ListViewItem newItem) {
+    public void replaceItem(PostItem newItem) {
         int index = findItem(newItem.getKey());
         listviewItemList.remove(index);
         listviewItemList.add(index, newItem);

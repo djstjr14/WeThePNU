@@ -1,9 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".discussActivity">
+    android:id="@+id/drawer_discuss"
+    android:orientation="vertical"
+    tools:openDrawer="end">
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_alignParentTop="true"
+            android:id="@+id/toolbar_discuss"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "토 론 게 시 판"
+                android:layout_gravity="center"
+                android:fontFamily="@font/notosans_black"
+                android:textSize="20sp"/>
+
+        </android.support.v7.widget.Toolbar>
+
+        <com.melnykov.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fab_discuss"
+            android:layout_gravity="bottom|right"
+            android:layout_marginLeft="330dp"
+            android:layout_marginBottom="100dp"
+            android:src="@drawable/add"
+            app:fab_colorNormal="@color/fabPrimary"
+            app:fab_colorPressed="@color/fabPressed"
+            app:fab_colorRipple="@color/fabRipple"
+            android:layout_alignParentBottom="true"/>
+
+        <LinearLayout
+            android:layout_below="@+id/toolbar_discuss"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/listview_discuss"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:choiceMode="singleChoice"
+                android:divider="#EAEAEA"
+                android:dividerHeight="1.5dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:padding="10dp"
+                android:orientation="horizontal">
+
+
+                <ImageButton
+                    android:id="@+id/recommend_btn_discuss"
+                    android:layout_margin="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_dark"
+                    />
+
+                <ImageButton
+                    android:id="@+id/new_btn_discuss"
+                    android:layout_margin="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_dark"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_discuss"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/drawer">
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>

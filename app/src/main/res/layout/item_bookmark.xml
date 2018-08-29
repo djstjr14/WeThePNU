@@ -2,8 +2,15 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="310dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="left"
+        >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,8 +21,8 @@
             android:id="@+id/item_bookmark_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
+            android:textColor="#474747"
+            android:textSize="17sp"
             android:layout_marginEnd="20dp"
             android:text="bookmarked agenda title"/>
 
@@ -34,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:gravity="start"
-        android:textSize="17sp"
+        android:textSize="14sp"
         android:textColor="#8C8C8C"
         android:layout_marginStart="10dp"
 
@@ -44,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:textSize="17sp"
+        android:textSize="14sp"
         android:textColor="#8C8C8C"
         android:layout_marginLeft="10dp"
         android:text="2018-08-08"
@@ -55,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:textSize="17sp"
+        android:textSize="14sp"
         android:textColor="#8C8C8C"
         android:layout_marginLeft="10dp"
         android:text="2018-09-08"
@@ -67,15 +74,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:textSize="17sp"
+        android:textSize="14sp"
         android:textColor="#8C8C8C"
         android:layout_marginLeft="10dp"
         android:text="userid"
         />
 
 
+    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageButton
+            android:id="@+id/item_bookmark_delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
+
+
 
 
 </LinearLayout>

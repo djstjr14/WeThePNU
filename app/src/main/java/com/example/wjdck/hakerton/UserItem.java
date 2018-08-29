@@ -8,36 +8,33 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class UserItem {
-    private Map<String, Boolean> bookmark = new HashMap<>();
-    private Map<String, Boolean> pushalarm = new HashMap<>();
+    private Map<String, PostItem> bookmark = new HashMap<>();
+    private Map<String, PostItem> pushalarm = new HashMap<>();
 
     @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
+    public Map<String, PostItem> toMap() {
+        HashMap<String, PostItem> result = new HashMap<>();
 
-        result.put("bookmark", bookmark);
-        result.put("pushalarm", pushalarm);
+        result.put("bookmark", null);
+        result.put("pushalarm", null);
         return result;
     }
 
-    public Map<String, Boolean> getBookmark() {
+    public Map<String, PostItem> getBookmark() {
         return bookmark;
     }
 
-    public void setBookmark(Map<String, Boolean> bookmark) {
+    public void setBookmark(Map<String, PostItem> bookmark) {
         this.bookmark = bookmark;
     }
 
-    public Map<String, Boolean> getPushalarm() {
+    public Map<String, PostItem> getPushalarm() {
         return pushalarm;
     }
 
-    public void setPushalarm(Map<String, Boolean> pushalarm) {
+    public void setPushalarm(Map<String, PostItem> pushalarm) {
         this.pushalarm = pushalarm;
     }
 
-    public UserItem() {
-        bookmark.put("admin", false);
-        pushalarm.put("admin", false);
-    }
+    public UserItem() {}
 }

@@ -71,6 +71,7 @@ public class detailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
         final ListViewItem item = (ListViewItem) intent.getSerializableExtra("ITEM");
+        final PostItem post = new PostItem(item.getKey(), item.getTitle(), item.getText(), item.getCategory(), item.getRecommend(), item.getDate());
         thisKey = item.getKey();
 
         btn_agree = findViewById(R.id.agree_btn);
@@ -85,10 +86,12 @@ public class detailActivity extends AppCompatActivity {
         //즐겨찾기 버튼 초기셋팅
         if(item.getBookmark().containsKey(Uid)){
             btn_bookmark.setChecked(true);
+            post.setBookmark(true);
         }
         //푸쉬알람 버튼 초기셋팅
         if(item.getPushalarm().containsKey(Uid)){
             btn_push.setChecked(true);
+            post.setPush(true);
         }
 
         items = new ArrayList<>();
@@ -98,6 +101,7 @@ public class detailActivity extends AppCompatActivity {
         Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
 
         //Toolbar 추가
+
         setSupportActionBar(toolbar_detail);
         //Toolbar의 왼쪽에 뒤로가기 버튼을 추가
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -112,12 +116,16 @@ public class detailActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id){
                     case R.id.navigation_item1:
+                        Intent intent1 = new Intent(detailActivity.this, BookmarkActivity.class);
+                        startActivity(intent1);
                         break;
 
                     case R.id.navigation_item2:
                         break;
 
                     case R.id.navigation_item3:
+                        Intent intent3 = new Intent(detailActivity.this, discussActivity.class);
+                        startActivity(intent3);
                         break;
                 }
 
@@ -163,7 +171,7 @@ public class detailActivity extends AppCompatActivity {
                         btn_bookmark.setChecked(false);
                     }
                     onBookmarkClicked(ref.child(thisKey));
-                    onBookmarkSave(userRef);
+                    onBookmarkSave(userRef, post);
                 }
             }
         });
@@ -177,7 +185,7 @@ public class detailActivity extends AppCompatActivity {
                         btn_push.setChecked(false);
                      }
                     onPushClicked(ref.child(thisKey));
-                    onPushSave(userRef);
+                    onPushSave(userRef, post);
                 }
             }
         });
@@ -285,7 +293,7 @@ public class detailActivity extends AppCompatActivity {
         });
     }
 
-    private void onBookmarkSave(DatabaseReference userRef) {
+    private void onBookmarkSave(DatabaseReference userRef, final PostItem post) {
         userRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -296,8 +304,16 @@ public class detailActivity extends AppCompatActivity {
                 }
                 if(ui.getBookmark().containsKey(thisKey)){
                     ui.getBookmark().remove(thisKey);
+                    if(ui.getPushalarm().containsKey(thisKey)){
+                        post.setBookmark(false);
+                        ui.getPushalarm().put(thisKey, post);
+                    }
                 }else{
-                    ui.getBookmark().put(thisKey, true);
+                    post.setBookmark(true);
+                    ui.getBookmark().put(thisKey, post);
+                    if(ui.getPushalarm().containsKey(thisKey)){
+                        ui.getPushalarm().put(thisKey, post);
+                    }
                 }
                 mutableData.setValue(ui);
                 return Transaction.success(mutableData);
@@ -337,7 +353,7 @@ public class detailActivity extends AppCompatActivity {
         });
     }
 
-    private void onPushSave(DatabaseReference userRef) {
+    private void onPushSave(DatabaseReference userRef, final PostItem post) {
         userRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -347,9 +363,17 @@ public class detailActivity extends AppCompatActivity {
                     mutableData.setValue(ui.toMap());
                 }
                 if(ui.getPushalarm().containsKey(thisKey)){
+                    if(ui.getBookmark().containsKey(thisKey)){
+                        post.setPush(false);
+                        ui.getBookmark().put(thisKey, post);
+                    }
                     ui.getPushalarm().remove(thisKey);
                 }else{
-                    ui.getPushalarm().put(thisKey, true);
+                    post.setPush(true);
+                    ui.getPushalarm().put(thisKey, post);
+                    if(ui.getBookmark().containsKey(thisKey)){
+                        ui.getBookmark().put(thisKey, post);
+                    }
                 }
                 mutableData.setValue(ui);
                 return Transaction.success(mutableData);
