@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 
 
-public class MyListActivity extends AppCompatActivity {
+public class MyListActivity extends AppCompatActivity implements PostItemAdapter.ListBtnClickListener {
 
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference UserRef;
@@ -50,11 +50,11 @@ public class MyListActivity extends AppCompatActivity {
             title.setText("푸쉬알림 목록");
         }
 
-        adapter = new PostItemAdapter();
+        adapter = new PostItemAdapter(this);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
+                @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Intent intent = new Intent(MyListActivity.this, detailActivity.class);
                 PostItem post = adapter.getItem(position);
@@ -116,5 +116,11 @@ public class MyListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         finish();
         return true;
+    }
+
+    @Override
+    public void onListBtnClick(int position) {
+        PostItem item = adapter.getItem(position);
+        UserRef.child(item.getKey()).removeValue();
     }
 }
