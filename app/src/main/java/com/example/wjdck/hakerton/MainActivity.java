@@ -1,6 +1,7 @@
 package com.example.wjdck.hakerton;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.melnykov.fab.FloatingActionButton;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
+import static com.example.wjdck.hakerton.loginActivity.appData;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -111,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_item5:
                         Intent intent5 = new Intent(MainActivity.this, loginActivity.class);
                         Uid = null;
-                        startActivity(intent5);
+                        startActivity(intent5); SharedPreferences.Editor editor= appData.edit();
+                        editor.clear().apply();
                         break;
                 }
 

@@ -1,23 +1,23 @@
 package com.example.wjdck.hakerton;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.util.Map;
+
 
 public class loginActivity extends AppCompatActivity {
 
@@ -27,21 +27,37 @@ public class loginActivity extends AppCompatActivity {
     Button loginButton;
     String userId,userPw;
     TextView findIdAndPw;
+    CheckBox loginCheckBox;
 
+    public static SharedPreferences appData;
     private long backKeyPressedTime = 0;
-    private Toast toast;
     public static String Uid = "djstjr14";
+    public static Toast toast;
     private final static String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36";
+    boolean loginFlag = true;
+    boolean SaveLoginData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        appData = getSharedPreferences("appData",MODE_PRIVATE);
+        SaveLoginData = appData.getBoolean("SAVE_LOGIN_DATA", false);
+        userId = appData.getString("ID", "");
+        userPw = appData.getString("PW", "");
+
         ID = (EditText) findViewById(R.id.etEmail);
         PW = (EditText) findViewById(R.id.etPassword);
         loginButton = (Button) findViewById(R.id.btn_login);
         findIdAndPw = (TextView)findViewById(R.id.findId);
+        loginCheckBox = (CheckBox)findViewById(R.id.checkBox);
+
+        if (SaveLoginData) {
+            Intent intent = new Intent(loginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+
 
         loginButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -53,11 +69,15 @@ public class loginActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        login();
+                        loginFlag = login();
                     }
                 }).start();
+               if(!loginFlag) {
+                   wrongIdOrPw();
+               }
             }
         });
+
 
         findIdAndPw.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -66,39 +86,10 @@ public class loginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
-    void login(){
+
+    boolean login(){
         try{
-            Connection.Response loginTry = Jsoup.connect(url)
-                    .userAgent(userAgent)
-                    .header("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-                    .header("Accept-Encoding","gzip, deflate, br")
-                    .header("Accept-Language","ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
-                    .header("Content-Type","application/x-www-form-urlencoded")
-                    .header("Origin","http://mypnu.net")
-                    .header("Referer","http://mypnu.net/")
-                    .header("Upgrade-Insecure-Requests","1")
-                    .method(Connection.Method.GET)
-                    .execute();
-
-            String PHPSessID = loginTry.cookie("PHPSESSID");
-            Map<String, String> loginCookie = loginTry.cookies();
-
-
-            Document loginDoc = loginTry.parse();
-
-
-            String error_return_url = "/home2";
-            String mid = "home2";
-            String vid = "";
-            String ruleset = "@login";
-            String act = "procMemberLogin";
-            String success_return_url = "https://mypnu.net/home2";
-            String xe_validator_id = "widgets/login_info/skins/stylish/login_form/1";
-
-
             Connection.Response loginForm = Jsoup.connect(url)
                     .userAgent(userAgent)
                     .timeout(3000)
@@ -109,51 +100,32 @@ public class loginActivity extends AppCompatActivity {
                     .header("Origin","http://mypnu.net")
                     .header("Referer","http://mypnu.net/")
                     .header("Upgrade-Insecure-Requests","1")
-                    .cookies(loginCookie)
-                    .data("error_return_url",error_return_url)
-                    .data("mid",mid)
-                    .data("vid",vid)
-                    .data("ruleset",ruleset)
-                    .data("act",act)
-                    .data("success_return_url",success_return_url)
-                    .data("xe_validator_id",xe_validator_id)
                     .data("user_id",userId)
                     .data("password",userPw)
                     .method(Connection.Method.POST)
                     .execute();
 
-
-
-            Map<String,String> loginHeader = loginForm.headers();
-
             boolean flag = loginForm.hasHeaderWithValue("Set-Cookie","xe_logged=true");
 
-            for ( Map.Entry<String, String> entry : loginHeader.entrySet() ) {
-                Log.d("!!!!!!!!!!!!!",entry.getKey());
-                Log.d("!!!!!!!!!!", entry.getValue());
-            }
-
-            int ce;
-
-            if(flag)
-                ce=3;
-            else
-                ce= 2;
-            String cec = ""+ce;
-
-            Log.d("!!!!!!!!!",cec);
             if(flag){
-                Intent intent = new Intent(loginActivity.this, MainActivity.class);
-                startActivity(intent);
+
+               SharedPreferences.Editor editor = appData.edit();
+
+               editor.putBoolean("SAVE_LOGIN_DATA",loginCheckBox.isChecked());
+               editor.putString("ID",ID.getText().toString());
+               editor.putString("PW",PW.getText().toString());
+
+               editor.apply();
+
+               Intent intent = new Intent(loginActivity.this, MainActivity.class);
+               startActivity(intent);
             }
-            else{
-                Intent intent = new Intent(loginActivity.this, loginActivity.class);
-                startActivity(intent);
-            }
+            return flag;
 
         }catch(IOException e){
             e.printStackTrace();
         }
+        return true;
     }
     @Override
     public void onBackPressed() {
@@ -171,6 +143,10 @@ public class loginActivity extends AppCompatActivity {
 
     public void showGuide() {
         toast = Toast.makeText(this, "\'뒤로\'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+    public void wrongIdOrPw() {
+        toast = Toast.makeText(this, "잘못된 ID 혹은 패스워드입니다", Toast.LENGTH_SHORT);
         toast.show();
     }
 }

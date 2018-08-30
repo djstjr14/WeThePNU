@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log In"
+            android:text="L O G I N"
             android:textSize="51px"
             android:fontFamily="@font/notosans_demilight"
             android:textColor="@android:color/black"
@@ -84,10 +84,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textSize="12dp"
+            android:fontFamily="@font/notosans_medium"
             android:text="아이디 / 비밀번호 찾기"
             android:textColor="@color/colorPrimary"
-            android:fontFamily="@font/notosans_medium" />
+            android:textSize="12dp" />
 
         <Button
             android:id="@+id/btn_login"
@@ -99,6 +99,14 @@
             android:fontFamily="@font/notosans_bold"
             android:text="L O G I N"
             android:textSize="32px"/>
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosans_medium"
+            android:text="로그인 유지"
+            android:textSize="12dp" />
 
     </LinearLayout>
 
