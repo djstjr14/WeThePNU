@@ -1,32 +1,35 @@
 package com.example.wjdck.hakerton;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
-public class PostItemAdapter extends BaseAdapter implements View.OnClickListener{
-    public interface ListBtnClickListener{
-        void onListBtnClick(int position);
-    }
+import static com.example.wjdck.hakerton.loginActivity.Uid;
 
-    private ListBtnClickListener listBtnClickListener;
-
+public class PostItemAdapter extends BaseAdapter {
     private ArrayList<PostItem> listviewItemList = new ArrayList<PostItem>();
+    int option;
 
-    public PostItemAdapter(){}
-
-    public PostItemAdapter(ListBtnClickListener clickListener){
-        this.listBtnClickListener = clickListener;
+    public PostItemAdapter(int option){
+        this.option = option;
     }
 
     @Override
@@ -60,16 +63,30 @@ public class PostItemAdapter extends BaseAdapter implements View.OnClickListener
         TextView enddateTextView = (TextView) convertView.findViewById(R.id.item_bookmark_enddate);
 
 
-        PostItem listViewItem = listviewItemList.get(position);
+        final PostItem listViewItem = listviewItemList.get(position);
 
         titleTextView.setText(listViewItem.getTitle());
         fieldTextView.setText(listViewItem.getCategory());
         startdateTextView.setText(mSimpleDateFormat.format(Long.parseLong(listViewItem.getDate())));
         enddateTextView.setText(mSimpleDateFormat.format((Long.parseLong(listViewItem.getDate()))+(2592000000L)));
 
-        ImageButton button = convertView.findViewById(R.id.item_delete);
-        button.setTag(position);
-        button.setOnClickListener(this);
+        ImageView cancle_btn = convertView.findViewById((R.id.item_delete));
+        cancle_btn.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Agenda").child(listViewItem.getKey());
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User").child(Uid);
+                if(option == 1){
+                    detailActivity.onBookmarkClicked(ref);
+                    detailActivity.onBookmarkSave(userRef, listViewItem);
+                }
+                else if(option == 2){
+                    detailActivity.onPushClicked(ref);
+                    detailActivity.onPushSave(userRef, listViewItem);
+                }
+            }
+        });
 
         return convertView;
     }
@@ -95,11 +112,5 @@ public class PostItemAdapter extends BaseAdapter implements View.OnClickListener
         int index = findItem(newItem.getKey());
         listviewItemList.remove(index);
         listviewItemList.add(index, newItem);
-    }
-
-    public void onClick(View v){
-        if(this.listBtnClickListener != null){
-            this.listBtnClickListener.onListBtnClick((int)v.getTag());
-        }
     }
 }

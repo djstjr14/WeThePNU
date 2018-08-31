@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 
 
-public class MyListActivity extends AppCompatActivity implements PostItemAdapter.ListBtnClickListener {
+public class MyListActivity extends AppCompatActivity {
 
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference UserRef;
@@ -50,11 +50,19 @@ public class MyListActivity extends AppCompatActivity implements PostItemAdapter
             title.setText("푸쉬알림 목록");
         }
 
-        adapter = new PostItemAdapter(this);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        if(option == 1){
+            UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("bookmark");
+        }
+        else if(option == 2){
+            UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("pushalarm");
+        }
+
+        adapter = new PostItemAdapter(option);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
+            @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Intent intent = new Intent(MyListActivity.this, detailActivity.class);
                 PostItem post = adapter.getItem(position);
@@ -70,13 +78,6 @@ public class MyListActivity extends AppCompatActivity implements PostItemAdapter
             }
         });
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        if(option == 1){
-            UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("bookmark");
-        }
-        else if(option == 2){
-            UserRef = mFirebaseDatabase.getReference("User").child(Uid).child("pushalarm");
-        }
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -116,11 +117,5 @@ public class MyListActivity extends AppCompatActivity implements PostItemAdapter
     public boolean onOptionsItemSelected(MenuItem item){
         finish();
         return true;
-    }
-
-    @Override
-    public void onListBtnClick(int position) {
-        PostItem item = adapter.getItem(position);
-        UserRef.child(item.getKey()).removeValue();
     }
 }
