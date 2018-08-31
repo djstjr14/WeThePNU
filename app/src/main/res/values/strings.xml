@@ -10,7 +10,9 @@
     <string name="title_activity_splash">splashActivity</string>
     <string name="nav_menu_1">즐겨찾기목록</string>
     <string name="nav_menu_2">푸쉬알림목록</string>
-    <string name="nav_menu_3">토론게시판</string>
+    <string name="nav_menu_3">자유토론게시판</string>
+    <string name="nav_menu_4">답변게시판</string>
+    <string name="nav_menu_5">로그아웃</string>
     <string name="title_activity_bookmark">BookmarkActivity</string>
     <string name="title_activity_add_discuss">addDiscussActivity</string>
 

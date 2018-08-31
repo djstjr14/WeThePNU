@@ -1,6 +1,7 @@
 package com.example.wjdck.hakerton;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.melnykov.fab.FloatingActionButton;
+
+import static com.example.wjdck.hakerton.loginActivity.Uid;
+import static com.example.wjdck.hakerton.loginActivity.appData;
 
 public class discussActivity extends AppCompatActivity {
     FirebaseDatabase mFirebaseDatabase;
@@ -93,7 +97,19 @@ public class discussActivity extends AppCompatActivity {
                         Intent intent3 = new Intent(discussActivity.this, discussActivity.class);
                         startActivity(intent3);
                         break;
+
+                    case R.id.navigation_item4:
+                        break;
+
+                    case R.id.navigation_item5:
+                        Intent intent5 = new Intent(discussActivity.this, loginActivity.class);
+                        Uid = null;
+                        startActivity(intent5); SharedPreferences.Editor editor= appData.edit();
+                        editor.clear().apply();
+                        startActivity(intent5);
+                        break;
                 }
+
                 return true;
             }
         });

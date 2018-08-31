@@ -1,6 +1,7 @@
 package com.example.wjdck.hakerton;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
+import static com.example.wjdck.hakerton.loginActivity.appData;
 
 
 public class detailActivity extends AppCompatActivity {
@@ -129,6 +131,17 @@ public class detailActivity extends AppCompatActivity {
                     case R.id.navigation_item3:
                         Intent intent3 = new Intent(detailActivity.this, discussActivity.class);
                         startActivity(intent3);
+                        break;
+
+                    case R.id.navigation_item4:
+                        break;
+
+                    case R.id.navigation_item5:
+                        Intent intent5 = new Intent(detailActivity.this, loginActivity.class);
+                        Uid = null;
+                        startActivity(intent5); SharedPreferences.Editor editor= appData.edit();
+                        editor.clear().apply();
+                        startActivity(intent5);
                         break;
                 }
 

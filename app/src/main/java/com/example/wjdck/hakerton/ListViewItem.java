@@ -17,6 +17,7 @@ public class ListViewItem implements Serializable {
     private Map<String, Boolean> agree = new HashMap<>();
     public Map<String, Boolean> bookmark = new HashMap<>();
     public Map<String, Boolean> pushalarm = new HashMap<>();
+    public Map<String, Boolean> clicked = new HashMap<>();
 
     public ListViewItem() {}
 
@@ -41,7 +42,18 @@ public class ListViewItem implements Serializable {
         result.put("agree", agree);
         result.put("bookmark", bookmark);
         result.put("pushalarm", pushalarm);
+        result.put("clicked", clicked);
         return result;
+
+    }
+
+
+    public Map<String, Boolean> getClicked(){
+        return clicked;
+    }
+
+    public void setClicked(Map<String, Boolean> clicked){
+        this.clicked = clicked;
     }
 
     public Map<String, Boolean> getAgree() {
