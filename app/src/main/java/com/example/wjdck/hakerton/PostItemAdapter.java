@@ -26,7 +26,7 @@ import static com.example.wjdck.hakerton.loginActivity.Uid;
 
 public class PostItemAdapter extends BaseAdapter {
     private ArrayList<PostItem> listviewItemList = new ArrayList<PostItem>();
-    int option;
+    private int option;
 
     public PostItemAdapter(int option){
         this.option = option;

@@ -9,5 +9,7 @@
     <color name="fabPressed">#6EB5F7</color>
     <color name="fabRipple">#AED6FC</color>
     <color name="clicked">#BDBDBD</color>
+    <color name="unclicked">#98C1D6</color>
+
 
 </resources>

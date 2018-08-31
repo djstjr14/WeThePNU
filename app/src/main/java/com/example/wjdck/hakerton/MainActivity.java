@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -22,6 +23,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.melnykov.fab.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 import static com.example.wjdck.hakerton.loginActivity.appData;
@@ -38,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar_main;
     DrawerLayout drawer;
     NavigationView navigation;
+    Button btn_rec_prog;
+    Button btn_rec_expired;
+    Button btn_lat_prog;
+    Button btn_lat_expired;
 
     private FloatingActionButton fab;
 
@@ -50,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
         toolbar_main = findViewById(R.id.main_toolbar);
         drawer = findViewById(R.id.drawer_main);
         navigation = findViewById(R.id.navigation_main);
+        btn_rec_expired = findViewById(R.id.expir_recommend_btn);
+        btn_rec_prog = findViewById(R.id.prog_recommend_btn);
+        btn_lat_expired = findViewById(R.id.expir_new_btn);
+        btn_lat_prog = findViewById(R.id.prog_new_btn);
 
         //Toolbar 추가
         setSupportActionBar(toolbar_main);
@@ -74,9 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!item.getClicked().containsKey(Uid)){
                     item.getClicked().put(Uid, true);
                     mDatabaseReference.child(item.getKey()).setValue(item);
-                    //item.clicked.put(Uid, true);
                 }
-                //ListViewItem item = new ListViewItem(); // clicked call
                 adapter.clickedList(view);
                 startActivity(intent);
             }
@@ -119,6 +131,42 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 return true;
+            }
+        });
+
+        btn_rec_prog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setSort(1);
+                adapter.listSort();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        btn_lat_prog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setSort(2);
+                adapter.listSort();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        btn_rec_expired.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                adapter.setSort(3);
+                adapter.listSort();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        btn_lat_expired.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setSort(4);
+                adapter.listSort();
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -168,9 +216,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, addAgendaActivity.class);
-                //intent.putExtra("");
                 startActivity(intent);
-
             }
         });
     }
