@@ -125,66 +125,79 @@
                     android:orientation="horizontal"
                     android:id="@+id/field_layout">
 
-                    <TextView
+                    <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:id="@+id/category1"
                         android:gravity="center"
+                        android:background="#CED9DD"
                         android:fontFamily="@font/notosans_bold"
                         android:text="전체"
                         android:textColor="#4F4D4B"
                         android:textSize="57px"/>
-                    <TextView
+                    <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:id="@+id/category2"
                         android:gravity="center"
+                        android:background="#CED9DD"
                         android:fontFamily="@font/notosans_bold"
                         android:text="행정"
                         android:textColor="#4F4D4B"
                         android:textSize="57px"/>
-                    <TextView
+                    <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:id="@+id/category3"
                         android:gravity="center"
+                        android:background="#CED9DD"
                         android:fontFamily="@font/notosans_bold"
                         android:text="보건/복지"
                         android:textColor="#4F4D4B"
                         android:textSize="57px"/>
-                    <TextView
+                    <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:id="@+id/category4"
                         android:gravity="center"
+                        android:background="#CED9DD"
                         android:fontFamily="@font/notosans_bold"
-                        android:text="교내 시설"
+                        android:text="교내시설"
                         android:textColor="#4F4D4B"
                         android:textSize="57px"/>
-                    <TextView
+                    <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:id="@+id/category5"
                         android:gravity="center"
+                        android:background="#CED9DD"
                         android:fontFamily="@font/notosans_bold"
                         android:text="인권/평등"
                         android:textColor="#4F4D4B"
                         android:textSize="57px"/>
-                    <TextView
+                    <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:id="@+id/category6"
                         android:gravity="center"
+                        android:background="#CED9DD"
                         android:fontFamily="@font/notosans_bold"
                         android:text="예술/문화"
                         android:textColor="#4F4D4B"
                         android:textSize="57px"/>
-
-                    <TextView
+                    <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:id="@+id/category7"
                         android:gravity="center"
+                        android:background="#CED9DD"
                         android:fontFamily="@font/notosans_bold"
                         android:text="기타"
                         android:textColor="#4F4D4B"

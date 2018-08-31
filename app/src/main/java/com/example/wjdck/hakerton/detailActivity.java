@@ -168,9 +168,10 @@ public class detailActivity extends AppCompatActivity {
                     toast.setGravity(Gravity.TOP, 0, 0);
                     toast.show();
                     toastFlag = false;
+                }else{
+                    Title.setText("참여인원 : ["+Long.toString(item.getRecommend()+1)+"명]");
                 }
 
-                Title.setText("참여인원 : ["+Long.toString(item.getRecommend()+1)+"명]");
                 edit_agree.setText("");
                 recyclerView.smoothScrollToPosition(adapter.getItemCount());
             }

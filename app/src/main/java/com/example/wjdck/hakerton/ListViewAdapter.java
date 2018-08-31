@@ -24,30 +24,18 @@ public class ListViewAdapter extends BaseAdapter {
     private final static int EXPR_LAT = 4;
 
     private int sort = PROG_REC;
-    private int category = 1;
+    private String category = "전체";
 
     public ListViewAdapter(){}
 
     @Override
     public int getCount() {
         int cnt = 0;
-        switch (sort){
-            case PROG_REC:
-            case PROG_LAT:
-                for(int i = 0; i < listviewItemList.size(); i++){
-                    if(Calendar.getInstance().getTimeInMillis() - Long.parseLong(listviewItemList.get(i).getDate()) <= (2592000000L)){
-                        cnt++;
-                    }
-                }
-                break;
-            case EXPR_REC:
-            case EXPR_LAT:
-                for(int i = 0; i < listviewItemList.size(); i++){
-                    if(Calendar.getInstance().getTimeInMillis() - Long.parseLong(listviewItemList.get(i).getDate()) > (2592000000L)){
-                        cnt++;
-                    }
-                }
-                break;
+        for(int i = 0; i < listviewItemList.size(); i++) {
+            ListViewItem item = listviewItemList.get(i);
+            if(filter(item)){
+                cnt++;
+            }
         }
         return cnt;
     }
@@ -90,21 +78,19 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public ListViewItem getItem(int position){
-        switch (sort){
-            case PROG_REC:
-            case PROG_LAT:
-                if(Calendar.getInstance().getTimeInMillis() - Long.parseLong(listviewItemList.get(position).getDate()) > (2592000000L)){
-                    return null;
+        ListViewItem item;
+        int fullSize = listviewItemList.size();
+        int itemIndex = 0;
+        for(int i = 0; i < fullSize; i++) {
+            item = listviewItemList.get(i);
+            if (filter(item)) {
+                if(itemIndex == position){
+                    return item;
                 }
-                break;
-            case EXPR_REC:
-            case EXPR_LAT:
-                if(Calendar.getInstance().getTimeInMillis() - Long.parseLong(listviewItemList.get(position).getDate()) <= (2592000000L)){
-                    return null;
-                }
-                break;
+                itemIndex++;
+            }
         }
-        return listviewItemList.get(position);
+        return null;
     }
 
     public void clickedList(View view){
@@ -118,21 +104,20 @@ public class ListViewAdapter extends BaseAdapter {
 
     public void addItem(ListViewItem item){
         listviewItemList.add(item);
-        listSort();
     }
     public void listSort(){
         Comparator<ListViewItem> noAsc = null;
         switch(sort) {
-            case 1:
-            case 3:noAsc = new Comparator<ListViewItem>() {
+            case PROG_REC:
+            case EXPR_REC:noAsc = new Comparator<ListViewItem>() {
                 @Override
                 public int compare(ListViewItem item1, ListViewItem item2) {
                     return (int)(item2.getRecommend() - item1.getRecommend());
                 }
             };
                 break;
-            case 2:
-            case 4:noAsc = new Comparator<ListViewItem>() {
+            case PROG_LAT:
+            case EXPR_LAT:noAsc = new Comparator<ListViewItem>() {
                 @Override
                 public int compare(ListViewItem item1, ListViewItem item2) {
                     return (int)(Long.parseLong(item2.getDate()) - Long.parseLong(item1.getDate()));
@@ -160,20 +145,46 @@ public class ListViewAdapter extends BaseAdapter {
         listviewItemList.add(index, newItem);
     }
 
+    private boolean filter(ListViewItem item){
+        boolean flag = false;
+        switch (sort){
+            case PROG_REC:
+            case PROG_LAT:
+                if(Calendar.getInstance().getTimeInMillis() - Long.parseLong(item.getDate()) <= (2592000000L)){
+                    if(category.equalsIgnoreCase("전체") || category.equalsIgnoreCase(item.getCategory())) {
+                        flag = true;
+                    }
+                }
+                break;
+            case EXPR_REC:
+            case EXPR_LAT:
+                if(Calendar.getInstance().getTimeInMillis() - Long.parseLong(item.getDate()) > (2592000000L)){
+                    if(category.equalsIgnoreCase("전체") || category.equalsIgnoreCase(item.getCategory())) {
+                        flag = true;
+                    }
+                }
+                break;
+        }
+        return flag;
+    }
+
     public int getSort() {
         return sort;
     }
 
     public void setSort(int sort) {
         this.sort = sort;
+        listSort();
+        notifyDataSetChanged();
     }
 
-    public int getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(String category) {
         this.category = category;
+        notifyDataSetChanged();
     }
 
 }
