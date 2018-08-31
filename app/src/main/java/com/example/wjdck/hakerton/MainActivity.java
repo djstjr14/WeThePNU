@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -44,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar_main;
     DrawerLayout drawer;
     NavigationView navigation;
-    Button btn_rec_prog;
-    Button btn_rec_expired;
-    Button btn_lat_prog;
-    Button btn_lat_expired;
+    ImageButton btn_rec_prog;
+    ImageButton btn_rec_expired;
+    ImageButton btn_lat_prog;
+    ImageButton btn_lat_expired;
     Button category1;
     Button category2;
     Button category3;
@@ -152,23 +153,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 adapter.setSort(1);
+                btn_rec_prog.setImageResource(R.drawable.btn_progressing_recommend_clicked);
+                btn_lat_prog.setImageResource(R.drawable.btn_progressing_latest_normal);
+                btn_rec_expired.setImageResource(R.drawable.btn_expired_recommend_normal);
+                btn_lat_expired.setImageResource(R.drawable.btn_expired_latest_normal);
             }
         });
         btn_lat_prog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapter.setSort(2);
+                btn_rec_prog.setImageResource(R.drawable.btn_progressing_recommend_normal);
+                btn_lat_prog.setImageResource(R.drawable.btn_progressing_latest_clicked);
+                btn_rec_expired.setImageResource(R.drawable.btn_expired_recommend_normal);
+                btn_lat_expired.setImageResource(R.drawable.btn_expired_latest_normal);
             }
         });
         btn_rec_expired.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 adapter.setSort(3);
+                btn_rec_prog.setImageResource(R.drawable.btn_progressing_recommend_normal);
+                btn_lat_prog.setImageResource(R.drawable.btn_progressing_latest_normal);
+                btn_rec_expired.setImageResource(R.drawable.btn_expired_recommend_clicked);
+                btn_lat_expired.setImageResource(R.drawable.btn_expired_latest_normal);
             }
         });
         btn_lat_expired.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn_rec_prog.setImageResource(R.drawable.btn_progressing_recommend_normal);
+                btn_lat_prog.setImageResource(R.drawable.btn_progressing_latest_normal);
+                btn_rec_expired.setImageResource(R.drawable.btn_expired_recommend_normal);
+                btn_lat_expired.setImageResource(R.drawable.btn_expired_latest_clicked);
                 adapter.setSort(4);
             }
         });
