@@ -2,15 +2,115 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        >
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="2dp"
+        android:background="@drawable/bar"
+        android:layout_marginTop="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/agenda_progress"
+        android:text = "청원 진행중"
+        android:textSize="17.6sp"
+        android:fontFamily="@font/notosans_bold"
+        android:textColor="#4B5B6A"
+
+        />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="2dp"
+            android:background="@drawable/bar"
+            android:layout_marginTop="5dp"
+            />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#B2CCFF"
+        android:layout_height="40dp"
+        android:background="#FFFFFF"
         android:text="title"
         android:gravity="center"
-        android:textColor="#000000"
-        android:textSize="24sp" />
+        android:textColor="#4A5A69"
+        android:fontFamily="@font/notosans_bold"
+        android:textSize="16.5sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/agenda_title_category"
+            android:text="보건/복지"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/notosans_regular"
+            android:textColor="#B5B5B5"
+            android:textSize="13.6sp"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/agenda_title_startdate"
+            android:text="2018-08-20"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:fontFamily="@font/notosans_regular"
+            android:textColor="#B5B5B5"
+            android:textSize="13.6sp"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/notosans_regular"
+            android:textColor="#B5B5B5"
+            android:textSize="13.6sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/agenda_title_enddate"
+            android:text="2018-09-20"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/notosans_regular"
+            android:textColor="#B5B5B5"
+            android:textSize="13.6sp"
+            />
+
+
+
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

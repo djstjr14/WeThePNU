@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.content.Intent;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -43,7 +44,7 @@ import static com.example.wjdck.hakerton.loginActivity.appData;
 public class detailActivity extends AppCompatActivity {
 
     TextView Title;
-    Button btn_agree;
+    ImageButton btn_agree;
     ToggleButton btn_push;
     ToggleButton btn_bookmark;
     EditText edit_agree;
