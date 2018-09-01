@@ -17,7 +17,7 @@
             android:id="@+id/toolbar_discuss"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="#447399"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text = "토 론 게 시 판"
                 android:layout_gravity="center"
+                android:textColor="#FFFFFF"
                 android:fontFamily="@font/notosans_black"
                 android:textSize="20sp"/>
 
