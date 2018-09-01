@@ -22,12 +22,13 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <TextView
+                android:id="@+id/toolbar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text = "W E  T H E  P N U"
                 android:textColor="#FFFFFF"
                 android:layout_gravity="center"
-                android:fontFamily="@font/notosans_black"
+                android:fontFamily="@font/notosans_medium"
                 android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
@@ -135,18 +136,19 @@
                         android:layout_marginLeft="10dp"
                         android:id="@+id/category1"
                         android:gravity="center"
-                        android:background="#CED9DD"
+                        android:background="@drawable/category_btn"
                         android:fontFamily="@font/notosans_bold"
                         android:text="전체"
                         android:textColor="#4F4D4B"
                         android:textSize="57px"/>
+
                     <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:id="@+id/category2"
                         android:gravity="center"
-                        android:background="#CED9DD"
+                        android:background="@drawable/category_btn"
                         android:fontFamily="@font/notosans_bold"
                         android:text="행정"
                         android:textColor="#4F4D4B"
@@ -157,7 +159,7 @@
                         android:layout_marginLeft="10dp"
                         android:id="@+id/category3"
                         android:gravity="center"
-                        android:background="#CED9DD"
+                        android:background="@drawable/category_btn"
                         android:fontFamily="@font/notosans_bold"
                         android:text="보건/복지"
                         android:textColor="#4F4D4B"
@@ -168,7 +170,7 @@
                         android:layout_marginLeft="10dp"
                         android:id="@+id/category4"
                         android:gravity="center"
-                        android:background="#CED9DD"
+                        android:background="@drawable/category_btn"
                         android:fontFamily="@font/notosans_bold"
                         android:text="교내시설"
                         android:textColor="#4F4D4B"
@@ -179,7 +181,7 @@
                         android:layout_marginLeft="10dp"
                         android:id="@+id/category5"
                         android:gravity="center"
-                        android:background="#CED9DD"
+                        android:background="@drawable/category_btn"
                         android:fontFamily="@font/notosans_bold"
                         android:text="인권/평등"
                         android:textColor="#4F4D4B"
@@ -190,7 +192,7 @@
                         android:layout_marginLeft="10dp"
                         android:id="@+id/category6"
                         android:gravity="center"
-                        android:background="#CED9DD"
+                        android:background="@drawable/category_btn"
                         android:fontFamily="@font/notosans_bold"
                         android:text="예술/문화"
                         android:textColor="#4F4D4B"
@@ -201,7 +203,7 @@
                         android:layout_marginLeft="10dp"
                         android:id="@+id/category7"
                         android:gravity="center"
-                        android:background="#CED9DD"
+                        android:background="@drawable/category_btn"
                         android:fontFamily="@font/notosans_bold"
                         android:text="기타"
                         android:textColor="#4F4D4B"

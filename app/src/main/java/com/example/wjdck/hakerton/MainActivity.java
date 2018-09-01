@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.melnykov.fab.FloatingActionButton;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     Button category6;
     Button category7;
 
+    TextView toolbar_text;
+
     private FloatingActionButton fab;
 
     @Override
@@ -79,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         category5 = findViewById(R.id.category5);
         category6 = findViewById(R.id.category6);
         category7 = findViewById(R.id.category7);
+        toolbar_text = findViewById(R.id.toolbar_text);
 
         //Toolbar 추가
         setSupportActionBar(toolbar_main);
@@ -192,42 +198,49 @@ public class MainActivity extends AppCompatActivity {
         category1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                toolbar_text.setText("전체");
                 adapter.setCategory("전체");
             }
         });
         category2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                toolbar_text.setText("행정");
                 adapter.setCategory("행정");
             }
         });
         category3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                toolbar_text.setText("보건/복지");
                 adapter.setCategory("보건/복지");
             }
         });
         category4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                toolbar_text.setText("교내시설");
                 adapter.setCategory("교내시설");
             }
         });
         category5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                toolbar_text.setText("인권/평등");
                 adapter.setCategory("인권/평등");
             }
         });
         category6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                toolbar_text.setText("예술/문화");
                 adapter.setCategory("예술/문화");
             }
         });
         category7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                toolbar_text.setText("기타");
                 adapter.setCategory("기타");
             }
         });
