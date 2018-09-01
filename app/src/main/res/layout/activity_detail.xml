@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer"
-    android:orientation="vertical"
-    tools:openDrawer="end">
+    android:orientation="vertical">
+    <!--tools:openDrawer="end"-->
+
 
 
     <RelativeLayout
@@ -19,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
-            android:background="?attr/colorPrimary"
+            android:background="#447399"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -53,22 +54,27 @@
         <LinearLayout
             android:id="@+id/ll"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
+            android:background="#CED9DD"
             android:orientation="horizontal"
             android:layout_above="@+id/ll2"
             >
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="315dp"
+                android:layout_height="35dp"
+                android:fontFamily="@font/notosans_regular"
+                android:textSize="13.5sp"
+                android:hint="    동의합니다"
+
                 android:id="@+id/agree_edit"
-                android:background="@drawable/border"/>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:background="@drawable/soft_edge"/>
+            <ImageButton
+                android:layout_width="45dp"
+                android:layout_height="35dp"
+
                 android:id="@+id/agree_btn"
+                android:background="@drawable/final_agree"
                 android:text="동의하기"
                 android:textAlignment="center" />
         </LinearLayout>
@@ -79,21 +85,33 @@
             android:orientation="horizontal"
             android:id="@+id/ll2"
             android:layout_alignParentBottom="true">
-
-            <ToggleButton
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                >
+            <ToggleButton
+                android:layout_width="20dp"
+                android:layout_height="25dp"
+                android:textOn=""
+                android:textOff=""
                 android:id="@+id/bookmark_btn"
                 android:background="@drawable/bookmark"/>
-
-            <ToggleButton
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:layout_weight="1"
+                >
+            <ToggleButton
+                android:layout_width="23dp"
+                android:layout_height="27dp"
+                android:textOn=""
+                android:textOff=""
                 android:id="@+id/push_btn"
                 android:background="@drawable/pushalarm" />
-
+            </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>

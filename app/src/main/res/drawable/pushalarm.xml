@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable = "@drawable/ic_pushalarm"
+    <item android:drawable = "@drawable/final_bell"
         android:state_checked="true"/>
-    <item android:drawable="@drawable/ic_pushalarm_border"
+    <item android:drawable="@drawable/final_bell_border"
         android:state_checked="false"/>
 </selector>
