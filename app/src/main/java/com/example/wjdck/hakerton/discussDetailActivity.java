@@ -1,5 +1,6 @@
 package com.example.wjdck.hakerton;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,10 +12,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 import static com.example.wjdck.hakerton.loginActivity.appData;
@@ -90,6 +94,11 @@ public class discussDetailActivity extends AppCompatActivity {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main, menu);
+        LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout drawerLinear = (LinearLayout) inflate.inflate(R.layout.drawer_header, null);
+
+        TextView drawer_id = (TextView) findViewById(R.id.drawer_id_main);
+        drawer_id.setText(Uid);
         return super.onCreateOptionsMenu(menu);
     }
 

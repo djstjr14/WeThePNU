@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.content.Intent;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -254,6 +256,11 @@ public class detailActivity extends AppCompatActivity {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main, menu);
+        LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout drawerLinear = (LinearLayout) inflate.inflate(R.layout.drawer_header, null);
+
+        TextView drawer_id = (TextView) findViewById(R.id.drawer_id_main);
+        drawer_id.setText(Uid);
         return super.onCreateOptionsMenu(menu);
     }
 

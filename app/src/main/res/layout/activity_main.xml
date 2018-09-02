@@ -222,6 +222,7 @@
         android:background="#F7F7F7"
         android:layout_gravity="end"
         app:headerLayout="@layout/drawer_header"
+        app:itemTextAppearance="@style/NavigationViewStyle"
         app:menu="@menu/drawer">
     </android.support.design.widget.NavigationView>
 
