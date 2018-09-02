@@ -6,7 +6,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
+@IgnoreExtraProperties
 public class discussItem implements Serializable {
 
     private String key;
@@ -15,6 +15,50 @@ public class discussItem implements Serializable {
     private long recommend;
     private long unrecommend;
     private String date;
+    private long hits;
+    private long comments;
+    public Map<String, Boolean> clicked = new HashMap<>();
+
+    public long getHits() {
+        return hits;
+    }
+
+    public void setHits(long hits) {
+        this.hits = hits;
+    }
+
+    public long getComments() {
+        return comments;
+    }
+
+    public void setComments(long comments) {
+        this.comments = comments;
+    }
+
+    public Map<String, Boolean> getClicked() {
+        return clicked;
+    }
+
+    public void setClicked(Map<String, Boolean> clicked) {
+        this.clicked = clicked;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put("key", key);
+        result.put("title", title);
+        result.put("text", text);
+        result.put("recommend", recommend);
+        result.put("unrecommend", unrecommend);
+        result.put("date", date);
+        result.put("hits", hits);
+        result.put("comments", comments);
+        result.put("clicked", clicked);
+        return result;
+
+    }
 
     public String getKey() {
         return key;
@@ -66,13 +110,14 @@ public class discussItem implements Serializable {
 
     public discussItem() {}
 
-    public discussItem(String key, String title, String text, long recommend, long unrecommend, String date){
+    public discussItem(String key, String title, String text, long recommend, long unrecommend, String date, long hits, long comments){
         this.key = key;
         this.title = title;
         this.text = text;
         this.recommend = recommend;
         this.unrecommend = unrecommend;
         this.date = date;
+        this.hits = hits;
+        this.comments = comments;
     }
-
 }

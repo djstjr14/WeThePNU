@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_discuss_detail"
     android:orientation="vertical"
-    >
+    tools:openDrawer="end">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -67,15 +67,16 @@
                 android:fontFamily="@font/notosans_regular"
                 android:textSize="13.5sp"
                 android:id="@+id/detail_commend_edit"
-                android:background="@drawable/soft_edge"/>
+                android:background=""/>
 
-            <ImageButton
+            <Button
                 android:layout_width="45dp"
                 android:layout_height="35dp"
+                android:layout_weight="3"
                 android:id="@+id/detail_commend_btn"
-                android:background="@drawable/final_agree"
+                android:background=""
                 android:text="등록"
-                android:textAlignment="center"/>
+                android:textAlignment="center" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -84,10 +85,8 @@
         android:id="@+id/navigation_discuss_detail"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="#F7F7F7"
         android:layout_gravity="end"
         app:headerLayout="@layout/drawer_header"
-        app:itemTextAppearance="@style/NavigationViewStyle"
         app:menu="@menu/drawer">
     </android.support.design.widget.NavigationView>
 

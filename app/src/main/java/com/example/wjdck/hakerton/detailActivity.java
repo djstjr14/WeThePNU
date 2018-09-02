@@ -66,6 +66,7 @@ public class detailActivity extends AppCompatActivity {
 
     String thisKey = "";
     Boolean toastFlag = false;
+    String progress = "청원 진행중";
 
     Toast toast;
 
@@ -75,7 +76,7 @@ public class detailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
         final ListViewItem item = (ListViewItem) intent.getSerializableExtra("ITEM");
-        final PostItem post = new PostItem(item.getKey(), item.getTitle(), item.getText(), item.getCategory(), item.getRecommend(), item.getDate());
+        final PostItem post = new PostItem(item.getKey(), item.getTitle(), item.getText(), item.getCategory(), item.getRecommend(), item.getDate(), item.isAnswered());
         thisKey = item.getKey();
 
         btn_agree = findViewById(R.id.agree_btn);
@@ -97,10 +98,14 @@ public class detailActivity extends AppCompatActivity {
             btn_push.setChecked(true);
             post.setPush(true);
         }
+        //답변 달렸을때
+        if(item.isAnswered()){
+            progress = "답변 완료";
+        }
 
         items = new ArrayList<>();
         recyclerView = findViewById(R.id.comment);
-        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText());
+        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), progress);
         recyclerView.setAdapter(adapter);
         Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
 

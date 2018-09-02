@@ -7,8 +7,25 @@ public class PostItem {
     private String category;
     private long recommend;
     private String date;
+    private boolean answered;
     private boolean book;
     private boolean push;
+
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
+    }
+
+    public boolean isBook() {
+        return book;
+    }
+
+    public void setBook(boolean book) {
+        this.book = book;
+    }
 
     public boolean isBookmark() {
         return book;
@@ -76,13 +93,14 @@ public class PostItem {
 
     public PostItem() {}
 
-    public PostItem(String key, String title, String text, String category, long recommend, String date){
+    public PostItem(String key, String title, String text, String category, long recommend, String date, boolean answered){
         this.key = key;
         this.title = title;
         this.text = text;
         this.category = category;
         this.recommend = recommend;
         this.date = date;
+        this.answered = answered;
         this.book = false;
         this.push = false;
     }

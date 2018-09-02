@@ -18,14 +18,13 @@
             android:layout_height="?attr/actionBarSize"
             android:background="#447399"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <TextView
                 android:id="@+id/toolbar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "W E  T H E  P N U"
+                android:text = "전체"
                 android:textColor="#FFFFFF"
                 android:layout_gravity="center"
                 android:fontFamily="@font/notosans_medium"
