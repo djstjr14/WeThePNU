@@ -52,8 +52,9 @@ public class addAgendaActivity extends AppCompatActivity {
                 String category = category_spinner.getSelectedItem().toString();
                 long recommend = 0;
                 long date = Calendar.getInstance().getTimeInMillis();
+                boolean answered = false;
 
-                ListViewItem agenda = new ListViewItem(key, title, text, category, recommend, Long.toString(date));
+                ListViewItem agenda = new ListViewItem(key, title, text, category, recommend, Long.toString(date), answered);
 
                 ref.push().setValue(agenda.toMap());
                 finish();

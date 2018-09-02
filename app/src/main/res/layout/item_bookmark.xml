@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:paddingLeft="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,48 +14,45 @@
         android:layout_gravity="left"
         >
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:gravity="center_vertical">
-
 
         <TextView
             android:id="@+id/item_bookmark_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#474747"
-            android:textSize="17sp"
-            android:layout_marginEnd="20dp"
+            android:textColor="#000000"
+            android:textSize="15.2sp"
+            android:fontFamily="@font/notosans_bold"
             android:text="bookmarked agenda title"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:orientation="horizontal"
         >
-
     <TextView
         android:id="@+id/item_bookmark_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:gravity="start"
-        android:textSize="14sp"
-        android:textColor="#8C8C8C"
-        android:layout_marginStart="10dp"
-
+        android:textSize="13sp"
+        android:textColor="#B5B5B5"
+        android:fontFamily="@font/notosans_bold"
         android:text="분야/분야"/>
     <TextView
         android:id="@+id/item_bookmark_startdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:textSize="14sp"
-        android:textColor="#8C8C8C"
+        android:textSize="13sp"
+        android:textColor="#B5B5B5"
+        android:fontFamily="@font/notosans_bold"
         android:layout_marginLeft="10dp"
         android:text="2018-08-08"
         />
@@ -64,36 +62,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:textSize="14sp"
-        android:textColor="#8C8C8C"
+        android:textSize="13sp"
+        android:textColor="#B5B5B5"
+        android:fontFamily="@font/notosans_bold"
         android:layout_marginLeft="10dp"
         android:text="2018-09-08"
         />
-
-
-    <TextView
-        android:id="@+id/item_bookmark_userid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:textSize="14sp"
-        android:textColor="#8C8C8C"
-        android:layout_marginLeft="10dp"
-        android:text="userid"
-        />
-
 
     </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="6">
+
         <ImageView
             android:id="@+id/item_delete"
-            android:src="@drawable/border"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_cancle_btn" />
 
     </LinearLayout>
 

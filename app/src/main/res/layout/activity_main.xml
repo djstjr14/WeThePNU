@@ -24,7 +24,7 @@
                 android:id="@+id/toolbar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "W E  T H E  P N U"
+                android:text = "전체"
                 android:textColor="#FFFFFF"
                 android:layout_gravity="center"
                 android:fontFamily="@font/notosans_medium"

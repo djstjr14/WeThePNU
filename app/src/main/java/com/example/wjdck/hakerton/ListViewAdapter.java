@@ -107,6 +107,7 @@ public class ListViewAdapter extends BaseAdapter {
     public void addItem(ListViewItem item){
         listviewItemList.add(item);
     }
+
     public void listSort(){
         Comparator<ListViewItem> noAsc = null;
         switch(sort) {

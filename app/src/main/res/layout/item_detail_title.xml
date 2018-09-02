@@ -27,7 +27,6 @@
         android:textSize="17.6sp"
         android:fontFamily="@font/notosans_bold"
         android:textColor="#4B5B6A"
-
         />
 
         <ImageView

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="top"
-            android:background="?attr/colorPrimary"
+            android:background="#447399"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -28,7 +28,7 @@
                 android:id="@+id/mylist_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/notosans_bold"
+                android:fontFamily="@font/notosans_medium"
                 android:text = "즐겨찾기 목록"
                 android:layout_gravity="center"
                 android:textSize="20sp"/>
