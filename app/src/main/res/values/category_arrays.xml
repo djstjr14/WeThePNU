@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="category">
+    <string-array name="category"
+        textSize="18sp"
+        fontFamily="@font/notosans_medium">
         <item >행정</item>
         <item >보건/복지</item>
         <item >교내시설</item>

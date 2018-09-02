@@ -19,15 +19,15 @@
             android:layout_alignParentTop="true"
             android:background="#447399"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <TextView
                 android:id="@+id/detail_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/notosans_bold"
+                android:fontFamily="@font/notosans_medium"
                 android:text = "게시글"
+                android:textColor="#FFFFFF"
                 android:layout_gravity="center"
                 android:textSize="20sp"/>
 
