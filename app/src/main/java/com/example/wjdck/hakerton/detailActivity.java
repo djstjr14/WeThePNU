@@ -38,6 +38,7 @@ import com.google.firebase.database.Transaction;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 import static com.example.wjdck.hakerton.loginActivity.appData;
@@ -258,7 +259,7 @@ public class detailActivity extends AppCompatActivity {
     //추가된 소스, ToolBar에 main.xml을 인플레이트함
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
+        //return super.onhg CreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main, menu);
         LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);

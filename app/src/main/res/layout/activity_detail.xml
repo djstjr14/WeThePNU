@@ -7,9 +7,6 @@
     android:id="@+id/drawer"
     android:orientation="vertical">
     <!--tools:openDrawer="end"-->
-
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -59,20 +56,17 @@
             android:orientation="horizontal"
             android:layout_above="@+id/ll2"
             >
-
             <EditText
                 android:layout_width="315dp"
                 android:layout_height="35dp"
                 android:fontFamily="@font/notosans_regular"
                 android:textSize="13.5sp"
                 android:hint="    동의합니다"
-
                 android:id="@+id/agree_edit"
                 android:background="@drawable/soft_edge"/>
             <ImageButton
                 android:layout_width="45dp"
                 android:layout_height="35dp"
-
                 android:id="@+id/agree_btn"
                 android:background="@drawable/final_agree"
                 android:text="동의하기"

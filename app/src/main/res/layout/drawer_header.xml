@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="?attr/actionBarSize"
     android:background="#F7F7F7"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:gravity="bottom">
+    android:gravity="center">
 
     <TextView
         android:layout_width="match_parent"
@@ -15,7 +15,6 @@
         android:fontFamily="@font/notosans_medium"
         android:textColor="#28323B"
         android:textSize="20sp"
-        android:paddingBottom="20dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <View style="@style/Divider"/>

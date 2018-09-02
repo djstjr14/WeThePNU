@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "토 론 게 시 판"
+                android:text = "자 유 토 론 게 시 판"
                 android:layout_gravity="center"
                 android:textColor="#FFFFFF"
                 android:fontFamily="@font/notosans_medium"
