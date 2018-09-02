@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/drawer_id_main"
         android:text="WeThePNU"
-        android:fontFamily="@font/notosans_bold"
+        android:fontFamily="@font/notosans_medium"
         android:textColor="#28323B"
         android:textSize="20sp"
         android:paddingBottom="20dp"
