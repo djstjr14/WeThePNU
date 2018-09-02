@@ -9,12 +9,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -22,6 +24,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.melnykov.fab.FloatingActionButton;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
@@ -37,8 +41,8 @@ public class discussActivity extends AppCompatActivity {
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigation;
-    Button btn_rec;
-    Button btn_latest;
+    ImageButton btn_rec;
+    ImageButton btn_latest;
 
     private FloatingActionButton fab;
 
@@ -51,6 +55,8 @@ public class discussActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_discuss);
         drawer = findViewById(R.id.drawer_discuss);
         navigation = findViewById(R.id.navigation_discuss);
+        btn_latest = findViewById(R.id.new_btn);
+        btn_rec = findViewById(R.id.recommend_btn);
 
         //Toolbar 추가
         setSupportActionBar(toolbar);
@@ -68,6 +74,13 @@ public class discussActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Intent intent = new Intent(discussActivity.this, discussDetailActivity.class);
+                discussItem item = adapter.getItem(position);
+                onItemClicked(mDatabaseReference.child(item.getKey()));
+                if(!item.getClicked().containsKey(Uid)){
+                    item.getClicked().put(Uid, true);
+                    mDatabaseReference.child(item.getKey()).setValue(item);
+                }
+                adapter.clickedList(view);
                 intent.putExtra("ITEM", adapter.getItem(position));
                 startActivity(intent);
             }
@@ -114,6 +127,23 @@ public class discussActivity extends AppCompatActivity {
             }
         });
 
+        btn_latest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setSort(1);
+                btn_rec.setImageResource(R.drawable.btn_recommend_normal);
+                btn_latest.setImageResource(R.drawable.btn_latest_clicked);
+            }
+        });
+        btn_rec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setSort(2);
+                btn_rec.setImageResource(R.drawable.btn_recommend_clicked);
+                btn_latest.setImageResource(R.drawable.btn_latest_normal);
+            }
+        });
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("Discuss");
         mChildEventListener = new ChildEventListener() {
@@ -125,6 +155,7 @@ public class discussActivity extends AppCompatActivity {
                     mDatabaseReference.child(dataSnapshot.getKey()).child("key").setValue(dataSnapshot.getKey());
                 }
                 adapter.addItem(item);
+                adapter.listSort();
                 adapter.notifyDataSetChanged();
             }
 
@@ -163,6 +194,25 @@ public class discussActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(discussActivity.this, addDiscussActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void onItemClicked(DatabaseReference agreeRef) {
+        agreeRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                discussItem item = mutableData.getValue(discussItem.class);
+                if(item == null) {
+                    return Transaction.success(mutableData);
+                }
+                item.setHits(item.getHits()+1);;
+                mutableData.setValue(item);
+                return Transaction.success(mutableData);
+            }
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                Log.d("DetailActivity", "Hits Transaction : onComplete:" + databaseError);
             }
         });
     }

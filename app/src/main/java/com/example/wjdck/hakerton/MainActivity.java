@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, detailActivity.class);
                 ListViewItem item = adapter.getItem(position);
                 intent.putExtra("ITEM", item);
-
                 if(!item.getClicked().containsKey(Uid)){
                     item.getClicked().put(Uid, true);
                     mDatabaseReference.child(item.getKey()).setValue(item);

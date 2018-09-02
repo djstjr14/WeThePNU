@@ -54,6 +54,7 @@ public class ListViewAdapter extends BaseAdapter {
         TextView titleTextView = (TextView) convertView.findViewById(R.id.agenda_title);
         TextView recommendTextView = (TextView) convertView.findViewById(R.id.agenda_num);
         TextView dateTextView = (TextView) convertView.findViewById(R.id.agenda_date);
+        TextView endDateTextView = (TextView) convertView.findViewById(R.id.agenda_enddate);
 
         ListViewItem listViewItem = getItem(pos);
 
@@ -61,6 +62,7 @@ public class ListViewAdapter extends BaseAdapter {
             titleTextView.setText(listViewItem.getTitle());
             recommendTextView.setText(Long.toString(listViewItem.getRecommend()) + " 명");
             dateTextView.setText(mSimpleDateFormat.format(Long.parseLong(listViewItem.getDate())));
+            endDateTextView.setText(mSimpleDateFormat.format((Long.parseLong(listViewItem.getDate()))+(2592000000L)));
             if(listViewItem.getClicked().containsKey(Uid)){
                 clickedList(convertView);
             }else{
