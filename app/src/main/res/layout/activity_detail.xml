@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notosans_medium"
-                android:text = "게시글"
+                android:text = "게 시 글"
                 android:textColor="#FFFFFF"
                 android:layout_gravity="center"
                 android:textSize="20sp"/>

@@ -6,6 +6,7 @@
             android:id="@+id/navigation_item1"
             android:fontFamily="@font/notosans_medium"
             android:title="@string/nav_menu_1" />
+
         <item
             android:id="@+id/navigation_item2"
             android:fontFamily="@font/notosans_medium"
@@ -17,7 +18,7 @@
         <item
             android:id="@+id/navigation_item4"
             android:fontFamily="@font/notosans_medium"
-            android:title="@string/nav_menu_4" />
+            android:title="@string/nav_menu_4"/>
         <item
             android:id="@+id/navigation_item5"
             android:fontFamily="@font/notosans_medium"

@@ -2,13 +2,16 @@ package com.example.wjdck.hakerton;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,7 +27,7 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private ArrayList<CommentItem> commentItems;
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    public CommentViewAdapter(Context context, ArrayList<CommentItem> items, String title, String body, String agree, String progress){
+    public CommentViewAdapter(final Context context, ArrayList<CommentItem> items, String title, String body, String agree, String progress){
         this.context = context;
         this.commentItems = items;
         this.title = title;
@@ -41,6 +44,7 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void setBody(String body) {
         this.body = body;
     }
+    public void setAgree(String agree){ this.agree = agree; }
 
     @Override
     public int getItemViewType(int position) {
@@ -77,6 +81,13 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if(position == 1) {
             ((DetailBodyViewHolder)holder).body.setText(body);
             ((DetailBodyViewHolder)holder).agree.setText(agree);
+            ((DetailBodyViewHolder)holder).answer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, openPdfActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         } else {
             ((CommentViewHolder)holder).userId.setText(commentItems.get(position).getUserid());
             ((CommentViewHolder)holder).body.setText(commentItems.get(position).getBody());
@@ -131,9 +142,11 @@ class DetailTitleViewHolder extends RecyclerView.ViewHolder {
 class DetailBodyViewHolder extends RecyclerView.ViewHolder {
     public TextView body;
     public TextView agree;
+    public Button answer;
     public DetailBodyViewHolder(View itemView) {
         super(itemView);
         this.body = itemView.findViewById(R.id.body);
         this.agree = itemView.findViewById(R.id.agree_people);
+        this.answer = itemView.findViewById(R.id.answer_btn);
     }
 }
