@@ -1,6 +1,7 @@
 package com.example.wjdck.hakerton;
 
 import android.app.Activity;
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,16 +22,22 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     Context context;
     private String title, body, agree, progress;
+    private int option = 1;
+    // option = 1 --> detailActivity, option = 2 --> detaildiscussActivity
     private ArrayList<CommentItem> commentItems;
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    public CommentViewAdapter(Context context, ArrayList<CommentItem> items, String title, String body, String agree, String progress){
+
+
+    public CommentViewAdapter(Context context, ArrayList<CommentItem> items, String title, String body, String agree, String progress, int option){
         this.context = context;
         this.commentItems = items;
         this.title = title;
         this.body = body;
         this.agree = agree;
         this.progress = progress;
+        this.option = option;
+
         commentItems.add(new CommentItem());
         commentItems.add(new CommentItem());
     }
@@ -58,29 +65,67 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v;
         if(viewType == 0) {
-            v = inflater.inflate(R.layout.item_detail_title, parent, false);
-            return new DetailTitleViewHolder(v);
+            if(option == 1){
+                v = inflater.inflate(R.layout.item_detail_title, parent, false);
+                return new DetailTitleViewHolder(v);
+            }
+            else {
+                v = inflater.inflate(R.layout.item_discuss_detail_title, parent, false);
+                return new DiscussDetailTitleViewHolder(v);
+            }
+
+
         } else if(viewType == 1) {
-            v = inflater.inflate(R.layout.item_detail_body, parent, false);
-            return new DetailBodyViewHolder(v);
+            if(option == 1) {
+                v = inflater.inflate(R.layout.item_detail_body, parent, false);
+                return new DetailBodyViewHolder(v);
+            }
+            else {
+                v = inflater.inflate(R.layout.item_discuss_detail_body, parent, false);
+                return new DiscussDetailBodyViewHolder(v);
+            }
+
         } else {
-            v = inflater.inflate(R.layout.item_comment, parent, false);
-            return new CommentViewHolder(v);
+            if(option == 1){
+                v = inflater.inflate(R.layout.item_comment, parent, false);
+                return new CommentViewHolder(v);
+            }
+            else {
+                v = inflater.inflate(R.layout.item_discuss_detail_comment, parent, false);
+                return new DiscussDetailCommentViewHolder(v);
+            }
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(position == 0) {
-            ((DetailTitleViewHolder)holder).title.setText(title);
-            ((DetailTitleViewHolder)holder).progress.setText(progress);
+            if(option == 1) {
+                ((DetailTitleViewHolder) holder).title.setText(title);
+                ((DetailTitleViewHolder) holder).progress.setText(progress);
+            }
+            else{
+                ((DiscussDetailTitleViewHolder) holder).title.setText(title);
+            }
         } else if(position == 1) {
-            ((DetailBodyViewHolder)holder).body.setText(body);
-            ((DetailBodyViewHolder)holder).agree.setText(agree);
+            if(option == 1){
+                ((DetailBodyViewHolder) holder).body.setText(body);
+                ((DetailBodyViewHolder) holder).agree.setText(agree);
+            }
+            else{
+                ((DiscussDetailBodyViewHolder) holder).body.setText(body);
+            }
         } else {
-            ((CommentViewHolder)holder).userId.setText(commentItems.get(position).getUserid());
-            ((CommentViewHolder)holder).body.setText(commentItems.get(position).getBody());
-            ((CommentViewHolder)holder).date.setText(mSimpleDateFormat.format(commentItems.get(position).getDate()));
+            if(option == 1) {
+                ((CommentViewHolder) holder).userId.setText(commentItems.get(position).getUserid());
+                ((CommentViewHolder) holder).body.setText(commentItems.get(position).getBody());
+                ((CommentViewHolder) holder).date.setText(mSimpleDateFormat.format(commentItems.get(position).getDate()));
+            }
+            else{
+                ((DiscussDetailCommentViewHolder) holder).id.setText(commentItems.get(position).getUserid());
+                ((DiscussDetailCommentViewHolder) holder).body.setText(commentItems.get(position).getBody());
+                ((DiscussDetailCommentViewHolder) holder).date.setText(mSimpleDateFormat.format(commentItems.get(position).getDate()));
+            }
         }
     }
 
@@ -113,9 +158,9 @@ class CommentViewHolder extends RecyclerView.ViewHolder {
 
     public CommentViewHolder(View itemView) {
         super(itemView);
-        this.userId = itemView.findViewById(R.id.item_comment_userid);
-        this.body = itemView.findViewById(R.id.item_comment_body);
-        this.date = itemView.findViewById(R.id.item_comment_date);
+            this.userId = itemView.findViewById(R.id.item_comment_userid);
+            this.body = itemView.findViewById(R.id.item_comment_body);
+            this.date = itemView.findViewById(R.id.item_comment_date);
     }
 }
 class DetailTitleViewHolder extends RecyclerView.ViewHolder {
@@ -136,4 +181,40 @@ class DetailBodyViewHolder extends RecyclerView.ViewHolder {
         this.body = itemView.findViewById(R.id.body);
         this.agree = itemView.findViewById(R.id.agree_people);
     }
+}
+
+class DiscussDetailCommentViewHolder extends RecyclerView.ViewHolder{
+    public TextView id;
+    public TextView date;
+    public TextView body;
+
+    public DiscussDetailCommentViewHolder(View itemView){
+        super(itemView);
+        this.id = itemView.findViewById(R.id.discuss_detail_comment_id);
+        this.body = itemView.findViewById(R.id.discuss_detail_comment_body);
+        this.date = itemView.findViewById(R.id.discuss_detail_comment_date);
+    }
+}
+
+class DiscussDetailTitleViewHolder extends RecyclerView.ViewHolder{
+    public TextView title;
+    public TextView date;
+    public TextView id;
+
+    public DiscussDetailTitleViewHolder(View itemView){
+        super(itemView);
+        this.title = itemView.findViewById(R.id.discuss_detail_title);
+        this.id = itemView.findViewById(R.id.discuss_detail_id);
+        this.date = itemView.findViewById(R.id.discuss_detail_date);
+    }
+}
+
+
+class DiscussDetailBodyViewHolder extends RecyclerView.ViewHolder{
+    public TextView body;
+    public DiscussDetailBodyViewHolder(View itemView){
+        super(itemView);
+        this.body = itemView.findViewById(R.id.discuss_detail_body);
+    }
+
 }
