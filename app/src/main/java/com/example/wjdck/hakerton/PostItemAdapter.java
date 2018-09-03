@@ -91,11 +91,7 @@ public class PostItemAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void addItem(PostItem item){
-        Collections.reverse(listviewItemList);
-        listviewItemList.add(item);
-        Collections.reverse(listviewItemList);
-    }
+    public void addItem(PostItem item){listviewItemList.add(item);}
     public int findItem(String key) {
         for(int i=0; i<listviewItemList.size(); i++) {
             if(listviewItemList.get(i).getKey().equals(key)){

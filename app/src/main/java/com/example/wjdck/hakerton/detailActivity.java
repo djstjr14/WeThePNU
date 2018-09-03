@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.content.Intent;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -36,6 +38,7 @@ import com.google.firebase.database.Transaction;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 import static com.example.wjdck.hakerton.loginActivity.appData;
@@ -64,6 +67,7 @@ public class detailActivity extends AppCompatActivity {
 
     String thisKey = "";
     Boolean toastFlag = false;
+    String progress = "청원 진행중";
 
     Toast toast;
 
@@ -73,7 +77,7 @@ public class detailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
         final ListViewItem item = (ListViewItem) intent.getSerializableExtra("ITEM");
-        final PostItem post = new PostItem(item.getKey(), item.getTitle(), item.getText(), item.getCategory(), item.getRecommend(), item.getDate());
+        final PostItem post = new PostItem(item.getKey(), item.getTitle(), item.getText(), item.getCategory(), item.getRecommend(), item.getDate(), item.isAnswered());
         thisKey = item.getKey();
 
         btn_agree = findViewById(R.id.agree_btn);
@@ -95,10 +99,14 @@ public class detailActivity extends AppCompatActivity {
             btn_push.setChecked(true);
             post.setPush(true);
         }
+        //답변 달렸을때
+        if(item.isAnswered()){
+            progress = "답변 완료";
+        }
 
         items = new ArrayList<>();
         recyclerView = findViewById(R.id.comment);
-        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText());
+        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), progress);
         recyclerView.setAdapter(adapter);
         Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
 
@@ -251,9 +259,14 @@ public class detailActivity extends AppCompatActivity {
     //추가된 소스, ToolBar에 main.xml을 인플레이트함
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
+        //return super.onhg CreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main, menu);
+        LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout drawerLinear = (LinearLayout) inflate.inflate(R.layout.drawer_header, null);
+
+        TextView drawer_id = (TextView) findViewById(R.id.drawer_id_main);
+        drawer_id.setText(Uid);
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_discuss"
-    android:orientation="vertical"
-    tools:openDrawer="end">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,17 +16,17 @@
             android:id="@+id/toolbar_discuss"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="#447399"
             android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "토 론 게 시 판"
+                android:text = "자 유 토 론 게 시 판"
                 android:layout_gravity="center"
-                android:fontFamily="@font/notosans_black"
+                android:textColor="#FFFFFF"
+                android:fontFamily="@font/notosans_medium"
                 android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
@@ -38,11 +37,9 @@
             android:id="@+id/fab_discuss"
             android:layout_gravity="bottom|right"
             android:layout_marginLeft="330dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="80dp"
             android:src="@drawable/add"
-            app:fab_colorNormal="@color/fabPrimary"
-            app:fab_colorPressed="@color/fabPressed"
-            app:fab_colorRipple="@color/fabRipple"
+            android:scaleType="centerCrop"
             android:layout_alignParentBottom="true"/>
 
         <LinearLayout
@@ -64,30 +61,37 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:padding="10dp"
+                android:layout_height="60dp"
+                android:paddingLeft="70dp"
+                android:paddingRight="70dp"
+                android:background="#EDF5F9"
                 android:orientation="horizontal">
 
+                <ImageButton
+                    android:id="@+id/new_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#EDF5F9"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:padding="5dp"
+                    android:layout_margin="15dp"
+                    android:src="@drawable/btn_latest_clicked"
+                    android:layout_weight="1" />
 
                 <ImageButton
-                    android:id="@+id/recommend_btn_discuss"
-                    android:layout_margin="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="70dp"
+                    android:id="@+id/recommend_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="@android:color/holo_blue_dark"
-                    />
-
-                <ImageButton
-                    android:id="@+id/new_btn_discuss"
-                    android:layout_margin="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/holo_blue_dark"
+                    android:background="#EDF5F9"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:padding="5dp"
+                    android:layout_margin="15dp"
+                    android:src="@drawable/btn_recommend_normal"
                     />
             </LinearLayout>
-
         </LinearLayout>
     </RelativeLayout>
 
@@ -96,8 +100,10 @@
         android:id="@+id/navigation_discuss"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:background="#F7F7F7"
         android:layout_gravity="end"
         app:headerLayout="@layout/drawer_header"
+        app:itemTextAppearance="@style/NavigationViewStyle"
         app:menu="@menu/drawer">
     </android.support.design.widget.NavigationView>
 

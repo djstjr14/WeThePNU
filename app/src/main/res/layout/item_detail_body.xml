@@ -5,8 +5,29 @@
     android:layout_height="wrap_content"
     android:background="@drawable/border"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2dp"
+        android:layout_marginLeft="2dp"
+        android:gravity="center"
+        android:background="@drawable/soft_border">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center|left"
+            android:text="청원개요"
+            android:fontFamily="@font/notosans_black"
+            android:textColor="#0D202D"
+            android:textSize="14.5sp" />
+    </LinearLayout>
+
     <TextView
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/body"
         android:layout_width="match_parent"
         android:layout_height="350dp"
@@ -17,49 +38,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="청원동의 "
-        android:fontFamily="@font/notosans_bold"
-        android:textSize="22sp"
-        android:textColor="#4F4D4B"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="107"
-        android:fontFamily="@font/notosans_bold"
-        android:textSize="22sp"
-        android:textColor="#FF6482"
-        android:id="@+id/agree_people"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" 명"
-        android:fontFamily="@font/notosans_bold"
-        android:textSize="22sp"
-        android:textColor="#4F4D4B"
-        />
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="65dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="청원동의 "
+                android:fontFamily="@font/notosans_bold"
+                android:textSize="22sp"
+                android:textColor="#4F4D4B"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="107"
+                android:fontFamily="@font/notosans_bold"
+                android:textSize="22sp"
+                android:textColor="#FF6482"
+                android:id="@+id/agree_people"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 명"
+                android:fontFamily="@font/notosans_bold"
+                android:textSize="22sp"
+                android:textColor="#4F4D4B"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="30dp"
+            android:layout_weight="5">
+            <Button
+                android:id="@+id/report_btn"
+                android:layout_width="30dp"
+                android:layout_height="32dp"
+                android:background="@drawable/btn_report" />
+        </LinearLayout>
+
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:orientation="horizontal">
-        <!--<Button-->
-            <!--android:id="@+id/share_btn"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="SNS 공유"/>-->
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginLeft="2dp"
+        android:background="@drawable/soft_border"
+        android:padding="10dp">
         <Button
-            android:id="@+id/report_btn"
-            android:layout_width="30dp"
-            android:layout_height="32dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/report"/>
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_answer"/>
     </LinearLayout>
 </LinearLayout>

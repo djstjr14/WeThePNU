@@ -49,10 +49,12 @@ public class addDiscussActivity extends AppCompatActivity {
                 long recommend = 0;
                 long unrecommend = 0;
                 long date = Calendar.getInstance().getTimeInMillis();
+                long hits = 0;
+                long comments = 0;
 
-                discussItem item = new discussItem(key, title, text, recommend, unrecommend, Long.toString(date));
+                discussItem item = new discussItem(key, title, text, recommend, unrecommend, Long.toString(date), hits, comments);
 
-                ref.push().setValue(item);
+                ref.push().setValue(item.toMap());
                 finish();
             }
         });

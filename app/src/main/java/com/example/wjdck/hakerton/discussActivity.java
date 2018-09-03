@@ -1,5 +1,6 @@
 package com.example.wjdck.hakerton;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,19 +10,26 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.melnykov.fab.FloatingActionButton;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
@@ -37,8 +45,8 @@ public class discussActivity extends AppCompatActivity {
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigation;
-    Button btn_rec;
-    Button btn_latest;
+    ImageButton btn_rec;
+    ImageButton btn_latest;
 
     private FloatingActionButton fab;
 
@@ -51,6 +59,8 @@ public class discussActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_discuss);
         drawer = findViewById(R.id.drawer_discuss);
         navigation = findViewById(R.id.navigation_discuss);
+        btn_latest = findViewById(R.id.new_btn);
+        btn_rec = findViewById(R.id.recommend_btn);
 
         //Toolbar 추가
         setSupportActionBar(toolbar);
@@ -68,6 +78,13 @@ public class discussActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Intent intent = new Intent(discussActivity.this, discussDetailActivity.class);
+                discussItem item = adapter.getItem(position);
+                onItemClicked(mDatabaseReference.child(item.getKey()));
+                if(!item.getClicked().containsKey(Uid)){
+                    item.getClicked().put(Uid, true);
+                    mDatabaseReference.child(item.getKey()).setValue(item);
+                }
+                adapter.clickedList(view);
                 intent.putExtra("ITEM", adapter.getItem(position));
                 startActivity(intent);
             }
@@ -111,6 +128,23 @@ public class discussActivity extends AppCompatActivity {
                 }
 
                 return true;
+            }
+        });
+
+        btn_latest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setSort(1);
+                btn_rec.setImageResource(R.drawable.btn_recommend_normal);
+                btn_latest.setImageResource(R.drawable.btn_latest_clicked);
+            }
+        });
+        btn_rec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setSort(2);
+                btn_rec.setImageResource(R.drawable.btn_recommend_clicked);
+                btn_latest.setImageResource(R.drawable.btn_latest_normal);
             }
         });
 
@@ -167,12 +201,37 @@ public class discussActivity extends AppCompatActivity {
         });
     }
 
+    private void onItemClicked(DatabaseReference agreeRef) {
+        agreeRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                discussItem item = mutableData.getValue(discussItem.class);
+                if(item == null) {
+                    return Transaction.success(mutableData);
+                }
+                item.setHits(item.getHits()+1);;
+                mutableData.setValue(item);
+                return Transaction.success(mutableData);
+            }
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                Log.d("DetailActivity", "Hits Transaction : onComplete:" + databaseError);
+            }
+        });
+    }
+
     //추가된 소스, ToolBar에 main.xml을 인플레이트함
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main, menu);
+
+        LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout drawerLinear = (LinearLayout) inflate.inflate(R.layout.drawer_header, null);
+
+        TextView drawer_id = (TextView) findViewById(R.id.drawer_id_main);
+        drawer_id.setText(Uid);
         return super.onCreateOptionsMenu(menu);
     }
 

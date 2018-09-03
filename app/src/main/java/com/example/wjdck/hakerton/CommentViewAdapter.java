@@ -20,15 +20,17 @@ import java.util.Locale;
 public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     Context context;
-    private String title, body;
+    private String title, body, agree, progress;
     private ArrayList<CommentItem> commentItems;
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    public CommentViewAdapter(Context context, ArrayList<CommentItem> items, String title, String body){
+    public CommentViewAdapter(Context context, ArrayList<CommentItem> items, String title, String body, String agree, String progress){
         this.context = context;
         this.commentItems = items;
         this.title = title;
         this.body = body;
+        this.agree = agree;
+        this.progress = progress;
         commentItems.add(new CommentItem());
         commentItems.add(new CommentItem());
     }
@@ -71,8 +73,10 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(position == 0) {
             ((DetailTitleViewHolder)holder).title.setText(title);
+            ((DetailTitleViewHolder)holder).progress.setText(progress);
         } else if(position == 1) {
             ((DetailBodyViewHolder)holder).body.setText(body);
+            ((DetailBodyViewHolder)holder).agree.setText(agree);
         } else {
             ((CommentViewHolder)holder).userId.setText(commentItems.get(position).getUserid());
             ((CommentViewHolder)holder).body.setText(commentItems.get(position).getBody());
@@ -116,17 +120,20 @@ class CommentViewHolder extends RecyclerView.ViewHolder {
 }
 class DetailTitleViewHolder extends RecyclerView.ViewHolder {
     public TextView title;
-
+    public TextView progress;
     public DetailTitleViewHolder(View itemView) {
         super(itemView);
         this.title = itemView.findViewById(R.id.title);
+        this.progress = itemView.findViewById(R.id.agenda_progress);
     }
 }
 
 class DetailBodyViewHolder extends RecyclerView.ViewHolder {
     public TextView body;
+    public TextView agree;
     public DetailBodyViewHolder(View itemView) {
         super(itemView);
         this.body = itemView.findViewById(R.id.body);
+        this.agree = itemView.findViewById(R.id.agree_people);
     }
 }
