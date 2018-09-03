@@ -1,4 +1,7 @@
 <resources>
+        <style name="MyCustomDialogStyle" parent="@android:style/Theme.Dialog">
+            <item name="android:background">#FFFFFF</item>-->
+        </style>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">

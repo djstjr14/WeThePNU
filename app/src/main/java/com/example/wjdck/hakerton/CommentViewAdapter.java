@@ -24,21 +24,21 @@ import java.util.Locale;
 public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     Context context;
-    private String title, body, agree, progress;
+    private String title, body, agree, progress, key;
     private int option = 1;
     // option = 1 --> detailActivity, option = 2 --> detaildiscussActivity
     private ArrayList<CommentItem> commentItems;
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    public CommentViewAdapter(Context context, ArrayList<CommentItem> items, String title, String body, String agree, String progress, int option){
+    public CommentViewAdapter(final Context context, ArrayList<CommentItem> items, String title, String body, String agree, String progress, String key, int option){
         this.context = context;
         this.commentItems = items;
         this.title = title;
         this.body = body;
         this.agree = agree;
         this.progress = progress;
+        this.key = key;
         this.option = option;
-
         commentItems.add(new CommentItem());
         commentItems.add(new CommentItem());
     }
@@ -75,8 +75,6 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 v = inflater.inflate(R.layout.item_discuss_detail_title, parent, false);
                 return new DiscussDetailTitleViewHolder(v);
             }
-
-
         } else if(viewType == 1) {
             if(option == 1) {
                 v = inflater.inflate(R.layout.item_detail_body, parent, false);
@@ -110,22 +108,29 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((DiscussDetailTitleViewHolder) holder).title.setText(title);
             }
         } else if(position == 1) {
-            ((DetailBodyViewHolder)holder).body.setText(body);
-            ((DetailBodyViewHolder)holder).agree.setText(agree);
-            ((DetailBodyViewHolder)holder).answer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, openPdfActivity.class);
-                    context.startActivity(intent);
-                }
-            });
             if(option == 1){
-                ((DetailBodyViewHolder) holder).body.setText(body);
-                ((DetailBodyViewHolder) holder).agree.setText(agree);
+                ((DetailBodyViewHolder)holder).body.setText(body);
+                ((DetailBodyViewHolder)holder).agree.setText(agree);
+                ((DetailBodyViewHolder)holder).answer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, openPdfActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
+                ((DetailBodyViewHolder)holder).report.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, reportPopupActivity.class);
+                        intent.putExtra("data", key);
+                        context.startActivity(intent);
+                    }
+                });
             }
             else{
                 ((DiscussDetailBodyViewHolder) holder).body.setText(body);
             }
+
         } else {
             if(option == 1) {
                 ((CommentViewHolder) holder).userId.setText(commentItems.get(position).getUserid());
@@ -169,9 +174,9 @@ class CommentViewHolder extends RecyclerView.ViewHolder {
 
     public CommentViewHolder(View itemView) {
         super(itemView);
-            this.userId = itemView.findViewById(R.id.item_comment_userid);
-            this.body = itemView.findViewById(R.id.item_comment_body);
-            this.date = itemView.findViewById(R.id.item_comment_date);
+        this.userId = itemView.findViewById(R.id.item_comment_userid);
+        this.body = itemView.findViewById(R.id.item_comment_body);
+        this.date = itemView.findViewById(R.id.item_comment_date);
     }
 }
 class DetailTitleViewHolder extends RecyclerView.ViewHolder {
@@ -188,11 +193,13 @@ class DetailBodyViewHolder extends RecyclerView.ViewHolder {
     public TextView body;
     public TextView agree;
     public Button answer;
+    public Button report;
     public DetailBodyViewHolder(View itemView) {
         super(itemView);
         this.body = itemView.findViewById(R.id.body);
         this.agree = itemView.findViewById(R.id.agree_people);
         this.answer = itemView.findViewById(R.id.answer_btn);
+        this.report = itemView.findViewById(R.id.report_btn);
     }
 }
 

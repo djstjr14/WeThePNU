@@ -8,7 +8,8 @@ public class CommentItem {
 
     public CommentItem() {}
 
-    public CommentItem(String userid, String body, long date) {
+    public CommentItem(String key, String userid, String body, long date) {
+        this.key = key;
         this.userid = userid;
         this.body = body;
         this.date = date;
