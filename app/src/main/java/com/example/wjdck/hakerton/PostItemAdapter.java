@@ -92,6 +92,7 @@ public class PostItemAdapter extends BaseAdapter {
     }
 
     public void addItem(PostItem item){listviewItemList.add(item);}
+
     public int findItem(String key) {
         for(int i=0; i<listviewItemList.size(); i++) {
             if(listviewItemList.get(i).getKey().equals(key)){
