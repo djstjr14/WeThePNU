@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -88,6 +89,8 @@ public class detailActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.detail_toolbar);
         drawer= findViewById(R.id.drawer);
         navigation= findViewById(R.id.navigation);
+
+
 
         //즐겨찾기 버튼 초기셋팅
         if(item.getBookmark().containsKey(Uid)){
@@ -179,6 +182,8 @@ public class detailActivity extends AppCompatActivity {
                     toastFlag = false;
                 }else{
                     Title.setText("참여인원 : ["+Long.toString(item.getRecommend()+1)+"명]");
+                    adapter.setAgree(Long.toString(item.getRecommend()+1));
+                    adapter.notifyDataSetChanged();
                 }
 
                 edit_agree.setText("");

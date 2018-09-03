@@ -15,5 +15,6 @@
     <string name="nav_menu_5">Log Out</string>
     <string name="title_activity_bookmark">BookmarkActivity</string>
     <string name="title_activity_add_discuss">addDiscussActivity</string>
+    <string name="title_activity_answer">AnswerActivity</string>
 
 </resources>

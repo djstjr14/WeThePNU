@@ -15,28 +15,28 @@
         >
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/mylist_toolbar"
+            android:id="@+id/answer_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="top"
             android:background="#447399"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <TextView
-                android:id="@+id/mylist_title"
+                android:id="@+id/answer_tooltitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="#FFFFFF"
                 android:fontFamily="@font/notosans_medium"
-                android:text = "즐 겨 찾 기 목 록"
+                android:text = "답변게시판"
+                android:layout_gravity="center"
                 android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
 
         <ListView
-            android:id="@+id/mylist_listview"
+            android:id="@+id/answer_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"

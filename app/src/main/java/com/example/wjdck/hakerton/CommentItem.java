@@ -22,7 +22,18 @@ public class CommentItem {
         this.key = key;
     }
 
-    public String getUserid() {
+    public String getUserid()
+    {
+        String hiddenid;
+        String star="";
+        for(int i=0; i<userid.length()-1;i++){
+            star = star+"*";
+        }
+        hiddenid = userid.substring(0,1)+star;
+
+
+        userid = hiddenid;
+
         return userid;
     }
 

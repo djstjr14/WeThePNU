@@ -42,13 +42,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="match_parent">
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        android:text="title"
+        android:text="titleasdifparpairjirsigjasrpgijfaj[afwr[anforwna[ofrauwn[ofnawr[onuasgj"
         android:gravity="center"
         android:textColor="#4A5A69"
         android:fontFamily="@font/notosans_bold"

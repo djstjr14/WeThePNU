@@ -47,7 +47,7 @@ public class MyListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_white_18dp);
         if(option == 2){
-            title.setText("푸쉬알림 목록");
+            title.setText("푸 쉬 알 림 목 록");
         }
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
