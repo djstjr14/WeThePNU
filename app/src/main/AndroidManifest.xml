@@ -16,7 +16,13 @@
         <activity
             android:name=".splashActivity"
             android:label="splashActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
@@ -26,13 +32,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".loginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".discussActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -49,8 +49,10 @@
             android:name=".MyListActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".AnswerActivity"
-            android:label="@string/title_activity_answer"></activity>
+            android:name=".openPdfActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
     </application>
 
 </manifest>

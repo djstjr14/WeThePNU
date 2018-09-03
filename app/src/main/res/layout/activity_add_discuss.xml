@@ -19,9 +19,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/notosans_medium"
-            android:text = "글쓰기"
+            android:text = "글 쓰 기"
             android:textColor="#FFFFFF"
+            android:fontFamily="@font/notosans_medium"
             android:layout_gravity="center"
             android:textSize="20sp"/>
     </android.support.v7.widget.Toolbar>
