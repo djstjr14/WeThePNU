@@ -93,7 +93,6 @@ public class detailActivity extends AppCompatActivity {
         if(item.getAgree().containsKey(Uid)){
             toastFlag = true;
         }
-
         //즐겨찾기 버튼 초기셋팅
         if(item.getBookmark().containsKey(Uid)){
             btn_bookmark.setChecked(true);
@@ -179,6 +178,7 @@ public class detailActivity extends AppCompatActivity {
                 onAgreeClicked(ref.child(thisKey), comment);
                 if(toastFlag){
                     Intent intent = new Intent(detailActivity.this, agreePopupActivity.class);
+                    intent.putExtra("data", "동의는 한 번만 할 수 있습니다.");
                     startActivityForResult(intent, 1);
                 }else{
                     Title.setText("참여인원 : ["+Long.toString(item.getRecommend()+1)+"명]");

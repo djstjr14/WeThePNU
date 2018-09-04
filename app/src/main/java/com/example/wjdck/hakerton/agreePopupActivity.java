@@ -8,13 +8,24 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class agreePopupActivity extends Activity{
+
+    String content;
+    TextView text;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.agree_popup_activity);
+
+        Intent intent = getIntent();
+        content = intent.getStringExtra("data");
+
+        text = findViewById(R.id.agree_popup_text);
+        text.setText(content);
     }
 
 

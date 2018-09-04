@@ -17,7 +17,16 @@ public class discussItem implements Serializable {
     private String date;
     private long hits;
     private long comments;
+    public Map<String, Boolean> recommended = new HashMap<>();
     public Map<String, Boolean> clicked = new HashMap<>();
+
+    public Map<String, Boolean> getRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(Map<String, Boolean> recommended) {
+        this.recommended = recommended;
+    }
 
     public long getHits() {
         return hits;
@@ -41,23 +50,6 @@ public class discussItem implements Serializable {
 
     public void setClicked(Map<String, Boolean> clicked) {
         this.clicked = clicked;
-    }
-
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-
-        result.put("key", key);
-        result.put("title", title);
-        result.put("text", text);
-        result.put("recommend", recommend);
-        result.put("unrecommend", unrecommend);
-        result.put("date", date);
-        result.put("hits", hits);
-        result.put("comments", comments);
-        result.put("clicked", clicked);
-        return result;
-
     }
 
     public String getKey() {
@@ -106,6 +98,23 @@ public class discussItem implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+
+        result.put("key", key);
+        result.put("title", title);
+        result.put("text", text);
+        result.put("recommend", recommend);
+        result.put("unrecommend", unrecommend);
+        result.put("date", date);
+        result.put("hits", hits);
+        result.put("comments", comments);
+        result.put("recommended", recommended);
+        result.put("clicked", clicked);
+        return result;
     }
 
     public discussItem() {}

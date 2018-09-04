@@ -13,18 +13,28 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static com.example.wjdck.hakerton.loginActivity.Uid;
+
 public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     Context context;
-    private String title, body, agree, progress, key;
+    private String title, body, agree, progress, key, recommend, unrecommend;
     private int option = 1;
     // option = 1 --> detailActivity, option = 2 --> detaildiscussActivity
     private ArrayList<CommentItem> commentItems;
@@ -49,7 +59,15 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void setBody(String body) {
         this.body = body;
     }
-    public void setAgree(String agree){ this.agree = agree; }
+    public void setAgree(String agree){
+        this.agree = agree;
+    }
+    public void setRecommend(String recommend){
+        this.recommend = recommend;
+    }
+    public void setUnrecommend(String unrecommend){
+        this.unrecommend = unrecommend;
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -98,7 +116,7 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if(position == 0) {
             if(option == 1) {
                 ((DetailTitleViewHolder) holder).title.setText(title);
@@ -129,6 +147,26 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
             else{
                 ((DiscussDetailBodyViewHolder) holder).body.setText(body);
+                ((DiscussDetailBodyViewHolder) holder).recommend.setText(recommend);
+                ((DiscussDetailBodyViewHolder) holder).unrecommend.setText(unrecommend);
+                ((DiscussDetailBodyViewHolder) holder).good.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Discuss");
+                        onRecommendClicked(ref.child(key),1);
+                        ((DiscussDetailBodyViewHolder) holder).recommend.setText(recommend);
+                        notifyDataSetChanged();
+                    }
+                });
+                ((DiscussDetailBodyViewHolder) holder).bad.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Discuss");
+                        onRecommendClicked(ref.child(key),2);
+                        ((DiscussDetailBodyViewHolder) holder).unrecommend.setText(unrecommend);
+                        notifyDataSetChanged();
+                    }
+                });
             }
 
         } else {
@@ -164,6 +202,40 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
     public void removeItem(int position) {
         commentItems.remove(position);
+    }
+
+    private void onRecommendClicked(DatabaseReference ref, final int op) {
+        ref.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                discussItem item = mutableData.getValue(discussItem.class);
+                if(item == null) {
+                    return Transaction.success(mutableData);
+                }
+                if (item.getRecommended().containsKey(Uid)) {
+                    Intent intent = new Intent(context, agreePopupActivity.class);
+                    intent.putExtra("data", "추천은 한 번만 할 수 있습니다.");
+                    context.startActivity(intent);
+                } else {
+                    item.getRecommended().put(Uid, true);
+                    if(op==1){
+                        item.setRecommend(item.getRecommend()+1);
+                        recommend = Long.toString( item.getRecommend());
+                    }
+                    else{
+                        item.setUnrecommend(item.getUnrecommend()+1);
+                        unrecommend = Long.toString(item.getUnrecommend());
+                    }
+                }
+                mutableData.setValue(item);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                Log.d("discussDetailActivity", "register Transaction : onComplete:" + databaseError);
+            }
+        });
     }
 }
 
@@ -232,9 +304,18 @@ class DiscussDetailTitleViewHolder extends RecyclerView.ViewHolder{
 
 class DiscussDetailBodyViewHolder extends RecyclerView.ViewHolder{
     public TextView body;
+    public TextView recommend;
+    public TextView unrecommend;
+    public ImageButton good;
+    public ImageButton bad;
+
     public DiscussDetailBodyViewHolder(View itemView){
         super(itemView);
         this.body = itemView.findViewById(R.id.discuss_detail_body);
+        this.good = itemView.findViewById(R.id.good_btn);
+        this.bad = itemView.findViewById(R.id.bad_btn);
+        this.recommend = itemView.findViewById(R.id.discuss_good_num);
+        this.unrecommend = itemView.findViewById(R.id.discuss_bad_num);
     }
 
 }
