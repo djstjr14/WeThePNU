@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#FFFFFF">
+        <TextView
+            android:id="@+id/discuss_detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="편의점 수를 늘려달라는 청원 ..."
+            android:gravity="center"
+            android:textColor="#4A5A69"
+            android:fontFamily="@font/notosans_bold"
+            android:textSize="16.5sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/discuss_detail_date"
+            android:text="2018-08-20"
+            android:fontFamily="@font/notosans_regular"
+            android:textColor="#B5B5B5"
+            android:textSize="13.6sp"
+            android:gravity="right"
+            android:layout_weight="2"
+            android:layout_marginRight="10dp"
+
+            />
+
+        <TextView
+            android:id="@+id/discuss_detail_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="l******"
+            android:fontFamily="@font/notosans_regular"
+            android:gravity="left"
+            android:layout_weight="4"
+            android:textColor="#B5B5B5"
+            android:textSize="13.6sp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

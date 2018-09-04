@@ -90,7 +90,9 @@ public class detailActivity extends AppCompatActivity {
         drawer= findViewById(R.id.drawer);
         navigation= findViewById(R.id.navigation);
 
-
+        if(item.getAgree().containsKey(Uid)){
+            toastFlag = true;
+        }
 
         //즐겨찾기 버튼 초기셋팅
         if(item.getBookmark().containsKey(Uid)){
@@ -109,7 +111,7 @@ public class detailActivity extends AppCompatActivity {
 
         items = new ArrayList<>();
         recyclerView = findViewById(R.id.comment);
-        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), progress);
+        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), progress, thisKey, 1);
         recyclerView.setAdapter(adapter);
         Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
 
@@ -173,13 +175,11 @@ public class detailActivity extends AppCompatActivity {
                 String text = edit_agree.getText().toString();
                 long date = Calendar.getInstance().getTimeInMillis();
 
-                CommentItem comment = new CommentItem(Uid, text, date);
+                CommentItem comment = new CommentItem(item.getKey(), Uid, text, date);
                 onAgreeClicked(ref.child(thisKey), comment);
                 if(toastFlag){
-                    toast = Toast.makeText(getApplicationContext(), "동의는 한 번만 할 수 있습니다.", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.TOP, 0, 0);
-                    toast.show();
-                    toastFlag = false;
+                    Intent intent = new Intent(detailActivity.this, agreePopupActivity.class);
+                    startActivityForResult(intent, 1);
                 }else{
                     Title.setText("참여인원 : ["+Long.toString(item.getRecommend()+1)+"명]");
                     adapter.setAgree(Long.toString(item.getRecommend()+1));
@@ -226,7 +226,7 @@ public class detailActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         ref = mFirebaseDatabase.getReference("Agenda");
         userRef = mFirebaseDatabase.getReference("User").child(Uid);
-        mDatabaseReference = mFirebaseDatabase.getReference(key);
+        mDatabaseReference = mFirebaseDatabase.getReference("Comment").child("agenda").child(key);
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -288,7 +288,6 @@ public class detailActivity extends AppCompatActivity {
                     return Transaction.success(mutableData);
                 } else {
                     mDatabaseReference.push().setValue(comment);
-
                     item.setRecommend(item.getRecommend()+1);
                     item.getAgree().put(Uid, true);
                 }

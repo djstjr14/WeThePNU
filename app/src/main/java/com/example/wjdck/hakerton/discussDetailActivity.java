@@ -11,17 +11,38 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 import static com.example.wjdck.hakerton.loginActivity.appData;
+import static com.example.wjdck.hakerton.loginActivity.toast;
 
 public class discussDetailActivity extends AppCompatActivity {
 
@@ -29,18 +50,47 @@ public class discussDetailActivity extends AppCompatActivity {
     NavigationView navigation;
     DrawerLayout drawer;
 
+    FirebaseDatabase mFirebaseDatabase;
+    DatabaseReference mDatabaseReference;
+    DatabaseReference ref;
+    DatabaseReference userRef;
+    ChildEventListener mChildEventListener;
+
+    RecyclerView recyclerView;
+    CommentViewAdapter adapter;
+    ArrayList<CommentItem> items;
+
+    String thiskey ="";
+    EditText Edit_comment;
+    Button register_btn;
+    TextView title;
+
+    Boolean toastFlag = false;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discuss_detail);
-
+        Intent intent = getIntent();
         toolbar = findViewById(R.id.discuss_detail_toolbar);
         navigation = findViewById(R.id.navigation_discuss_detail);
         drawer = findViewById(R.id.drawer_discuss_detail);
+        Edit_comment = findViewById(R.id.detail_commend_edit);
+        register_btn = findViewById(R.id.detail_commend_btn);
+
+        final discussItem item = (discussItem) intent.getSerializableExtra("ITEM");
+        thiskey = item.getKey();
+
+        items = new ArrayList<>();
+        recyclerView = findViewById(R.id.comment);
+        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), null, 2);
+        recyclerView.setAdapter(adapter);
 
         //Toolbar 추가
-
         setSupportActionBar(toolbar);
+
         //Toolbar의 왼쪽에 뒤로가기 버튼을 추가
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_white_18dp);
@@ -85,9 +135,91 @@ public class discussDetailActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        register_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //키보드 내리기
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+                String text = Edit_comment.getText().toString();
+                long date = Calendar.getInstance().getTimeInMillis();
+
+                CommentItem comment = new CommentItem(Uid, text, date);
+                onRegisterClicked(ref.child(thiskey), comment);
+                Edit_comment.setText("");
+                recyclerView.smoothScrollToPosition(adapter.getItemCount());
+
+            }
+
+        });
+
+        initFirebase(item.getKey());
     }
 
 
+    private void initFirebase(String key) {
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        ref = mFirebaseDatabase.getReference("Discuss");
+        userRef = mFirebaseDatabase.getReference("User").child(Uid);
+        mDatabaseReference = mFirebaseDatabase.getReference("Comment").child("dicuss").child(key);
+        mChildEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                CommentItem item = dataSnapshot.getValue(CommentItem.class);
+                item.setKey(dataSnapshot.getKey());
+                adapter.addItem(item);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                int position = adapter.findItem(dataSnapshot.getKey());
+                adapter.removeItem(position);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        mDatabaseReference.addChildEventListener(mChildEventListener);
+    }
+
+    private void onRegisterClicked(DatabaseReference registerRef, final CommentItem comment) {
+        registerRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                discussItem item = mutableData.getValue(discussItem.class);
+                if(item == null) {
+                    return Transaction.success(mutableData);
+                }
+
+                mDatabaseReference.push().setValue(comment);
+                item.setComments(item.getComments()+1);
+                mutableData.setValue(item);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                Log.d("discussDetailActivity", "register Transaction : onComplete:" + databaseError);
+            }
+        });
+    }
     //추가된 소스, ToolBar에 main.xml을 인플레이트함
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
