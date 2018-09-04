@@ -7,16 +7,25 @@ public class PostItem {
     private String category;
     private long recommend;
     private String date;
-    private boolean answered;
     private boolean book;
     private boolean push;
+    private int answerNum;
+    private String answerDate;
 
-    public boolean isAnswered() {
-        return answered;
+    public int getAnswerNum() {
+        return answerNum;
     }
 
-    public void setAnswered(boolean answered) {
-        this.answered = answered;
+    public void setAnswerNum(int answerNum) {
+        this.answerNum = answerNum;
+    }
+
+    public String getAnswerDate() {
+        return answerDate;
+    }
+
+    public void setAnswerDate(String answerDate) {
+        this.answerDate = answerDate;
     }
 
     public boolean isBook() {
@@ -93,15 +102,16 @@ public class PostItem {
 
     public PostItem() {}
 
-    public PostItem(String key, String title, String text, String category, long recommend, String date, boolean answered){
+    public PostItem(String key, String title, String text, String category, long recommend, String date, int answerNum, String answerDate){
         this.key = key;
         this.title = title;
         this.text = text;
         this.category = category;
         this.recommend = recommend;
         this.date = date;
-        this.answered = answered;
         this.book = false;
         this.push = false;
+        this.answerNum = answerNum;
+        this.answerDate = answerDate;
     }
 }

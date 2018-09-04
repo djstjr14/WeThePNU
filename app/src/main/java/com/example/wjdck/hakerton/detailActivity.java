@@ -78,7 +78,7 @@ public class detailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
         final ListViewItem item = (ListViewItem) intent.getSerializableExtra("ITEM");
-        final PostItem post = new PostItem(item.getKey(), item.getTitle(), item.getText(), item.getCategory(), item.getRecommend(), item.getDate(), item.isAnswered());
+        final PostItem post = new PostItem(item.getKey(), item.getTitle(), item.getText(), item.getCategory(), item.getRecommend(), item.getDate(), item.getAnswerNum(), item.getAnswerDate());
         thisKey = item.getKey();
 
         btn_agree = findViewById(R.id.agree_btn);
@@ -104,7 +104,7 @@ public class detailActivity extends AppCompatActivity {
             post.setPush(true);
         }
         //답변 달렸을때
-        if(item.isAnswered()){
+        if(item.getAnswerNum()!=0){
             progress = "답변 완료";
         }
 
@@ -147,6 +147,8 @@ public class detailActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item4:
+                        Intent intent4 = new Intent(detailActivity.this, AnswerActivity.class);
+                        startActivity(intent4);
                         break;
 
                     case R.id.navigation_item5:
@@ -259,20 +261,6 @@ public class detailActivity extends AppCompatActivity {
             }
         };
         mDatabaseReference.addChildEventListener(mChildEventListener);
-    }
-
-    //추가된 소스, ToolBar에 main.xml을 인플레이트함
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onhg CreateOptionsMenu(menu);
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main, menu);
-        LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout drawerLinear = (LinearLayout) inflate.inflate(R.layout.drawer_header, null);
-
-        TextView drawer_id = (TextView) findViewById(R.id.drawer_id_main);
-        drawer_id.setText(Uid);
-        return super.onCreateOptionsMenu(menu);
     }
 
     private void onAgreeClicked(DatabaseReference agreeRef, final CommentItem comment) {
@@ -414,6 +402,20 @@ public class detailActivity extends AppCompatActivity {
                 Log.d("DetailActivity", "Agenda Transaction : onComplete:" + databaseError);
             }
         });
+    }
+
+    //추가된 소스, ToolBar에 main.xml을 인플레이트함
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onhg CreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
+        LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout drawerLinear = (LinearLayout) inflate.inflate(R.layout.drawer_header, null);
+
+        TextView drawer_id = (TextView) findViewById(R.id.drawer_id_main);
+        drawer_id.setText(Uid);
+        return super.onCreateOptionsMenu(menu);
     }
 
     //추가된 소스, ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수

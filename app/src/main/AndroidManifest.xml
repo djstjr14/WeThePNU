@@ -61,6 +61,10 @@
             android:configChanges="orientation"
             android:theme="@style/MyCustomDialogStyle">
         </activity>
+        <activity
+            android:name=".AnswerActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

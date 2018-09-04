@@ -120,6 +120,8 @@ public class discussDetailActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item4:
+                        Intent intent4 = new Intent(discussDetailActivity.this, AnswerActivity.class);
+                        startActivity(intent4);
                         break;
 
                     case R.id.navigation_item5:
@@ -215,6 +217,7 @@ public class discussDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     //추가된 소스, ToolBar에 main.xml을 인플레이트함
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -11,23 +11,31 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class answerAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<answerItem> listViewItemList = new ArrayList<answerItem>() ;
+    private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
     // ListViewAdapter의 생성자
-    public answerAdapter() {
-
-    }
+    public answerAdapter() {}
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override
     public int getCount() {
-        return listViewItemList.size() ;
+        int cnt = 0;
+        int size = listViewItemList.size();
+        for(int i = 0; i < size; i++){
+            if(listViewItemList.get(i).getAnswerNum() != 0){
+                cnt++;
+            }
+        }
+        return cnt;
     }
 
+    SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -40,40 +48,25 @@ public class answerAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.item_answer, parent, false);
         }
 
-        // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-
         TextView answernumTextView = (TextView) convertView.findViewById(R.id.answer_number);
         TextView titleTextView = (TextView) convertView.findViewById(R.id.answer_title) ;
-        ImageView starticonImageView = (ImageView) convertView.findViewById(R.id.answer_start_icon) ;
-        TextView startTextView = (TextView) convertView.findViewById(R.id.answer_start_text) ;
         TextView startdateTextView = (TextView) convertView.findViewById(R.id.answer_startdate) ;
-        ImageView arrow1ImageView = (ImageView) convertView.findViewById(R.id.arrow1) ;
-
-        ImageView endiconImageView = (ImageView) convertView.findViewById(R.id.answer_end_icon) ;
-        TextView endTextView = (TextView) convertView.findViewById(R.id.answer_end_text) ;
         TextView enddateTextView = (TextView) convertView.findViewById(R.id.answer_enddate) ;
-        ImageView arrow2ImageView = (ImageView) convertView.findViewById(R.id.arrow2) ;
-
-        ImageView peopleiconImageView = (ImageView) convertView.findViewById(R.id.answer_people_icon) ;
-        TextView peopleTextView = (TextView) convertView.findViewById(R.id.answer_people_text) ;
         TextView peoplenumTextView = (TextView) convertView.findViewById(R.id.answer_people_number) ;
-        ImageView arrow3ImageView = (ImageView) convertView.findViewById(R.id.arrow3) ;
-
-        ImageView answeringImageView = (ImageView) convertView.findViewById(R.id.answering_icon) ;
-        TextView answeringTextView = (TextView) convertView.findViewById(R.id.answering_text) ;
         TextView answeringdateTextView = (TextView) convertView.findViewById(R.id.answering_date) ;
 
-
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        answerItem listViewItem = listViewItemList.get(position);
+        ListViewItem listViewItem = listViewItemList.get(position);
 
-        // 아이템 내 각 위젯에 데이터 반영
-        answernumTextView.setText(listViewItem.getAnswer_number());
-        titleTextView.setText(listViewItem.getTitle());
-        startdateTextView.setText(listViewItem.getStartdate());
-        enddateTextView.setText(listViewItem.getEnddate());
-        peoplenumTextView.setText(Long.toString(listViewItem.getAnswer_people()));
-        answeringdateTextView.setText(listViewItem.getAnswering_date());
+        if(listViewItem.getAnswerNum() != 0){
+            answernumTextView.setText(Integer.toString(listViewItem.getAnswerNum()));
+            titleTextView.setText(listViewItem.getTitle());
+            startdateTextView.setText(mSimpleDateFormat.format(Long.parseLong(listViewItem.getDate())));
+            enddateTextView.setText(mSimpleDateFormat.format((Long.parseLong(listViewItem.getDate())) + (2592000000L)));
+            peoplenumTextView.setText(Long.toString(listViewItem.getRecommend()));
+            answeringdateTextView.setText(listViewItem.getAnswerDate());
+        }
+
         return convertView;
     }
 
@@ -85,11 +78,29 @@ public class answerAdapter extends BaseAdapter {
 
     // 지정한 위치(position)에 있는 데이터 리턴 : 필수 구현
     @Override
-    public Object getItem(int position) {
+    public ListViewItem getItem(int position) {
         return listViewItemList.get(position) ;
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(answerItem item) {listViewItemList.add(item); }
+    public void addItem(ListViewItem item) {listViewItemList.add(item); }
+
+    public int findItem(String key) {
+        for(int i=0; i<listViewItemList.size(); i++) {
+            if(listViewItemList.get(i).getKey().equals(key)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public void removeItem(int position) {
+        listViewItemList.remove(position);
+    }
+
+    public void replaceItem(ListViewItem newItem) {
+        int index = findItem(newItem.getKey());
+        listViewItemList.remove(index);
+        listViewItemList.add(index, newItem);
+    }
 }
 
