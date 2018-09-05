@@ -63,7 +63,7 @@ public class answerAdapter extends BaseAdapter {
             titleTextView.setText(listViewItem.getTitle());
             startdateTextView.setText(mSimpleDateFormat.format(Long.parseLong(listViewItem.getDate())));
             enddateTextView.setText(mSimpleDateFormat.format((Long.parseLong(listViewItem.getDate())) + (2592000000L)));
-            peoplenumTextView.setText(Long.toString(listViewItem.getRecommend()));
+            peoplenumTextView.setText(Long.toString(listViewItem.getRecommend()) + "명");
             answeringdateTextView.setText(listViewItem.getAnswerDate());
         }
 

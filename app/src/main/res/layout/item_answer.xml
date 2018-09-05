@@ -4,30 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+
+
     >
+
     <TextView
         android:id="@+id/answer_number"
-        android:layout_width="87dp"
-        android:layout_height="23dp"
+        android:layout_width="105dp"
+        android:layout_height="27.5dp"
         android:layout_gravity="left"
-        android:layout_marginLeft="28.5dp"
-        android:layout_marginTop="30dp"
-        android:text="04"
-
-        android:paddingLeft="40dp"
-
-        android:textDirection="locale"
-        android:fontFamily="@font/notosans_bold"
-        android:textSize="11sp"
-        android:textColor="#FFFFFF"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/answer_icon"
-        />
+        android:textStyle="bold"
+
+        android:paddingLeft="44dp"
+        android:text="1"
+        android:textColor="#FFFFFF"
+        android:textDirection="locale"
+        android:textSize="14sp" />
     <TextView
         android:id="@+id/answer_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24.5dp"
-        android:layout_marginTop="10dp"
+
         android:layout_marginRight="19.5dp"
         android:text="제도관 내 교내 고양이를 위한 복지정책이 필요합니다."
         android:textAlignment="textStart"
@@ -37,26 +38,28 @@
         />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="98dp"
         android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:paddingTop="3dp"
         >
         <LinearLayout
-            android:layout_width="50dp"
-            android:layout_height="70dp"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
             android:orientation="vertical"
             >
             <ImageView
                 android:id="@+id/answer_start_icon"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@drawable/answer_start"
                 />
             <TextView
                 android:id="@+id/answer_start_text"
                 android:layout_width="match_parent"
-                android:layout_height="13dp"
+                android:layout_height="19dp"
                 android:text="청원시작"
-                android:textSize="8sp"
+                android:textSize="10sp"
                 android:fontFamily="@font/notosans_medium"
                 android:layout_marginTop="7dp"
                 android:textColor="#9FB7C4"
@@ -65,8 +68,8 @@
             <TextView
                 android:id="@+id/answer_startdate"
                 android:layout_width="match_parent"
-                android:layout_height="13dp"
-                android:textSize="8sp"
+                android:layout_height="19dp"
+                android:textSize="10sp"
                 android:text="[2018.08.21]"
                 android:fontFamily="@font/notosans_bold"
                 android:textColor="#9FB7C4"
@@ -75,29 +78,29 @@
         </LinearLayout>
         <ImageView
             android:id="@+id/arrow1"
-            android:layout_width="5.6dp"
-            android:layout_height="9.8dp"
+            android:layout_width="8dp"
+            android:layout_height="13.5dp"
             android:background="@drawable/arrow1"
             android:layout_margin="12dp"
             />
 
         <LinearLayout
-            android:layout_width="50dp"
-            android:layout_height="70dp"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
             android:orientation="vertical"
             >
             <ImageView
                 android:id="@+id/answer_end_icon"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@drawable/answer_end"
                 />
             <TextView
                 android:id="@+id/answer_end_text"
                 android:layout_width="match_parent"
-                android:layout_height="13dp"
+                android:layout_height="19dp"
                 android:text="청원완료"
-                android:textSize="8sp"
+                android:textSize="10sp"
                 android:fontFamily="@font/notosans_medium"
                 android:layout_marginTop="7dp"
                 android:textColor="#6998B2"
@@ -106,8 +109,8 @@
             <TextView
                 android:id="@+id/answer_enddate"
                 android:layout_width="match_parent"
-                android:layout_height="13dp"
-                android:textSize="8sp"
+                android:layout_height="19dp"
+                android:textSize="10sp"
                 android:text="[2018.08.21]"
                 android:fontFamily="@font/notosans_bold"
                 android:textColor="#6998B2"
@@ -117,29 +120,29 @@
 
         <ImageView
             android:id="@+id/arrow2"
-            android:layout_width="5.6dp"
-            android:layout_height="9.8dp"
+            android:layout_width="8dp"
+            android:layout_height="13.5dp"
             android:background="@drawable/arrow2"
             android:layout_margin="12dp"
             />
 
         <LinearLayout
-            android:layout_width="50dp"
-            android:layout_height="70dp"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
             android:orientation="vertical"
             >
             <ImageView
                 android:id="@+id/answer_people_icon"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@drawable/answer_people"
                 />
             <TextView
                 android:id="@+id/answer_people_text"
                 android:layout_width="match_parent"
-                android:layout_height="13dp"
+                android:layout_height="19dp"
                 android:text="참여인원"
-                android:textSize="8sp"
+                android:textSize="10sp"
                 android:fontFamily="@font/notosans_medium"
                 android:layout_marginTop="7dp"
                 android:textColor="#27507C"
@@ -148,8 +151,8 @@
             <TextView
                 android:id="@+id/answer_people_number"
                 android:layout_width="match_parent"
-                android:layout_height="13dp"
-                android:textSize="8sp"
+                android:layout_height="19dp"
+                android:textSize="10sp"
                 android:text="200명"
                 android:fontFamily="@font/notosans_bold"
                 android:textColor="#27507C"
@@ -161,29 +164,29 @@
 
         <ImageView
             android:id="@+id/arrow3"
-            android:layout_width="5.6dp"
-            android:layout_height="9.8dp"
+            android:layout_width="8dp"
+            android:layout_height="13.5dp"
             android:background="@drawable/arrow3"
             android:layout_margin="12dp"
             />
 
         <LinearLayout
-            android:layout_width="50dp"
-            android:layout_height="70dp"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
             android:orientation="vertical"
             >
             <ImageView
                 android:id="@+id/answering_icon"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@drawable/answering"
                 />
             <TextView
                 android:id="@+id/answering_text"
                 android:layout_width="match_parent"
-                android:layout_height="13dp"
+                android:layout_height="19dp"
                 android:text="청원답변"
-                android:textSize="8sp"
+                android:textSize="10sp"
                 android:fontFamily="@font/notosans_medium"
                 android:layout_marginTop="7dp"
                 android:textColor="#1B2259"
@@ -192,8 +195,8 @@
             <TextView
                 android:id="@+id/answering_date"
                 android:layout_width="match_parent"
-                android:layout_height="13dp"
-                android:textSize="8sp"
+                android:layout_height="19dp"
+                android:textSize="10sp"
                 android:text="[2018.08.21]"
                 android:fontFamily="@font/notosans_bold"
                 android:textColor="#1B2259"
