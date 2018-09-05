@@ -80,10 +80,6 @@ public class discussActivity extends AppCompatActivity {
                 Intent intent = new Intent(discussActivity.this, discussDetailActivity.class);
                 discussItem item = adapter.getItem(position);
                 onItemClicked(mDatabaseReference.child(item.getKey()));
-                if(!item.getClicked().containsKey(Uid)){
-                    item.getClicked().put(Uid, true);
-                    mDatabaseReference.child(item.getKey()).setValue(item);
-                }
                 adapter.clickedList(view);
                 intent.putExtra("ITEM", adapter.getItem(position));
                 startActivity(intent);
@@ -161,6 +157,7 @@ public class discussActivity extends AppCompatActivity {
                     mDatabaseReference.child(dataSnapshot.getKey()).child("key").setValue(dataSnapshot.getKey());
                 }
                 adapter.addItem(item);
+                adapter.listSort();
                 adapter.notifyDataSetChanged();
             }
 
@@ -211,10 +208,14 @@ public class discussActivity extends AppCompatActivity {
                 if(item == null) {
                     return Transaction.success(mutableData);
                 }
+                if(!item.getClicked().containsKey(Uid)){
+                    item.getClicked().put(Uid, true);
+                }
                 item.setHits(item.getHits()+1);;
                 mutableData.setValue(item);
                 return Transaction.success(mutableData);
             }
+
             @Override
             public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
                 Log.d("DetailActivity", "Hits Transaction : onComplete:" + databaseError);

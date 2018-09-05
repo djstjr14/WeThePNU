@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -34,39 +35,28 @@ import static com.example.wjdck.hakerton.loginActivity.Uid;
 public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     Context context;
-    private String title, body, agree, progress, key, recommend, unrecommend;
     private int option = 1;
     // option = 1 --> detailActivity, option = 2 --> detaildiscussActivity
     private ArrayList<CommentItem> commentItems;
+    private ListViewItem item1;
+    private discussItem item2;
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    public CommentViewAdapter(final Context context, ArrayList<CommentItem> items, String title, String body, String agree, String progress, String key, int option){
+    public CommentViewAdapter(final Context context, ArrayList<CommentItem> items, ListViewItem item1, discussItem item2, int option){
         this.context = context;
         this.commentItems = items;
-        this.title = title;
-        this.body = body;
-        this.agree = agree;
-        this.progress = progress;
-        this.key = key;
+        this.item1 = item1;
+        this.item2 = item2;
         this.option = option;
         commentItems.add(new CommentItem());
         commentItems.add(new CommentItem());
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setItem1(ListViewItem item1){
+        this.item1 = item1;
     }
-    public void setBody(String body) {
-        this.body = body;
-    }
-    public void setAgree(String agree){
-        this.agree = agree;
-    }
-    public void setRecommend(String recommend){
-        this.recommend = recommend;
-    }
-    public void setUnrecommend(String unrecommend){
-        this.unrecommend = unrecommend;
+    public void setItem2(discussItem item2){
+        this.item2 = item2;
     }
 
     @Override
@@ -119,20 +109,41 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if(position == 0) {
             if(option == 1) {
-                ((DetailTitleViewHolder) holder).title.setText(title);
-                ((DetailTitleViewHolder) holder).progress.setText(progress);
+                ((DetailTitleViewHolder) holder).title.setText(item1.getTitle());
+                if(item1.getAnswerNum() == 0){
+                    ((DetailTitleViewHolder) holder).progress.setText("청원 진행중");
+                }
+                else{
+                    ((DetailTitleViewHolder) holder).progress.setText("답변 완료");
+                }
+                ((DetailTitleViewHolder) holder).category.setText(item1.getCategory());
+                ((DetailTitleViewHolder) holder).startDate.setText(mSimpleDateFormat.format(Long.parseLong(item1.getDate())));
+                ((DetailTitleViewHolder) holder).endDate.setText(mSimpleDateFormat.format(Long.parseLong(item1.getDate()) + 2592000000L));
             }
             else{
-                ((DiscussDetailTitleViewHolder) holder).title.setText(title);
+                ((DiscussDetailTitleViewHolder) holder).title.setText(item2.getText());
+                ((DiscussDetailTitleViewHolder) holder).date.setText(mSimpleDateFormat.format(Long.parseLong(item2.getDate())));
+                String star="";
+                for(int i=0; i<item2.getId().length()-1;i++) {
+                    star = star + "*";
+                }
+                ((DiscussDetailTitleViewHolder) holder).id.setText(item2.getId().substring(0,1)+star);
             }
         } else if(position == 1) {
             if(option == 1){
-                ((DetailBodyViewHolder)holder).body.setText(body);
-                ((DetailBodyViewHolder)holder).agree.setText(agree);
+                ((DetailBodyViewHolder)holder).body.setText(item1.getText());
+                ((DetailBodyViewHolder)holder).agree.setText(Long.toString(item1.getRecommend()));
                 ((DetailBodyViewHolder)holder).answer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, openPdfActivity.class);
+                        Intent intent;
+                        if(item1.getAnswerNum() == 0){
+                            intent = new Intent(context, agreePopupActivity.class);
+                            intent.putExtra("data", "답변이 미등록된 청원입니다.");
+                        }
+                        else{
+                            intent = new Intent(context, openPdfActivity.class);
+                        }
                         context.startActivity(intent);
                     }
                 });
@@ -140,21 +151,21 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, reportPopupActivity.class);
-                        intent.putExtra("data", key);
+                        intent.putExtra("data", item1.getKey());
                         context.startActivity(intent);
                     }
                 });
             }
             else{
-                ((DiscussDetailBodyViewHolder) holder).body.setText(body);
-                ((DiscussDetailBodyViewHolder) holder).recommend.setText(recommend);
-                ((DiscussDetailBodyViewHolder) holder).unrecommend.setText(unrecommend);
+                ((DiscussDetailBodyViewHolder) holder).body.setText(item2.getText());
+                ((DiscussDetailBodyViewHolder) holder).recommend.setText(Long.toString(item2.getRecommend()));
+                ((DiscussDetailBodyViewHolder) holder).unrecommend.setText(Long.toString(item2.getUnrecommend()));
                 ((DiscussDetailBodyViewHolder) holder).good.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Discuss");
-                        onRecommendClicked(ref.child(key),1);
-                        ((DiscussDetailBodyViewHolder) holder).recommend.setText(recommend);
+                        onRecommendClicked(ref.child(item2.getKey()),1);
+                        ((DiscussDetailBodyViewHolder) holder).recommend.setText(Long.toString(item2.getRecommend()));
                         notifyDataSetChanged();
                     }
                 });
@@ -162,8 +173,8 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     @Override
                     public void onClick(View v) {
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Discuss");
-                        onRecommendClicked(ref.child(key),2);
-                        ((DiscussDetailBodyViewHolder) holder).unrecommend.setText(unrecommend);
+                        onRecommendClicked(ref.child(item2.getKey()),2);
+                        ((DiscussDetailBodyViewHolder) holder).unrecommend.setText(Long.toString(item2.getUnrecommend()));
                         notifyDataSetChanged();
                     }
                 });
@@ -220,13 +231,12 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     item.getRecommended().put(Uid, true);
                     if(op==1){
                         item.setRecommend(item.getRecommend()+1);
-                        recommend = Long.toString( item.getRecommend());
                     }
                     else{
                         item.setUnrecommend(item.getUnrecommend()+1);
-                        unrecommend = Long.toString(item.getUnrecommend());
                     }
                 }
+                item2 = item;
                 mutableData.setValue(item);
                 return Transaction.success(mutableData);
             }
@@ -254,10 +264,17 @@ class CommentViewHolder extends RecyclerView.ViewHolder {
 class DetailTitleViewHolder extends RecyclerView.ViewHolder {
     public TextView title;
     public TextView progress;
+    public TextView category;
+    public TextView startDate;
+    public TextView endDate;
+
     public DetailTitleViewHolder(View itemView) {
         super(itemView);
         this.title = itemView.findViewById(R.id.title);
         this.progress = itemView.findViewById(R.id.agenda_progress);
+        this.category = itemView.findViewById(R.id.agenda_title_category);
+        this.startDate = itemView.findViewById(R.id.agenda_title_startdate);
+        this.endDate = itemView.findViewById(R.id.agenda_title_enddate);
     }
 }
 

@@ -64,7 +64,6 @@ public class discussDetailActivity extends AppCompatActivity {
     TextView title;
 
     String thisKey ="";
-    Boolean toastFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +81,11 @@ public class discussDetailActivity extends AppCompatActivity {
 
         items = new ArrayList<>();
         recyclerView = findViewById(R.id.comment);
-        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), null, thisKey, 2);
-        adapter.setRecommend(Long.toString(item.getRecommend()));
-        adapter.setUnrecommend(Long.toString(item.getUnrecommend()));
+        adapter = new CommentViewAdapter(this, items, null, item, 2);
         recyclerView.setAdapter(adapter);
 
         //Toolbar 추가
         setSupportActionBar(toolbar);
-
         //Toolbar의 왼쪽에 뒤로가기 버튼을 추가
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_white_18dp);

@@ -17,8 +17,17 @@ public class discussItem implements Serializable {
     private String date;
     private long hits;
     private long comments;
+    private String id;
     public Map<String, Boolean> recommended = new HashMap<>();
     public Map<String, Boolean> clicked = new HashMap<>();
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Map<String, Boolean> getRecommended() {
         return recommended;
@@ -112,6 +121,7 @@ public class discussItem implements Serializable {
         result.put("date", date);
         result.put("hits", hits);
         result.put("comments", comments);
+        result.put("id", id);
         result.put("recommended", recommended);
         result.put("clicked", clicked);
         return result;
@@ -119,7 +129,7 @@ public class discussItem implements Serializable {
 
     public discussItem() {}
 
-    public discussItem(String key, String title, String text, long recommend, long unrecommend, String date, long hits, long comments){
+    public discussItem(String key, String title, String text, long recommend, long unrecommend, String date, long hits, long comments, String id){
         this.key = key;
         this.title = title;
         this.text = text;
@@ -128,5 +138,6 @@ public class discussItem implements Serializable {
         this.date = date;
         this.hits = hits;
         this.comments = comments;
+        this.id = id;
     }
 }

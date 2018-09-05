@@ -21,6 +21,6 @@ public class openPdfActivity extends AppCompatActivity {
         mWebSettings = mWebView.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
 
-        mWebView.loadUrl("https://drive.google.com/open?id=1twXqHpkf8yE4ITz9B2HtWKdKkxPuBg03");
+        mWebView.loadUrl("https://drive.google.com/open?id=1XUeUsErG0yrezUPArmLhXE8yM2oZMHuN");
     }
 }

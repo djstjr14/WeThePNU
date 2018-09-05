@@ -52,7 +52,8 @@
             android:name=".openPdfActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".reportPopupActivity"
+        <activity
+            android:name=".reportPopupActivity"
             android:configChanges="orientation"
             android:theme="@style/MyCustomDialogStyle">
         </activity>
@@ -65,6 +66,7 @@
             android:name=".AnswerActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".findIdAndPwActivity"></activity>
     </application>
 
 </manifest>

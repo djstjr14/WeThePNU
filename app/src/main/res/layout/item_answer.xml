@@ -157,9 +157,6 @@
                 android:fontFamily="@font/notosans_bold"
                 android:textColor="#27507C"
                 />
-
-
-
         </LinearLayout>
 
         <ImageView

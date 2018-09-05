@@ -110,7 +110,7 @@ public class detailActivity extends AppCompatActivity {
 
         items = new ArrayList<>();
         recyclerView = findViewById(R.id.comment);
-        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), progress, thisKey, 1);
+        adapter = new CommentViewAdapter(this, items, item, null, 1);
         recyclerView.setAdapter(adapter);
         Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
 
@@ -183,8 +183,9 @@ public class detailActivity extends AppCompatActivity {
                     intent.putExtra("data", "동의는 한 번만 할 수 있습니다.");
                     startActivityForResult(intent, 1);
                 }else{
-                    Title.setText("참여인원 : ["+Long.toString(item.getRecommend()+1)+"명]");
-                    adapter.setAgree(Long.toString(item.getRecommend()+1));
+                    item.setRecommend(item.getRecommend()+1);
+                    Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
+                    adapter.setItem1(item);
                     adapter.notifyDataSetChanged();
                 }
 
@@ -272,12 +273,12 @@ public class detailActivity extends AppCompatActivity {
                     return Transaction.success(mutableData);
                 }
                 if (item.getAgree().containsKey(Uid)) {
-                    toastFlag = true;
                     return Transaction.success(mutableData);
                 } else {
                     mDatabaseReference.push().setValue(comment);
                     item.setRecommend(item.getRecommend()+1);
                     item.getAgree().put(Uid, true);
+                    toastFlag = true;
                 }
                 mutableData.setValue(item);
                 return Transaction.success(mutableData);
