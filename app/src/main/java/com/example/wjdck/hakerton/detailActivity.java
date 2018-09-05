@@ -78,7 +78,7 @@ public class detailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
         final ListViewItem item = (ListViewItem) intent.getSerializableExtra("ITEM");
-        final PostItem post = new PostItem(item.getKey(), item.getTitle(), item.getText(), item.getCategory(), item.getRecommend(), item.getDate(), item.isAnswered());
+        final PostItem post = new PostItem(item.getKey(), item.getTitle(), item.getText(), item.getCategory(), item.getRecommend(), item.getDate(), item.getAnswerNum(), item.getAnswerDate());
         thisKey = item.getKey();
 
         btn_agree = findViewById(R.id.agree_btn);
@@ -90,8 +90,9 @@ public class detailActivity extends AppCompatActivity {
         drawer= findViewById(R.id.drawer);
         navigation= findViewById(R.id.navigation);
 
-
-
+        if(item.getAgree().containsKey(Uid)){
+            toastFlag = true;
+        }
         //즐겨찾기 버튼 초기셋팅
         if(item.getBookmark().containsKey(Uid)){
             btn_bookmark.setChecked(true);
@@ -103,13 +104,13 @@ public class detailActivity extends AppCompatActivity {
             post.setPush(true);
         }
         //답변 달렸을때
-        if(item.isAnswered()){
+        if(item.getAnswerNum()!=0){
             progress = "답변 완료";
         }
 
         items = new ArrayList<>();
         recyclerView = findViewById(R.id.comment);
-        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), progress, 1);
+        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), progress, thisKey, 1);
         recyclerView.setAdapter(adapter);
         Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
 
@@ -146,6 +147,8 @@ public class detailActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item4:
+                        Intent intent4 = new Intent(detailActivity.this, AnswerActivity.class);
+                        startActivity(intent4);
                         break;
 
                     case R.id.navigation_item5:
@@ -173,13 +176,12 @@ public class detailActivity extends AppCompatActivity {
                 String text = edit_agree.getText().toString();
                 long date = Calendar.getInstance().getTimeInMillis();
 
-                CommentItem comment = new CommentItem(Uid, text, date);
+                CommentItem comment = new CommentItem(item.getKey(), Uid, text, date);
                 onAgreeClicked(ref.child(thisKey), comment);
                 if(toastFlag){
-                    toast = Toast.makeText(getApplicationContext(), "동의는 한 번만 할 수 있습니다.", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.TOP, 0, 0);
-                    toast.show();
-                    toastFlag = false;
+                    Intent intent = new Intent(detailActivity.this, agreePopupActivity.class);
+                    intent.putExtra("data", "동의는 한 번만 할 수 있습니다.");
+                    startActivityForResult(intent, 1);
                 }else{
                     Title.setText("참여인원 : ["+Long.toString(item.getRecommend()+1)+"명]");
                     adapter.setAgree(Long.toString(item.getRecommend()+1));
@@ -226,7 +228,7 @@ public class detailActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         ref = mFirebaseDatabase.getReference("Agenda");
         userRef = mFirebaseDatabase.getReference("User").child(Uid);
-        mDatabaseReference = mFirebaseDatabase.getReference(key);
+        mDatabaseReference = mFirebaseDatabase.getReference("Comment").child("agenda").child(key);
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -261,20 +263,6 @@ public class detailActivity extends AppCompatActivity {
         mDatabaseReference.addChildEventListener(mChildEventListener);
     }
 
-    //추가된 소스, ToolBar에 main.xml을 인플레이트함
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onhg CreateOptionsMenu(menu);
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main, menu);
-        LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout drawerLinear = (LinearLayout) inflate.inflate(R.layout.drawer_header, null);
-
-        TextView drawer_id = (TextView) findViewById(R.id.drawer_id_main);
-        drawer_id.setText(Uid);
-        return super.onCreateOptionsMenu(menu);
-    }
-
     private void onAgreeClicked(DatabaseReference agreeRef, final CommentItem comment) {
         agreeRef.runTransaction(new Transaction.Handler() {
             @Override
@@ -288,7 +276,6 @@ public class detailActivity extends AppCompatActivity {
                     return Transaction.success(mutableData);
                 } else {
                     mDatabaseReference.push().setValue(comment);
-
                     item.setRecommend(item.getRecommend()+1);
                     item.getAgree().put(Uid, true);
                 }
@@ -415,6 +402,20 @@ public class detailActivity extends AppCompatActivity {
                 Log.d("DetailActivity", "Agenda Transaction : onComplete:" + databaseError);
             }
         });
+    }
+
+    //추가된 소스, ToolBar에 main.xml을 인플레이트함
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onhg CreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
+        LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout drawerLinear = (LinearLayout) inflate.inflate(R.layout.drawer_header, null);
+
+        TextView drawer_id = (TextView) findViewById(R.id.drawer_id_main);
+        drawer_id.setText(Uid);
+        return super.onCreateOptionsMenu(menu);
     }
 
     //추가된 소스, ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수

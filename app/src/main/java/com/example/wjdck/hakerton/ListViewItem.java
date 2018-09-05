@@ -14,23 +14,25 @@ public class ListViewItem implements Serializable {
     private String category;
     private long recommend;
     private String date;
-    private boolean answered;
+    private int answerNum = 0;
+    private String answerDate = "";
 
-    private Map<String, Boolean> agree = new HashMap<>();
+    public Map<String, Boolean> agree = new HashMap<>();
     public Map<String, Boolean> bookmark = new HashMap<>();
     public Map<String, Boolean> pushalarm = new HashMap<>();
     public Map<String, Boolean> clicked = new HashMap<>();
 
     public ListViewItem() {}
 
-    public ListViewItem(String key, String title, String text, String category, long recommend, String date, boolean answered){
+    public ListViewItem(String key, String title, String text, String category, long recommend, String date, int answerNum, String answerDate){
         this.key = key;
         this.title = title;
         this.text = text;
         this.category = category;
         this.recommend = recommend;
         this.date = date;
-        this.answered = answered;
+        this.answerNum = answerNum;
+        this.answerDate = answerDate;
     }
     @Exclude
     public Map<String, Object> toMap() {
@@ -42,7 +44,8 @@ public class ListViewItem implements Serializable {
         result.put("category", category);
         result.put("recommend", recommend);
         result.put("date", date);
-        result.put("answered", answered);
+        result.put("answerNum", answerNum);
+        result.put("answerDate", answerDate);
         result.put("agree", agree);
         result.put("bookmark", bookmark);
         result.put("pushalarm", pushalarm);
@@ -51,12 +54,20 @@ public class ListViewItem implements Serializable {
 
     }
 
-    public boolean isAnswered() {
-        return answered;
+    public int getAnswerNum() {
+        return answerNum;
     }
 
-    public void setAnswered(boolean answered) {
-        this.answered = answered;
+    public void setAnswerNum(int answerNum) {
+        this.answerNum = answerNum;
+    }
+
+    public String getAnswerDate() {
+        return answerDate;
+    }
+
+    public void setAnswerDate(String answerDate) {
+        this.answerDate = answerDate;
     }
 
     public Map<String, Boolean> getClicked(){
@@ -130,7 +141,6 @@ public class ListViewItem implements Serializable {
     public void setRecommend(long recommend) {
         this.recommend = recommend;
     }
-
 
     public String getDate() {
         return date;

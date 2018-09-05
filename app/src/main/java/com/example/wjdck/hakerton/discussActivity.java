@@ -116,6 +116,8 @@ public class discussActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item4:
+                        Intent intent4 = new Intent(discussActivity.this, AnswerActivity.class);
+                        startActivity(intent4);
                         break;
 
                     case R.id.navigation_item5:

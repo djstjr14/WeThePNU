@@ -64,7 +64,7 @@ public class discussItemAdapter extends BaseAdapter {
         TextView recommendsTextView = (TextView) convertView.findViewById((R.id.recommends_num));
         TextView commentsTextView = (TextView) convertView.findViewById(R.id.discuss_comments);
 
-        discussItem listViewItem = listviewItemList.get(position);
+        discussItem listViewItem = listviewItemList.get(pos);
 
         titleTextView.setText(listViewItem.getTitle());
         dateTextView.setText(mSimpleDateFormat.format(Long.parseLong(listViewItem.getDate())));

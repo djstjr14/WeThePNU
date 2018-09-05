@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawer"
-    android:orientation="vertical"
-    tools:openDrawer="end">
+    android:id="@+id/answer_drawer"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,8 +27,9 @@
                 android:id="@+id/answer_tooltitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/notosans_medium"
-                android:text = "답변게시판"
+                android:fontFamily="@font/notosans_bold"
+                android:textColor="#FFFFFF"
+                android:text = "답 변 게 시 판"
                 android:layout_gravity="center"
                 android:textSize="20sp"/>
 
@@ -43,8 +43,16 @@
             android:divider="#EAEAEA"
             android:dividerHeight="1.5dp"
             >
-
-
         </ListView>
     </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/answer_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/drawer">
+    </android.support.design.widget.NavigationView>
+
 </android.support.v4.widget.DrawerLayout>

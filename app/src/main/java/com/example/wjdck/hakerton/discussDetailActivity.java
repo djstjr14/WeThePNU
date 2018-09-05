@@ -53,21 +53,18 @@ public class discussDetailActivity extends AppCompatActivity {
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference;
     DatabaseReference ref;
-    DatabaseReference userRef;
     ChildEventListener mChildEventListener;
 
     RecyclerView recyclerView;
     CommentViewAdapter adapter;
     ArrayList<CommentItem> items;
 
-    String thiskey ="";
     EditText Edit_comment;
     Button register_btn;
     TextView title;
 
+    String thisKey ="";
     Boolean toastFlag = false;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +78,13 @@ public class discussDetailActivity extends AppCompatActivity {
         register_btn = findViewById(R.id.detail_commend_btn);
 
         final discussItem item = (discussItem) intent.getSerializableExtra("ITEM");
-        thiskey = item.getKey();
+        thisKey = item.getKey();
 
         items = new ArrayList<>();
         recyclerView = findViewById(R.id.comment);
-        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), null, 2);
+        adapter = new CommentViewAdapter(this, items, item.getTitle(), item.getText(), Long.toString(item.getRecommend()), null, thisKey, 2);
+        adapter.setRecommend(Long.toString(item.getRecommend()));
+        adapter.setUnrecommend(Long.toString(item.getUnrecommend()));
         recyclerView.setAdapter(adapter);
 
         //Toolbar 추가
@@ -121,6 +120,8 @@ public class discussDetailActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item4:
+                        Intent intent4 = new Intent(discussDetailActivity.this, AnswerActivity.class);
+                        startActivity(intent4);
                         break;
 
                     case R.id.navigation_item5:
@@ -146,23 +147,20 @@ public class discussDetailActivity extends AppCompatActivity {
                 String text = Edit_comment.getText().toString();
                 long date = Calendar.getInstance().getTimeInMillis();
 
-                CommentItem comment = new CommentItem(Uid, text, date);
-                onRegisterClicked(ref.child(thiskey), comment);
+                CommentItem comment = new CommentItem(thisKey, Uid, text, date);
+                onRegisterClicked(ref.child(thisKey), comment);
                 Edit_comment.setText("");
                 recyclerView.smoothScrollToPosition(adapter.getItemCount());
-
             }
 
         });
 
-        initFirebase(item.getKey());
+        initFirebase(thisKey);
     }
-
 
     private void initFirebase(String key) {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         ref = mFirebaseDatabase.getReference("Discuss");
-        userRef = mFirebaseDatabase.getReference("User").child(Uid);
         mDatabaseReference = mFirebaseDatabase.getReference("Comment").child("dicuss").child(key);
         mChildEventListener = new ChildEventListener() {
             @Override
@@ -207,7 +205,6 @@ public class discussDetailActivity extends AppCompatActivity {
                 if(item == null) {
                     return Transaction.success(mutableData);
                 }
-
                 mDatabaseReference.push().setValue(comment);
                 item.setComments(item.getComments()+1);
                 mutableData.setValue(item);
@@ -220,6 +217,7 @@ public class discussDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     //추가된 소스, ToolBar에 main.xml을 인플레이트함
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

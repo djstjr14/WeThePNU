@@ -66,7 +66,7 @@ public class MyListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Intent intent = new Intent(MyListActivity.this, detailActivity.class);
                 PostItem post = adapter.getItem(position);
-                ListViewItem item = new ListViewItem(post.getKey(), post.getTitle(), post.getText(), post.getCategory(), post.getRecommend(), post.getDate(), post.isAnswered());
+                ListViewItem item = new ListViewItem(post.getKey(), post.getTitle(), post.getText(), post.getCategory(), post.getRecommend(), post.getDate(), post.getAnswerNum(), post.getAnswerDate());
                 if(post.isBookmark()){
                     item.bookmark.put(Uid, true);
                 }

@@ -104,12 +104,11 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-
                 Intent intent = new Intent(MainActivity.this, detailActivity.class);
                 ListViewItem item = adapter.getItem(position);
                 intent.putExtra("ITEM", item);
                 if(!item.getClicked().containsKey(Uid)){
-                        item.getClicked().put(Uid, true);
+                    item.getClicked().put(Uid, true);
                     mDatabaseReference.child(item.getKey()).setValue(item);
                 }
                 adapter.clickedList(view);
@@ -143,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item4:
+                        Intent intent4 = new Intent(MainActivity.this, AnswerActivity.class);
+                        startActivity(intent4);
                         break;
 
                     case R.id.navigation_item5:
@@ -152,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
                         editor.clear().apply();
                         break;
                 }
-
                 return true;
             }
         });
@@ -247,7 +247,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -264,10 +263,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 ListViewItem item = dataSnapshot.getValue(ListViewItem.class);
-                if(item.getKey().equalsIgnoreCase("")){
-                    item.setKey(dataSnapshot.getKey());
-                    mDatabaseReference.child(dataSnapshot.getKey()).child("key").setValue(dataSnapshot.getKey());
-                }
                 adapter.replaceItem(item);
                 adapter.notifyDataSetChanged();
             }
