@@ -121,7 +121,7 @@ public class CommentViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((DetailTitleViewHolder) holder).endDate.setText(mSimpleDateFormat.format(Long.parseLong(item1.getDate()) + 2592000000L));
             }
             else{
-                ((DiscussDetailTitleViewHolder) holder).title.setText(item2.getText());
+                ((DiscussDetailTitleViewHolder) holder).title.setText(item2.getTitle());
                 ((DiscussDetailTitleViewHolder) holder).date.setText(mSimpleDateFormat.format(Long.parseLong(item2.getDate())));
                 String star="";
                 for(int i=0; i<item2.getId().length()-1;i++) {
