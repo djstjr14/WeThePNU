@@ -20,8 +20,10 @@ import static com.example.wjdck.hakerton.loginActivity.Uid;
 public class discussItemAdapter extends BaseAdapter {
 
     private ArrayList<discussItem> listviewItemList = new ArrayList<discussItem>();
-    private final static int REC = 1;
-    private final static int LAT = 2;
+    private final static int LAT = 1;
+    private final static int REC = 2;
+
+    private int sort = LAT;
 
     public int getSort() {
         return sort;
@@ -29,9 +31,9 @@ public class discussItemAdapter extends BaseAdapter {
 
     public void setSort(int sort) {
         this.sort = sort;
+        listSort();
+        notifyDataSetChanged();
     }
-
-    private int sort = LAT;
 
     @Override
     public int getCount() {

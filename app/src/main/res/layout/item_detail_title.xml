@@ -104,12 +104,5 @@
             android:textColor="#B5B5B5"
             android:textSize="13.6sp"
             />
-
-
-
-
     </LinearLayout>
-
-
-
 </LinearLayout>

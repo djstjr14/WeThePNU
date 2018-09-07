@@ -12,6 +12,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
+import static com.example.wjdck.hakerton.loginActivity.Uid;
+
 public class addDiscussActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference ref;
@@ -52,7 +54,7 @@ public class addDiscussActivity extends AppCompatActivity {
                 long hits = 0;
                 long comments = 0;
 
-                discussItem item = new discussItem(key, title, text, recommend, unrecommend, Long.toString(date), hits, comments);
+                discussItem item = new discussItem(key, title, text, recommend, unrecommend, Long.toString(date), hits, comments, Uid);
 
                 ref.push().setValue(item.toMap());
                 finish();

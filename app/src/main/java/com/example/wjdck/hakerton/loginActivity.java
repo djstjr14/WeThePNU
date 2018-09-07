@@ -146,8 +146,9 @@ public class loginActivity extends AppCompatActivity {
         toast.show();
     }
     public void wrongIdOrPw() {
-        toast = Toast.makeText(this, "잘못된 ID 혹은 패스워드입니다", Toast.LENGTH_SHORT);
-        toast.show();
+        Intent intent = new Intent(loginActivity.this, agreePopupActivity.class);
+        intent.putExtra("data", "잘못된 ID 혹은 패스워드입니다.");
+        startActivity(intent);
     }
 }
 

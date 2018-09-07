@@ -21,9 +21,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/notosans_demilight"
-            android:text="L O G I N"
+            android:text="Log In"
             android:textColor="@android:color/black"
-            android:textSize="51px" />
+            android:textSize="30sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:textSize="26px"
+            android:textSize="15sp"
             android:fontFamily="@font/notosans_demilight"
             android:text="아이디" />
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtEmail"
             android:fontFamily="@font/notosans_light"
-            android:textSize="32px"
+            android:textSize="15sp"
             android:ems="10"
             android:hint="ID"
             android:inputType="textEmailAddress" />
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/notosans_demilight"
-            android:textSize="26px"
+            android:textSize="15sp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/etEmail"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtPassword"
             android:fontFamily="@font/notosans_light"
-            android:textSize="32px"
+            android:textSize="15sp"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword" />
@@ -86,27 +86,30 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/notosans_medium"
             android:text="아이디 / 비밀번호 찾기"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12dp" />
+            android:textColor="#447399"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/btn_login"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="200dp"
+            android:layout_width="181dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="25dp"
+            android:background="#447399"
             android:fontFamily="@font/notosans_bold"
             android:text="L O G I N"
-            android:textSize="32px"/>
+            android:textColor="#ffffff"
+            android:textSize="19sp" />
 
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/notosans_medium"
+            android:layout_marginTop="10dp"
             android:text="로그인 유지"
-            android:textSize="12dp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
