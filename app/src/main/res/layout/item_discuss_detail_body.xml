@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/border"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     android:orientation="vertical">
 
     <TextView
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
         android:id="@+id/discuss_detail_body"
         android:layout_width="match_parent"
         android:layout_height="350dp"

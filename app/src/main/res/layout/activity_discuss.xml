@@ -16,6 +16,7 @@
             android:id="@+id/toolbar_discuss"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:fitsSystemWindows="true"
             android:background="#447399"
             android:elevation="4dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -27,7 +28,7 @@
                 android:layout_gravity="center"
                 android:textColor="#FFFFFF"
                 android:fontFamily="@font/notosans_medium"
-                android:textSize="20sp"/>
+                android:textSize="17sp"/>
 
         </android.support.v7.widget.Toolbar>
 
@@ -35,8 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fab_discuss"
-            android:layout_gravity="bottom|right"
-            android:layout_marginLeft="330dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="80dp"
             android:src="@drawable/add"
             android:scaleType="centerCrop"
@@ -52,8 +53,8 @@
             <ListView
                 android:id="@+id/listview_discuss"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_weight="9.3"
                 android:choiceMode="singleChoice"
                 android:divider="#EAEAEA"
                 android:dividerHeight="1.5dp"
@@ -61,7 +62,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
                 android:paddingLeft="70dp"
                 android:paddingRight="70dp"
                 android:background="#EDF5F9"

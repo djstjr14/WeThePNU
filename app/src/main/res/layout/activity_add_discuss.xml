@@ -23,7 +23,7 @@
             android:textColor="#FFFFFF"
             android:fontFamily="@font/notosans_medium"
             android:layout_gravity="center"
-            android:textSize="20sp"/>
+            android:textSize="17sp"/>
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
@@ -95,17 +95,29 @@
 
             <Button
                 android:id="@+id/add_discuss_cancle_btn"
-                android:layout_width="165dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="39dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/btn_cancle" />
+                android:gravity="center"
+                android:text="취소"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:background="@drawable/background_button_cancle" />
 
             <Button
                 android:id="@+id/add_discuss_regist_btn"
-                android:layout_width="165dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="39dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/btn_regist" />
+                android:gravity="center"
+                android:text="등록"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:background="@drawable/background_button_regist" />
 
         </LinearLayout>
 

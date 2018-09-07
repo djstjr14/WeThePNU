@@ -9,12 +9,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <android.support.v7.widget.Toolbar
             android:layout_alignParentTop="true"
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
+            android:fitsSystemWindows="true"
             android:layout_height="?attr/actionBarSize"
             android:background="#447399"
             android:elevation="4dp"
@@ -28,7 +30,7 @@
                 android:textColor="#FFFFFF"
                 android:layout_gravity="center"
                 android:fontFamily="@font/notosans_medium"
-                android:textSize="20sp"/>
+                android:textSize="17sp"/>
 
         </android.support.v7.widget.Toolbar>
 
@@ -36,9 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fab"
-            android:layout_gravity="bottom|right"
-            android:layout_marginLeft="330dp"
-            android:layout_marginBottom="120dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="110dp"
             android:src="@drawable/add"
             android:scaleType="centerCrop"
             android:layout_alignParentBottom="true"/>
@@ -53,7 +55,8 @@
             <ListView
                 android:id="@+id/agenda_listview"
                 android:layout_width="match_parent"
-                android:layout_height="595dp"
+                android:layout_height="0dp"
+                android:layout_weight="8.5"
                 android:choiceMode="singleChoice"
                 android:divider="#EAEAEA"
                 android:dividerHeight="1.5dp"
@@ -61,7 +64,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp"
                 android:background="#EDF5F9"
@@ -70,7 +74,7 @@
                 <ImageButton
                     android:id="@+id/prog_recommend_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="match_parent"
                     android:background="#EDF5F9"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
@@ -120,13 +124,15 @@
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
                 android:background="#CED9DD">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:id="@+id/field_layout">
 
                     <Button
@@ -139,7 +145,7 @@
                         android:fontFamily="@font/notosans_bold"
                         android:text="전체"
                         android:textColor="#4F4D4B"
-                        android:textSize="57px"/>
+                        android:textSize="18sp"/>
 
                     <Button
                         android:layout_width="100dp"
@@ -151,7 +157,7 @@
                         android:fontFamily="@font/notosans_bold"
                         android:text="행정"
                         android:textColor="#4F4D4B"
-                        android:textSize="57px"/>
+                        android:textSize="18sp"/>
                     <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
@@ -162,7 +168,7 @@
                         android:fontFamily="@font/notosans_bold"
                         android:text="보건/복지"
                         android:textColor="#4F4D4B"
-                        android:textSize="57px"/>
+                        android:textSize="18sp"/>
                     <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
@@ -173,7 +179,7 @@
                         android:fontFamily="@font/notosans_bold"
                         android:text="교내시설"
                         android:textColor="#4F4D4B"
-                        android:textSize="57px"/>
+                        android:textSize="18sp"/>
                     <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
@@ -184,7 +190,7 @@
                         android:fontFamily="@font/notosans_bold"
                         android:text="인권/평등"
                         android:textColor="#4F4D4B"
-                        android:textSize="57px"/>
+                        android:textSize="18sp"/>
                     <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
@@ -195,7 +201,7 @@
                         android:fontFamily="@font/notosans_bold"
                         android:text="예술/문화"
                         android:textColor="#4F4D4B"
-                        android:textSize="57px"/>
+                        android:textSize="18sp"/>
                     <Button
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
@@ -206,7 +212,7 @@
                         android:fontFamily="@font/notosans_bold"
                         android:text="기타"
                         android:textColor="#4F4D4B"
-                        android:textSize="57px"/>
+                        android:textSize="18sp"/>
                 </LinearLayout>
             </HorizontalScrollView>
 

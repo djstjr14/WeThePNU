@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-
-
+    android:paddingStart="26dp"
+    android:paddingEnd="26dp"
     >
 
     <TextView
@@ -13,11 +13,9 @@
         android:layout_width="105dp"
         android:layout_height="27.5dp"
         android:layout_gravity="left"
-        android:layout_marginLeft="26dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/answer_icon"
         android:textStyle="bold"
-
         android:paddingLeft="44dp"
         android:text="1"
         android:textColor="#FFFFFF"
@@ -27,9 +25,6 @@
         android:id="@+id/answer_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24.5dp"
-
-        android:layout_marginRight="19.5dp"
         android:text="제도관 내 교내 고양이를 위한 복지정책이 필요합니다."
         android:textAlignment="textStart"
         android:fontFamily="@font/notosans_bold"
@@ -40,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="98dp"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:paddingTop="3dp"
         >
         <LinearLayout

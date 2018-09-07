@@ -53,14 +53,14 @@
                 android:layout_height="wrap_content"
                 android:text="청원동의 "
                 android:fontFamily="@font/notosans_bold"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textColor="#4F4D4B"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="107"
                 android:fontFamily="@font/notosans_bold"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textColor="#FF6482"
                 android:id="@+id/agree_people"
                 />
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:text=" 명"
                 android:fontFamily="@font/notosans_bold"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textColor="#4F4D4B"
                 />
         </LinearLayout>
@@ -95,8 +95,12 @@
         android:padding="10dp">
         <Button
             android:layout_width="120dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:id="@+id/answer_btn"
-            android:background="@drawable/btn_answer"/>
+            android:gravity="center"
+            android:text="청원답변"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/background_button_regist"/>
     </LinearLayout>
 </LinearLayout>
