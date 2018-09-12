@@ -30,7 +30,7 @@
                 android:text = "게 시 글"
                 android:textColor="#FFFFFF"
                 android:layout_gravity="center"
-                android:textSize="17sp"/>
+                android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
 
@@ -53,25 +53,33 @@
             android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:padding="7dp"
             android:background="#CED9DD"
             android:orientation="horizontal"
             android:layout_above="@+id/ll2"
             >
             <EditText
-                android:layout_width="315dp"
-                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:layout_marginLeft="10dp"
                 android:fontFamily="@font/notosans_regular"
-                android:textSize="13.5sp"
-                android:hint="    동의합니다"
+                android:textSize="13sp"
+                android:text="동의합니다."
                 android:id="@+id/agree_edit"
                 android:background="@drawable/soft_edge"/>
-            <ImageButton
-                android:layout_width="45dp"
-                android:layout_height="35dp"
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:layout_marginRight="10dp"
                 android:id="@+id/agree_btn"
-                android:background="@drawable/final_agree"
-                android:text="동의하기"
-                android:textAlignment="center" />
+                android:background="@drawable/background_button_comment"
+                android:text="동의"
+                android:textSize="13sp"
+                android:textColor="#FFFFFF"
+                android:fontFamily="@font/notosans_regular"
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout

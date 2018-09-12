@@ -30,7 +30,7 @@
                 android:textColor="#FFFFFF"
                 android:layout_gravity="center"
                 android:fontFamily="@font/notosans_medium"
-                android:textSize="17sp"/>
+                android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
 

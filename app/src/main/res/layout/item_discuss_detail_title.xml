@@ -8,8 +8,10 @@
 
         <TextView
             android:id="@+id/discuss_detail_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
             android:text="편의점 수를 늘려달라는 청원 ..."
             android:gravity="center"
             android:textColor="#4A5A69"
@@ -32,7 +34,7 @@
             android:textColor="#B5B5B5"
             android:textSize="13.6sp"
             android:gravity="right"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:layout_marginRight="10dp"
 
             />
@@ -44,7 +46,7 @@
             android:text="l******"
             android:fontFamily="@font/notosans_regular"
             android:gravity="left"
-            android:layout_weight="4"
+            android:layout_weight="1"
             android:textColor="#B5B5B5"
             android:textSize="13.6sp"
             />

@@ -51,7 +51,7 @@ import static com.example.wjdck.hakerton.loginActivity.cussWords;
 public class detailActivity extends AppCompatActivity {
 
     TextView Title;
-    ImageButton btn_agree;
+    Button btn_agree;
     ToggleButton btn_push;
     ToggleButton btn_bookmark;
     EditText edit_agree;
@@ -178,21 +178,23 @@ public class detailActivity extends AppCompatActivity {
                 long date = Calendar.getInstance().getTimeInMillis();
                 AlertDialog.Builder dialog = new AlertDialog.Builder(detailActivity.this);
                 boolean cussFlag = false;
-
-                dialog.setTitle("욕설 / 비속어")
-                        .setMessage("입력하신 는 욕설/비속어 입니다")
-                        .setPositiveButton("종료합니다", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
+                String word = "";
 
                 for (String cussWord : cussWords) {
                     if (text.contains(cussWord)) {
+                        word = text;
                         cussFlag = true;
                         break;
                     }
                 }
+
+                dialog.setTitle("욕설 / 비속어")
+                        .setMessage("입력하신 " + word + "는 욕설/비속어 입니다")
+                        .setPositiveButton("닫기", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
 
                 if(cussFlag)
                     dialog.show();
@@ -210,7 +212,7 @@ public class detailActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     }
 
-                    edit_agree.setText("");
+                    edit_agree.setText("동의합니다.");
                     recyclerView.smoothScrollToPosition(adapter.getItemCount());
                 }
             }

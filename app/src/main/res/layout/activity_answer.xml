@@ -31,7 +31,7 @@
                 android:textColor="#FFFFFF"
                 android:text = "답 변 게 시 판"
                 android:layout_gravity="center"
-                android:textSize="17sp"/>
+                android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
 

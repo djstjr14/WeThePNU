@@ -30,6 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp">
 
@@ -48,7 +50,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="35dp"
             android:orientation="horizontal">
             <EditText
                 android:id="@+id/add_discuss_title"
@@ -74,7 +76,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginBottom="20dp"
             android:background="@drawable/border">
 
@@ -102,7 +105,7 @@
                 android:gravity="center"
                 android:text="취소"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:background="@drawable/background_button_cancle" />
 

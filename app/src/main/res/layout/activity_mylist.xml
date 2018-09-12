@@ -31,7 +31,7 @@
                 android:textColor="#FFFFFF"
                 android:fontFamily="@font/notosans_medium"
                 android:text = "즐 겨 찾 기 목 록"
-                android:textSize="17sp"/>
+                android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
 

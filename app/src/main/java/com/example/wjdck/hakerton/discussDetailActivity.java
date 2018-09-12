@@ -148,21 +148,23 @@ public class discussDetailActivity extends AppCompatActivity {
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(discussDetailActivity.this);
                 boolean cussFlag = false;
-
-                dialog.setTitle("욕설 / 비속어")
-                        .setMessage("입력하신 는 욕설/비속어 입니다")
-                        .setPositiveButton("종료합니다", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
+                String word = "";
 
                 for (String cussWord : cussWords) {
                     if (text.contains(cussWord)) {
                         cussFlag = true;
+                        word = text;
                         break;
                     }
                 }
+
+                dialog.setTitle("욕설 / 비속어")
+                        .setMessage("입력하신 " + word + "는 욕설/비속어 입니다")
+                        .setPositiveButton("닫기", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
 
                 if(cussFlag)
                     dialog.show();

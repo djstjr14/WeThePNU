@@ -23,13 +23,15 @@
             android:text = "청 원 하 기"
             android:textColor="#FFFFFF"
             android:layout_gravity="center"
-            android:textSize="17sp"/>
+            android:textSize="20sp"/>
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp">
 
@@ -47,7 +49,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="35dp"
             android:orientation="horizontal">
             <Spinner
                 android:id="@+id/spinner_category"
@@ -82,7 +84,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginBottom="20dp"
             android:background="@drawable/border">
 

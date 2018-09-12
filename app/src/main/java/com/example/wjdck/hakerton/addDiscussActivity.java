@@ -52,23 +52,27 @@ public class addDiscussActivity extends AppCompatActivity {
                 String key = "";
                 String title = edit_title.getText().toString();
                 String text = edit_agenda.getText().toString();
+                String word = "";
                 boolean cussFlag = false;
 
+                for (String cussWord : cussWords) {
+                    if (title.contains(cussWord) || text.contains(cussWord)) {
+                        if(title.contains(cussWord)) word = title;
+                        else                        word = text;
+                        cussFlag = true;
+                        break;
+                    }
+                }
+
                 dialog.setTitle("욕설 / 비속어")
-                        .setMessage("입력하신 는 욕설/비속어 입니다")
-                        .setPositiveButton("종료합니다", new DialogInterface.OnClickListener() {
+                        .setMessage("입력하신" + word + "는 욕설/비속어 입니다")
+                        .setPositiveButton("닫기", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 finish();
                             }
                         });
 
-                for (String cussWord : cussWords) {
-                    if (title.contains(cussWord) || text.contains(cussWord)) {
-                        cussFlag = true;
-                        break;
-                    }
-                }
 
                 if(cussFlag)
                     dialog.show();

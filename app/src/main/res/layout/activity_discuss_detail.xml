@@ -28,7 +28,7 @@
                 android:textColor="#FFFFFF"
                 android:text = "자 유 토 론 게 시 판"
                 android:layout_gravity="center"
-                android:textSize="17sp"/>
+                android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
 
@@ -53,27 +53,33 @@
             android:id="@+id/ll_discuss"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:padding="7dp"
             android:orientation="horizontal"
             android:background="#CED9DD"
             android:layout_alignParentBottom="true"
             >
-
             <EditText
-                android:layout_width="270dp"
-                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
+                android:layout_weight="7"
                 android:fontFamily="@font/notosans_regular"
-                android:textSize="13.5sp"
+                android:textSize="13sp"
                 android:id="@+id/detail_commend_edit"
                 android:background="@drawable/soft_edge"/>
 
             <Button
-                android:layout_width="50dp"
-                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
+                android:layout_weight="1.0"
                 android:id="@+id/detail_commend_btn"
-                android:background="@drawable/register_btn"
-                android:textAlignment="center"
+                android:background="@drawable/background_button_comment"
+                android:text="등록"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:fontFamily="@font/notosans_regular"
+                android:gravity="center"
                 />
         </LinearLayout>
 
