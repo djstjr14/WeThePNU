@@ -1,12 +1,14 @@
 package com.example.wjdck.hakerton;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +45,7 @@ import java.util.HashMap;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 import static com.example.wjdck.hakerton.loginActivity.appData;
+import static com.example.wjdck.hakerton.loginActivity.cussWords;
 
 
 public class detailActivity extends AppCompatActivity {
@@ -69,8 +72,6 @@ public class detailActivity extends AppCompatActivity {
     String thisKey = "";
     Boolean toastFlag = false;
     String progress = "청원 진행중";
-
-    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,22 +176,43 @@ public class detailActivity extends AppCompatActivity {
 
                 String text = edit_agree.getText().toString();
                 long date = Calendar.getInstance().getTimeInMillis();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(detailActivity.this);
+                boolean cussFlag = false;
 
-                CommentItem comment = new CommentItem(item.getKey(), Uid, text, date);
-                onAgreeClicked(ref.child(thisKey), comment);
-                if(toastFlag){
-                    Intent intent = new Intent(detailActivity.this, agreePopupActivity.class);
-                    intent.putExtra("data", "동의는 한 번만 할 수 있습니다.");
-                    startActivityForResult(intent, 1);
-                }else{
-                    item.setRecommend(item.getRecommend()+1);
-                    Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
-                    adapter.setItem1(item);
-                    adapter.notifyDataSetChanged();
+                dialog.setTitle("욕설 / 비속어")
+                        .setMessage("입력하신 는 욕설/비속어 입니다")
+                        .setPositiveButton("종료합니다", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+                for (String cussWord : cussWords) {
+                    if (text.contains(cussWord)) {
+                        cussFlag = true;
+                        break;
+                    }
                 }
 
-                edit_agree.setText("");
-                recyclerView.smoothScrollToPosition(adapter.getItemCount());
+                if(cussFlag)
+                    dialog.show();
+                else{
+                    CommentItem comment = new CommentItem(item.getKey(), Uid, text, date);
+                    onAgreeClicked(ref.child(thisKey), comment);
+                    if(toastFlag){
+                        Intent intent = new Intent(detailActivity.this, agreePopupActivity.class);
+                        intent.putExtra("data", "동의는 한 번만 할 수 있습니다.");
+                        startActivityForResult(intent, 1);
+                    }else{
+                        item.setRecommend(item.getRecommend()+1);
+                        Title.setText("참여인원 : ["+Long.toString(item.getRecommend())+"명]");
+                        adapter.setItem1(item);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    edit_agree.setText("");
+                    recyclerView.smoothScrollToPosition(adapter.getItemCount());
+                }
             }
 
         });

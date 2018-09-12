@@ -1,6 +1,7 @@
 package com.example.wjdck.hakerton;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -42,6 +44,7 @@ import java.util.Calendar;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
 import static com.example.wjdck.hakerton.loginActivity.appData;
+import static com.example.wjdck.hakerton.loginActivity.cussWords;
 import static com.example.wjdck.hakerton.loginActivity.toast;
 
 public class discussDetailActivity extends AppCompatActivity {
@@ -143,10 +146,33 @@ public class discussDetailActivity extends AppCompatActivity {
                 String text = Edit_comment.getText().toString();
                 long date = Calendar.getInstance().getTimeInMillis();
 
-                CommentItem comment = new CommentItem(thisKey, Uid, text, date);
-                onRegisterClicked(ref.child(thisKey), comment);
-                Edit_comment.setText("");
-                recyclerView.smoothScrollToPosition(adapter.getItemCount());
+                AlertDialog.Builder dialog = new AlertDialog.Builder(discussDetailActivity.this);
+                boolean cussFlag = false;
+
+                dialog.setTitle("욕설 / 비속어")
+                        .setMessage("입력하신 는 욕설/비속어 입니다")
+                        .setPositiveButton("종료합니다", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+                for (String cussWord : cussWords) {
+                    if (text.contains(cussWord)) {
+                        cussFlag = true;
+                        break;
+                    }
+                }
+
+                if(cussFlag)
+                    dialog.show();
+                else{
+                    CommentItem comment = new CommentItem(thisKey, Uid, text, date);
+                    onRegisterClicked(ref.child(thisKey), comment);
+                    Edit_comment.setText("");
+                    recyclerView.smoothScrollToPosition(adapter.getItemCount());
+                }
+
             }
 
         });

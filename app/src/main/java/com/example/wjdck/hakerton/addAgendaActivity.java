@@ -1,8 +1,11 @@
 package com.example.wjdck.hakerton;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
+
+import static com.example.wjdck.hakerton.loginActivity.cussWords;
 
 public class addAgendaActivity extends AppCompatActivity {
 
@@ -46,19 +51,43 @@ public class addAgendaActivity extends AppCompatActivity {
         btn_regist.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(addAgendaActivity.this);
                 String key = "";
                 String title = edit_title.getText().toString();
                 String text = edit_agenda.getText().toString();
-                String category = category_spinner.getSelectedItem().toString();
-                long recommend = 0;
-                long date = Calendar.getInstance().getTimeInMillis();
-                int answerNum = 0;
-                String answerDate = "";
+                boolean cussFlag = false;
 
-                ListViewItem agenda = new ListViewItem(key, title, text, category, recommend, Long.toString(date), answerNum, answerDate);
+                dialog.setTitle("욕설 / 비속어")
+                        .setMessage("입력하신 는 욕설/비속어 입니다")
+                        .setPositiveButton("종료합니다", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
 
-                ref.push().setValue(agenda.toMap());
-                finish();
+                for (String cussWord : cussWords) {
+                    if (title.contains(cussWord) || text.contains(cussWord)) {
+                        cussFlag = true;
+                        break;
+                    }
+                }
+
+                if(cussFlag)
+                    dialog.show();
+                else{
+                    String category = category_spinner.getSelectedItem().toString();
+                    long recommend = 0;
+                    long date = Calendar.getInstance().getTimeInMillis();
+                    int answerNum = 0;
+                    String answerDate = "";
+
+                    ListViewItem agenda = new ListViewItem(key, title, text, category, recommend, Long.toString(date), answerNum, answerDate);
+
+                    ref.push().setValue(agenda.toMap());
+                }
+
+
             }
         });
 

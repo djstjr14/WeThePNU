@@ -1,6 +1,8 @@
 package com.example.wjdck.hakerton;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Calendar;
 
 import static com.example.wjdck.hakerton.loginActivity.Uid;
+import static com.example.wjdck.hakerton.loginActivity.cussWords;
 
 public class addDiscussActivity extends AppCompatActivity {
     private FirebaseDatabase database;
@@ -45,19 +48,43 @@ public class addDiscussActivity extends AppCompatActivity {
         btn_regist.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(addDiscussActivity.this);
                 String key = "";
                 String title = edit_title.getText().toString();
                 String text = edit_agenda.getText().toString();
-                long recommend = 0;
-                long unrecommend = 0;
-                long date = Calendar.getInstance().getTimeInMillis();
-                long hits = 0;
-                long comments = 0;
+                boolean cussFlag = false;
 
-                discussItem item = new discussItem(key, title, text, recommend, unrecommend, Long.toString(date), hits, comments, Uid);
+                dialog.setTitle("욕설 / 비속어")
+                        .setMessage("입력하신 는 욕설/비속어 입니다")
+                        .setPositiveButton("종료합니다", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
 
-                ref.push().setValue(item.toMap());
-                finish();
+                for (String cussWord : cussWords) {
+                    if (title.contains(cussWord) || text.contains(cussWord)) {
+                        cussFlag = true;
+                        break;
+                    }
+                }
+
+                if(cussFlag)
+                    dialog.show();
+                else{
+                    long recommend = 0;
+                    long unrecommend = 0;
+                    long date = Calendar.getInstance().getTimeInMillis();
+                    long hits = 0;
+                    long comments = 0;
+
+                    discussItem item = new discussItem(key, title, text, recommend, unrecommend, Long.toString(date), hits, comments, Uid);
+
+                    ref.push().setValue(item.toMap());
+                    finish();
+                }
+
             }
         });
 

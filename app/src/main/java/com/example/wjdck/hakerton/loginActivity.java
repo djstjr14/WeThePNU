@@ -33,6 +33,7 @@ public class loginActivity extends AppCompatActivity {
     private long backKeyPressedTime = 0;
     public static String Uid = "djstjr14";
     public static Toast toast;
+    public static String[] cussWords = {"1234", "욕설", "비속어", "나쁜말", "대머리", "대학원생"};
     private final static String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36";
     boolean loginFlag = true;
     boolean SaveLoginData;
