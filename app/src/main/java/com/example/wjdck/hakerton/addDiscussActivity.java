@@ -69,7 +69,6 @@ public class addDiscussActivity extends AppCompatActivity {
                         .setPositiveButton("닫기", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                finish();
                             }
                         });
 

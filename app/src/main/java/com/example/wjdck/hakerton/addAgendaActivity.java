@@ -72,7 +72,6 @@ public class addAgendaActivity extends AppCompatActivity {
                         .setPositiveButton("닫기", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                finish();
                             }
                         });
 
@@ -88,6 +87,7 @@ public class addAgendaActivity extends AppCompatActivity {
                     ListViewItem agenda = new ListViewItem(key, title, text, category, recommend, Long.toString(date), answerNum, answerDate);
 
                     ref.push().setValue(agenda.toMap());
+                    finish();
                 }
 
 
